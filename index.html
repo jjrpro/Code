@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Steamfitters Local 638 — United Association</title>
+<meta name="description" content="Steamfitters Local Union No. 638 — serving New York City's mechanical industry since 1888. Apprenticeship, journeyman training, contractor referral, and member services." />
+<style>
+  :root {
+    --navy: #0a2540;
+    --navy-deep: #061a2e;
+    --steel: #4a5568;
+    --steel-light: #cbd5e0;
+    --gold: #c9a55c;
+    --gold-soft: #e7d4a7;
+    --red: #b71c1c;
+    --bg: #f7f7f5;
+    --paper: #ffffff;
+    --ink: #1a202c;
+    --muted: #5a6878;
+    --maxw: 1200px;
+    --radius: 4px;
+    --shadow: 0 2px 8px rgba(10,37,64,.08);
+    --shadow-lg: 0 10px 30px rgba(10,37,64,.15);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-weight: 800; letter-spacing: -0.01em; line-height: 1.15; margin: 0 0 .5em; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  h3 { font-size: 1.2rem; }
+  p { margin: 0 0 1em; }
+  a { color: var(--navy); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s; }
+  a:hover { border-bottom-color: var(--gold); }
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
+  .eyebrow { display: inline-block; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: .75rem; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    background: var(--navy-deep);
+    color: #c8d2dd;
+    font-size: .85rem;
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .topbar .row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; }
+  .topbar a { color: #c8d2dd; }
+  .topbar a:hover { color: var(--gold); border-color: transparent; }
+  .topbar .meta span + span::before { content: " · "; color: rgba(255,255,255,.35); margin: 0 .4rem; }
+
+  /* ============ HEADER / NAV ============ */
+  header.site {
+    background: var(--navy);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--shadow);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; }
+  .brand { display: flex; align-items: center; gap: .85rem; color: #fff; border: 0; }
+  .brand:hover { border: 0; }
+  .logo {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--navy);
+    display: grid; place-items: center;
+    font-weight: 900; font-size: 1.1rem;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--gold);
+    flex: 0 0 auto;
+  }
+  .brand-text { line-height: 1.1; }
+  .brand-text .l1 { display: block; font-size: .7rem; letter-spacing: .22em; color: var(--gold-soft); text-transform: uppercase; font-weight: 700; }
+  .brand-text .l2 { display: block; font-size: 1.15rem; font-weight: 800; }
+  nav.primary ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.75rem; align-items: center; }
+  nav.primary a {
+    color: #e9eef4; border: 0;
+    font-weight: 600; font-size: .95rem;
+    padding: .5rem 0;
+    position: relative;
+  }
+  nav.primary a:hover { color: var(--gold); }
+  nav.primary a:hover::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 2px; background: var(--gold);
+  }
+  .cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: .65rem 1.1rem !important;
+    border-radius: var(--radius);
+    font-weight: 800;
+    border: 0;
+  }
+  .cta:hover { background: #d6b873; }
+  .cta:hover::after { display: none !important; }
+  .menu-btn {
+    display: none;
+    background: transparent; border: 1px solid rgba(255,255,255,.3);
+    color: #fff; padding: .5rem .75rem; border-radius: var(--radius);
+    font-size: 1rem; cursor: pointer;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: 5rem 0 6rem;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0 38px, rgba(201,165,92,.04) 38px 39px),
+      radial-gradient(ellipse at top right, rgba(201,165,92,.18), transparent 60%);
+    pointer-events: none;
+  }
+  .hero .container { position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: center; }
+  .hero h1 { color: #fff; }
+  .hero h1 span.accent { color: var(--gold); }
+  .hero .lede { font-size: 1.15rem; color: #d0d9e3; max-width: 36rem; margin-bottom: 2rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: .85rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 800;
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .btn-primary:hover { background: #d6b873; border-color: #d6b873; }
+  .btn-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.35); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  .hero-card h3 { color: var(--gold-soft); font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .stat .num { font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat .lbl { font-size: .85rem; color: #c8d2dd; margin-top: .35rem; }
+
+  /* ============ ANNOUNCEMENT BAR ============ */
+  .announce {
+    background: var(--gold);
+    color: var(--navy);
+    padding: .85rem 0;
+    font-weight: 700;
+    text-align: center;
+    font-size: .95rem;
+  }
+  .announce a { color: var(--navy); border-bottom: 2px solid var(--navy); }
+
+  /* ============ SECTIONS ============ */
+  section.block { padding: 5rem 0; }
+  section.block.alt { background: var(--paper); }
+  .section-head { max-width: 48rem; margin-bottom: 3rem; }
+  .section-head h2 { color: var(--navy); }
+  .section-head .lede { color: var(--muted); font-size: 1.1rem; }
+
+  /* Cards grid */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .card {
+    background: var(--paper);
+    border: 1px solid #e5e9ef;
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform .15s, box-shadow .15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .card .icon {
+    width: 48px; height: 48px;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: var(--radius);
+    display: grid; place-items: center;
+    margin-bottom: 1rem;
+    font-weight: 900;
+  }
+  .card h3 { color: var(--navy); margin-bottom: .5rem; }
+  .card p { color: var(--muted); margin-bottom: 1rem; flex: 1; }
+  .card a.more { font-weight: 700; color: var(--navy); border-bottom: 2px solid var(--gold); align-self: flex-start; }
+
+  /* ============ ABOUT / TWO-COL ============ */
+  .twocol { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: center; }
+  .image-block {
+    background: linear-gradient(135deg, var(--navy), var(--steel));
+    border-radius: var(--radius);
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .image-block::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px);
+  }
+  .image-block .placeholder-tag {
+    position: absolute; bottom: 1rem; right: 1rem;
+    background: rgba(0,0,0,.5); color: var(--gold-soft);
+    padding: .4rem .75rem; border-radius: var(--radius);
+    font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+  }
+  ul.checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  ul.checklist li {
+    padding: .5rem 0 .5rem 2rem;
+    position: relative;
+    color: var(--ink);
+  }
+  ul.checklist li::before {
+    content: "✓"; position: absolute; left: 0; top: .4rem;
+    color: var(--gold); font-weight: 900;
+    width: 1.4rem; height: 1.4rem;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: .8rem;
+  }
+
+  /* ============ NEWS ============ */
+  .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .news-item { background: var(--paper); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid #e5e9ef; }
+  .news-thumb {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--steel), var(--navy));
+    position: relative;
+  }
+  .news-thumb .cat {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--gold); color: var(--navy);
+    padding: .25rem .6rem; font-size: .7rem; font-weight: 800;
+    letter-spacing: .12em; text-transform: uppercase; border-radius: 2px;
+  }
+  .news-body { padding: 1.25rem 1.5rem 1.5rem; }
+  .news-body .date { font-size: .85rem; color: var(--muted); margin-bottom: .35rem; }
+  .news-body h3 { color: var(--navy); font-size: 1.1rem; margin-bottom: .5rem; }
+  .news-body a.more { font-size: .9rem; font-weight: 700; color: var(--navy); border-bottom: 2px solid var(--gold); }
+
+  /* ============ EVENTS / TABLE ============ */
+  .events {
+    background: var(--navy);
+    color: #e9eef4;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .events-head { background: var(--navy-deep); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .events-head h3 { color: var(--gold); margin: 0; font-size: .85rem; letter-spacing: .18em; text-transform: uppercase; }
+  .events-head a { color: var(--gold-soft); font-size: .85rem; }
+  .event-row { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.25rem 2rem; border-top: 1px solid rgba(255,255,255,.08); }
+  .event-date { text-align: center; }
+  .event-date .m { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+  .event-date .d { font-size: 1.8rem; font-weight: 900; line-height: 1; }
+  .event-meta { font-size: .85rem; color: #b8c4d2; margin-top: .2rem; }
+  .event-meta span + span::before { content: " · "; color: rgba(255,255,255,.35); margin: 0 .4rem; }
+  .event-cta { color: var(--gold); font-weight: 700; font-size: .9rem; border: 0; }
+  .event-cta:hover { color: #fff; }
+
+  /* ============ CONTACT ============ */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .contact-info { background: var(--navy); color: #fff; padding: 2.5rem; border-radius: var(--radius); }
+  .contact-info h3 { color: var(--gold); }
+  .contact-info .row { display: flex; gap: 1rem; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,.1); }
+  .contact-info .row:first-of-type { border-top: 0; }
+  .contact-info .row .label { color: var(--gold-soft); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; width: 100px; flex: 0 0 auto; }
+  .contact-info .row .val { color: #fff; }
+  .contact-info a { color: #fff; border-bottom-color: var(--gold); }
+
+  form.contact { background: var(--paper); padding: 2.5rem; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid #e5e9ef; }
+  form.contact label { display: block; font-weight: 700; font-size: .85rem; color: var(--navy); letter-spacing: .05em; margin-bottom: .4rem; }
+  form.contact input, form.contact select, form.contact textarea {
+    width: 100%;
+    padding: .75rem .9rem;
+    border: 1px solid var(--steel-light);
+    border-radius: var(--radius);
+    font: inherit;
+    margin-bottom: 1.25rem;
+    background: #fff;
+  }
+  form.contact input:focus, form.contact textarea:focus, form.contact select:focus {
+    outline: 0; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(10,37,64,.1);
+  }
+
+  /* ============ FOOTER ============ */
+  footer.site {
+    background: var(--navy-deep);
+    color: #b8c4d2;
+    padding: 4rem 0 2rem;
+    font-size: .9rem;
+  }
+  footer.site .grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+  footer.site h4 { color: #fff; font-size: .85rem; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1rem; }
+  footer.site ul { list-style: none; padding: 0; margin: 0; }
+  footer.site ul li { margin: .5rem 0; }
+  footer.site a { color: #b8c4d2; }
+  footer.site a:hover { color: var(--gold); }
+  footer.site .brand-block { color: #d0d9e3; }
+  footer.site .legal {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    color: #8a98a8; font-size: .85rem;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 960px) {
+    .hero-grid, .twocol, .contact-grid { grid-template-columns: 1fr; }
+    .grid-3, .news-grid { grid-template-columns: repeat(2, 1fr); }
+    footer.site .grid { grid-template-columns: 1fr 1fr; }
+    nav.primary ul { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--navy-deep); flex-direction: column; gap: 0; padding: 1rem 1.5rem; box-shadow: var(--shadow-lg); }
+    nav.primary ul.open { display: flex; }
+    nav.primary ul li { width: 100%; border-bottom: 1px solid rgba(255,255,255,.08); }
+    nav.primary ul li:last-child { border-bottom: 0; }
+    nav.primary a { padding: .85rem 0; display: block; }
+    .menu-btn { display: inline-block; }
+  }
+  @media (max-width: 600px) {
+    .grid-3, .news-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
+    .event-row { grid-template-columns: 60px 1fr; }
+    .event-cta { grid-column: 2; justify-self: start; }
+    footer.site .grid { grid-template-columns: 1fr; }
+    section.block { padding: 3.5rem 0; }
+    .hero { padding: 3.5rem 0 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container row">
+    <div class="meta">
+      <span>United Association · Local 638</span>
+      <span>Long Island City, NY</span>
+    </div>
+    <div class="meta">
+      <span><a href="tel:+17187290600">(718) 729-0600</a></span>
+      <span><a href="#members">Member Login</a></span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER / NAV -->
+<header class="site">
+  <div class="container nav">
+    <a href="#" class="brand" aria-label="Steamfitters Local 638 home">
+      <div class="logo" aria-hidden="true">638</div>
+      <div class="brand-text">
+        <span class="l1">Steamfitters</span>
+        <span class="l2">Local Union 638</span>
+      </div>
+    </a>
+    <button class="menu-btn" aria-label="Toggle navigation" onclick="document.getElementById('primary-menu').classList.toggle('open')">☰ Menu</button>
+    <nav class="primary" aria-label="Primary">
+      <ul id="primary-menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#members">Members</a></li>
+        <li><a href="#contractors">Contractors</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#apply" class="cta">Join the Union</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ANNOUNCEMENT -->
+<div class="announce">
+  📢 General Membership Meeting — Thursday, June 11 at 5:00 PM at the Union Hall. <a href="#events">View details</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">United Association · Since 1888</span>
+        <h1>Building New York's <span class="accent">Mechanical Backbone</span> for Over 135 Years.</h1>
+        <p class="lede">Steamfitters Local 638 represents the most highly trained mechanical tradespeople in the New York metropolitan area — installing, maintaining, and servicing the piping systems that move steam, water, gas, and refrigerants through the city's hospitals, towers, and infrastructure.</p>
+        <div class="hero-actions">
+          <a href="#apply" class="btn btn-primary">Apprenticeship Application</a>
+          <a href="#contractors" class="btn btn-ghost">Hire Union Steamfitters</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Local 638 by the Numbers</h3>
+        <div class="stats">
+          <div class="stat"><div class="num">7,500+</div><div class="lbl">Active Members</div></div>
+          <div class="stat"><div class="num">135</div><div class="lbl">Years Strong</div></div>
+          <div class="stat"><div class="num">5</div><div class="lbl">Boroughs Served</div></div>
+          <div class="stat"><div class="num">500+</div><div class="lbl">Signatory Contractors</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="block alt" id="about">
+  <div class="container twocol">
+    <div>
+      <span class="eyebrow">About the Local</span>
+      <h2>Skilled. Certified. Union Proud.</h2>
+      <p>Local 638 members are journeymen and apprentice steamfitters, welders, refrigeration mechanics, and HVAC technicians working under the United Association of Plumbers and Pipefitters. We've been organized since 1888, and every member completes a five-year, state-certified apprenticeship before earning journeyman status.</p>
+      <ul class="checklist">
+        <li>Five-year, no-cost apprenticeship with paid on-the-job training</li>
+        <li>OSHA-30, ASME B31, and AWS-certified welding curriculum</li>
+        <li>Family medical, dental, vision, and pension benefits from day one</li>
+        <li>Industry-leading wage scale negotiated under a master collective bargaining agreement</li>
+        <li>Lifelong access to advanced training: medical gas, HDPE fusion, BIM, and more</li>
+      </ul>
+      <a href="#about-full" class="btn btn-primary" style="margin-top:1rem;">Read Our History</a>
+    </div>
+    <div class="image-block" aria-hidden="true">
+      <span class="placeholder-tag">Replace with member photo</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="block">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">What We Do</span>
+      <h2>Five Crafts. One Union.</h2>
+      <p class="lede">Local 638 jurisdiction covers the full scope of high-pressure and process piping work in commercial, institutional, and industrial construction across the five boroughs and Long Island.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon">⚙</div>
+        <h3>Steamfitting</h3>
+        <p>High-pressure steam, condensate, hot and chilled water, fuel oil, and process piping systems in hospitals, universities, and high-rise construction.</p>
+        <a href="#" class="more">Learn more →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🔥</div>
+        <h3>Welding</h3>
+        <p>Certified TIG, MIG, and stick welding to ASME Section IX, AWS D1.1, and B31 standards. In-house weld testing facility on premises.</p>
+        <a href="#" class="more">Learn more →</a>
+      </div>
+      <div class="card">
+        <div class="icon">❄</div>
+        <h3>Refrigeration &amp; HVAC</h3>
+        <p>Commercial refrigeration installation, controls, chillers, and process cooling. EPA 608 certified across all categories.</p>
+        <a href="#" class="more">Learn more →</a>
+      </div>
+      <div class="card">
+        <div class="icon">⛽</div>
+        <h3>Medical &amp; Specialty Gas</h3>
+        <p>NFPA 99 medical gas piping for hospitals and life-science facilities. ASSE 6010 certified installers and brazers.</p>
+        <a href="#" class="more">Learn more →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🛠</div>
+        <h3>Service &amp; Maintenance</h3>
+        <p>24/7 service work on operating systems — building stocks, hospitals, data centers, and process facilities throughout the city.</p>
+        <a href="#" class="more">Learn more →</a>
+      </div>
+      <div class="card">
+        <div class="icon">📐</div>
+        <h3>BIM &amp; Prefab</h3>
+        <p>Members trained in Revit, Navisworks, and modular prefabrication — bringing shop-fabricated quality and schedule certainty to every job.</p>
+        <a href="#" class="more">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING / APPRENTICESHIP CTA -->
+<section class="block alt" id="training">
+  <div class="container twocol">
+    <div class="image-block" aria-hidden="true">
+      <span class="placeholder-tag">Replace with training photo</span>
+    </div>
+    <div>
+      <span class="eyebrow">Apprenticeship</span>
+      <h2>Become a Steamfitter. Earn While You Learn.</h2>
+      <p>The Enterprise Association Steamfitters Local 638 JATC runs one of the most rigorous, well-respected apprenticeship programs in the trades. Five years. Paid from day one. No tuition. Full benefits. Lifetime career.</p>
+      <ul class="checklist">
+        <li>Starting wage at 50% of journeyman scale, raises every six months</li>
+        <li>10,000 hours of paid on-the-job training</li>
+        <li>900+ hours of classroom instruction at our LIC training center</li>
+        <li>State of New York &amp; U.S. Department of Labor certified</li>
+        <li>Veterans receive preference under our Helmets to Hardhats partnership</li>
+      </ul>
+      <div class="hero-actions">
+        <a href="#apply" class="btn btn-primary">Apply Now</a>
+        <a href="#" class="btn btn-ghost" style="color:var(--navy); border-color:var(--navy);">Application Requirements</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERS PORTAL -->
+<section class="block" id="members">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Member Resources</span>
+      <h2>Tools for Members.</h2>
+      <p class="lede">Dispatch list, dues, benefits, continuing education — everything you need to manage your career and your benefits in one place.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon">📋</div>
+        <h3>Out-of-Work List</h3>
+        <p>Sign up, check your position, and view current dispatches. Updated daily by the business office.</p>
+        <a href="#" class="more">Member Login →</a>
+      </div>
+      <div class="card">
+        <div class="icon">💵</div>
+        <h3>Dues &amp; Assessments</h3>
+        <p>Pay quarterly dues online, review your account history, and download tax-deductible payment receipts.</p>
+        <a href="#" class="more">Pay Online →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🏥</div>
+        <h3>Health &amp; Welfare</h3>
+        <p>Medical, dental, vision, and prescription coverage through the Local 638 Welfare Fund. Find providers, claims, and ID cards.</p>
+        <a href="#" class="more">Benefits Portal →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🏛</div>
+        <h3>Pension &amp; Annuity</h3>
+        <p>Defined-benefit pension plus supplemental annuity. View your accrued benefits and project retirement income.</p>
+        <a href="#" class="more">Pension Portal →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🎓</div>
+        <h3>Continuing Education</h3>
+        <p>Sign up for OSHA refreshers, advanced welding certs, medical gas, and code update classes at the LIC training center.</p>
+        <a href="#" class="more">Class Schedule →</a>
+      </div>
+      <div class="card">
+        <div class="icon">📰</div>
+        <h3>Union Bulletins</h3>
+        <p>Read the monthly newsletter, business agent updates, and notices from the Executive Board.</p>
+        <a href="#" class="more">Latest Bulletins →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRACTORS -->
+<section class="block alt" id="contractors">
+  <div class="container twocol">
+    <div>
+      <span class="eyebrow">For Contractors</span>
+      <h2>Hire the Best-Trained Workforce in New York.</h2>
+      <p>Signatory contractors get on-demand access to a roster of over 7,500 fully-vetted, code-certified mechanical tradespeople. From skyscraper construction to hospital service calls, Local 638 delivers safety, productivity, and quality you can underwrite.</p>
+      <ul class="checklist">
+        <li>Same-day dispatch through our business office</li>
+        <li>Predictable labor cost under master CBA — no scrambling for talent</li>
+        <li>OSHA-compliant, certified, drug-tested workforce</li>
+        <li>Project-specific staffing: shutdowns, retrofits, new construction</li>
+        <li>BIM &amp; prefab-capable crews</li>
+      </ul>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Become Signatory</a>
+        <a href="#contact" class="btn btn-ghost" style="color:var(--navy); border-color:var(--navy);">Request Manpower</a>
+      </div>
+    </div>
+    <div class="image-block" aria-hidden="true">
+      <span class="placeholder-tag">Replace with jobsite photo</span>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="block" id="news">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">News &amp; Updates</span>
+      <h2>Latest from Local 638.</h2>
+    </div>
+    <div class="news-grid">
+      <article class="news-item">
+        <div class="news-thumb"><span class="cat">Contract</span></div>
+        <div class="news-body">
+          <div class="date">May 22, 2026</div>
+          <h3>Members Ratify New Five-Year Master Agreement</h3>
+          <p>Membership approves new CBA with wage increases, expanded healthcare, and stronger jurisdictional protections.</p>
+          <a href="#" class="more">Read more →</a>
+        </div>
+      </article>
+      <article class="news-item">
+        <div class="news-thumb"><span class="cat">Training</span></div>
+        <div class="news-body">
+          <div class="date">May 14, 2026</div>
+          <h3>Fall Apprenticeship Class Opens June 1</h3>
+          <p>Applications open for the September 2026 entering class. Information sessions every Wednesday in LIC.</p>
+          <a href="#" class="more">Read more →</a>
+        </div>
+      </article>
+      <article class="news-item">
+        <div class="news-thumb"><span class="cat">Community</span></div>
+        <div class="news-body">
+          <div class="date">May 6, 2026</div>
+          <h3>Local 638 Volunteers Rebuild Brooklyn Community Center</h3>
+          <p>Over 40 members donated weekend hours installing new HVAC and hot water systems for a Bed-Stuy youth program.</p>
+          <a href="#" class="more">Read more →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="block alt" id="events">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Calendar</span>
+      <h2>Upcoming Meetings &amp; Events.</h2>
+    </div>
+    <div class="events">
+      <div class="events-head">
+        <h3>June – July 2026</h3>
+        <a href="#">Full calendar →</a>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="m">Jun</div><div class="d">11</div></div>
+        <div>
+          <strong>General Membership Meeting</strong>
+          <div class="event-meta"><span>5:00 PM</span><span>Union Hall, Long Island City</span><span>Open to all members</span></div>
+        </div>
+        <a href="#" class="event-cta">Details →</a>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="m">Jun</div><div class="d">18</div></div>
+        <div>
+          <strong>Apprenticeship Information Night</strong>
+          <div class="event-meta"><span>6:30 PM</span><span>JATC Training Center</span><span>Prospective applicants welcome</span></div>
+        </div>
+        <a href="#" class="event-cta">Details →</a>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="m">Jun</div><div class="d">27</div></div>
+        <div>
+          <strong>Annual Family Picnic — Heckscher State Park</strong>
+          <div class="event-meta"><span>11:00 AM</span><span>Field 8</span><span>Members &amp; families</span></div>
+        </div>
+        <a href="#" class="event-cta">Details →</a>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="m">Jul</div><div class="d">09</div></div>
+        <div>
+          <strong>Executive Board Meeting</strong>
+          <div class="event-meta"><span>4:00 PM</span><span>Union Hall</span><span>Officers &amp; delegates</span></div>
+        </div>
+        <a href="#" class="event-cta">Details →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Get in Touch</span>
+      <h2>Visit the Union Hall.</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Steamfitters Local Union 638</h3>
+        <div class="row">
+          <div class="label">Address</div>
+          <div class="val">27-08 40th Avenue<br>Long Island City, NY 11101</div>
+        </div>
+        <div class="row">
+          <div class="label">Phone</div>
+          <div class="val"><a href="tel:+17187290600">(718) 729-0600</a></div>
+        </div>
+        <div class="row">
+          <div class="label">Hours</div>
+          <div class="val">Mon – Fri · 8:00 AM – 4:30 PM</div>
+        </div>
+        <div class="row">
+          <div class="label">Dispatch</div>
+          <div class="val"><a href="tel:+17187290600">(718) 729-0600</a> ext. 2</div>
+        </div>
+        <div class="row">
+          <div class="label">Benefits</div>
+          <div class="val"><a href="mailto:benefits@steamfitters638.org">benefits@steamfitters638.org</a></div>
+        </div>
+        <div class="row">
+          <div class="label">JATC</div>
+          <div class="val"><a href="mailto:training@steamfitters638.org">training@steamfitters638.org</a></div>
+        </div>
+      </div>
+      <form class="contact" id="apply" onsubmit="event.preventDefault(); alert('Form preview only — wire to your backend.');">
+        <label for="f-name">Full Name</label>
+        <input type="text" id="f-name" required>
+        <label for="f-email">Email</label>
+        <input type="email" id="f-email" required>
+        <label for="f-phone">Phone</label>
+        <input type="tel" id="f-phone">
+        <label for="f-subject">I'm interested in</label>
+        <select id="f-subject">
+          <option>Apprenticeship Application</option>
+          <option>Hiring Union Steamfitters</option>
+          <option>Becoming a Signatory Contractor</option>
+          <option>Member Services Question</option>
+          <option>General Inquiry</option>
+        </select>
+        <label for="f-msg">Message</label>
+        <textarea id="f-msg" rows="5"></textarea>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="container">
+    <div class="grid">
+      <div class="brand-block">
+        <div style="display:flex; align-items:center; gap:.75rem; margin-bottom:1rem;">
+          <div class="logo" aria-hidden="true">638</div>
+          <strong style="color:#fff; font-size:1.1rem;">Steamfitters Local 638</strong>
+        </div>
+        <p>Representing the mechanical tradespeople of the New York metropolitan area since 1888. Affiliated with the United Association of Plumbers and Pipefitters, AFL-CIO.</p>
+      </div>
+      <div>
+        <h4>The Union</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#">History</a></li>
+          <li><a href="#">Officers</a></li>
+          <li><a href="#">Bylaws</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Members</h4>
+        <ul>
+          <li><a href="#members">Member Login</a></li>
+          <li><a href="#">Out-of-Work List</a></li>
+          <li><a href="#">Benefits</a></li>
+          <li><a href="#">Pension</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <div>© 2026 Steamfitters Local Union No. 638 · United Association · AFL-CIO</div>
+      <div><a href="#">Privacy</a> · <a href="#">Accessibility</a> · <a href="#">Site Map</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
