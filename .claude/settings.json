@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/user/Code/.claude/hooks/sync-memory.sh",
+            "timeout": 30,
+            "statusMessage": "Syncing notes to Obsidian repo…"
+          }
+        ]
+      }
+    ]
+  }
+}
