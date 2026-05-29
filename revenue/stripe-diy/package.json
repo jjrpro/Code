@@ -1,0 +1,19 @@
+{
+  "name": "jaurxtrades-vip-stripe",
+  "version": "1.0.0",
+  "description": "Stripe + Telegram VIP webhook server for JaurxTrades",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "node-fetch": "^2.7.0",
+    "stripe": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

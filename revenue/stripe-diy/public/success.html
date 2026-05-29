@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to JaurxTrades VIP</title>
+<style>
+  :root {
+    --navy: #0a2540;
+    --gold: #c9a55c;
+    --ink: #1a202c;
+    --muted: #5a6878;
+    --bg: #f7f7f5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--navy) 0%, #061a2e 100%);
+    color: var(--ink);
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+  }
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 520px;
+    width: 100%;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    text-align: center;
+  }
+  .check {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--navy);
+    display: grid; place-items: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem; font-weight: 900;
+  }
+  h1 { font-size: 1.6rem; margin: 0 0 .5rem; color: var(--navy); }
+  p { color: var(--muted); line-height: 1.55; margin: 0 0 1rem; }
+  .invite-box {
+    margin: 2rem 0 1rem;
+    padding: 1.5rem;
+    background: var(--bg);
+    border: 2px dashed var(--gold);
+    border-radius: 6px;
+    text-align: left;
+  }
+  .invite-box .lbl {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--gold);
+    font-weight: 800;
+    margin-bottom: .5rem;
+  }
+  .invite-box .link {
+    word-break: break-all;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: .9rem;
+    color: var(--navy);
+    background: #fff;
+    padding: .75rem;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-weight: 800;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: background .15s;
+  }
+  .btn:hover { background: #0e3056; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: #d6b873; }
+  .meta { font-size: .85rem; color: var(--muted); margin-top: 2rem; }
+  .meta a { color: var(--navy); }
+  .pending {
+    color: var(--muted);
+    font-style: italic;
+    padding: 1rem;
+  }
+  .error {
+    background: #fef2f2;
+    color: #991b1b;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+  }
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid #cbd5e0;
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    vertical-align: middle;
+    margin-right: .5rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="check">✓</div>
+  <h1>You're in.</h1>
+  <p>Payment confirmed. Your private invite link to <strong>JaurxTrades VIP</strong> is below — it's single-use and expires in 7 days, so don't share it.</p>
+
+  <div id="invite-area">
+    <div class="pending"><span class="spinner"></span> Generating your invite link…</div>
+  </div>
+
+  <p class="meta">
+    Questions? DM <a href="https://t.me/JaurxBot">@JaurxBot</a> or email
+    <a href="mailto:admin@jjrproconsultants.com">admin@jjrproconsultants.com</a>.
+    <br><br>
+    Manage your subscription anytime via the link in your Stripe receipt email.
+  </p>
+</div>
+
+<script>
+(async function() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  const area = document.getElementById('invite-area');
+
+  if (!sessionId) {
+    area.innerHTML = '<div class="error">Missing session ID. If you just paid, check your email for the invite link, or contact support.</div>';
+    return;
+  }
+
+  // The webhook might lag 1-3 seconds behind the redirect. Retry up to 10x.
+  let attempts = 0;
+  const maxAttempts = 12;
+
+  async function tryFetch() {
+    attempts++;
+    try {
+      const res = await fetch(`/api/invite?session_id=${encodeURIComponent(sessionId)}`);
+      const data = await res.json();
+
+      if (data.pending) {
+        if (attempts < maxAttempts) {
+          setTimeout(tryFetch, 2000);
+        } else {
+          area.innerHTML = '<div class="error">Still generating your invite — please check your email in a moment, or refresh this page.</div>';
+        }
+        return;
+      }
+
+      if (data.error) {
+        area.innerHTML = `<div class="error">${data.error}</div>`;
+        return;
+      }
+
+      area.innerHTML = `
+        <div class="invite-box">
+          <div class="lbl">Your VIP invite link</div>
+          <div class="link" id="invite-link">${data.invite_link}</div>
+        </div>
+        <a class="btn btn-gold" href="${data.invite_link}" target="_blank" rel="noopener">Join VIP Channel →</a>
+      `;
+    } catch (err) {
+      if (attempts < maxAttempts) {
+        setTimeout(tryFetch, 2000);
+      } else {
+        area.innerHTML = `<div class="error">Couldn't load your invite. Refresh this page or contact support.</div>`;
+      }
+    }
+  }
+
+  tryFetch();
+})();
+</script>
+</body>
+</html>

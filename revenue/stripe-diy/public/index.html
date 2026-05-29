@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JaurxTrades VIP — Live MGC & MNQ Trade Alerts</title>
+<meta name="description" content="Real-time futures trade alerts from John Reilly. Entries, stops, and targets posted as taken. $49/mo via Stripe.">
+<style>
+  :root {
+    --navy: #0a2540;
+    --navy-deep: #061a2e;
+    --gold: #c9a55c;
+    --ink: #1a202c;
+    --muted: #5a6878;
+    --bg: #f7f7f5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+    color: #fff;
+    padding: 4rem 1.5rem 5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0 0 1rem;
+    line-height: 1.15;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero .lede {
+    font-size: 1.15rem;
+    color: #c8d2dd;
+    max-width: 36rem;
+    margin: 0 auto 2rem;
+  }
+  .price-card {
+    max-width: 480px;
+    margin: -3rem auto 3rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    padding: 2.5rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .price-card .price {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .price-card .price small {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .price-card .label {
+    color: var(--gold);
+    font-size: .85rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: .5rem;
+  }
+  ul.benefits {
+    list-style: none; padding: 0; margin: 2rem 0;
+    text-align: left;
+  }
+  ul.benefits li {
+    padding: .65rem 0 .65rem 2rem;
+    position: relative;
+    color: var(--ink);
+  }
+  ul.benefits li::before {
+    content: "✓";
+    position: absolute; left: 0; top: .7rem;
+    color: var(--gold); font-weight: 900;
+    width: 1.4rem; height: 1.4rem;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: .75rem;
+  }
+  .btn {
+    display: block;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 1.1rem;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 1.5rem;
+    transition: background .15s;
+  }
+  .btn:hover { background: #d6b873; }
+  .disclaimer {
+    max-width: 600px;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    font-size: .8rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Live MGC &amp; MNQ Trades.<br><span class="accent">Posted As I Take Them.</span></h1>
+  <p class="lede">Real-time entry, stop, and target alerts straight from my trading desk into your private Telegram channel.</p>
+</section>
+
+<div class="price-card">
+  <div class="label">JaurxTrades VIP</div>
+  <div class="price">$49<small>/month</small></div>
+  <ul class="benefits">
+    <li>Real-time MGC + MNQ trade alerts with entry, SL, TP, and size</li>
+    <li>Daily morning bias post before market open</li>
+    <li>Weekly recap of wins, losses, and lessons</li>
+    <li>Private Q&amp;A access — DM John, get a reply within 24h</li>
+    <li>Cancel anytime, no contracts</li>
+  </ul>
+  <!--
+    REPLACE the href below with your Stripe Payment Link.
+    Format: https://buy.stripe.com/<your-link-id>
+    Set the success URL on the Stripe side to:
+      {YOUR_PUBLIC_URL}/success.html?session_id={CHECKOUT_SESSION_ID}
+    And cancel URL to:
+      {YOUR_PUBLIC_URL}/cancel.html
+  -->
+  <a class="btn" href="https://buy.stripe.com/REPLACE_ME">Join VIP — $49/mo</a>
+</div>
+
+<p class="disclaimer">
+  JaurxTrades VIP is an educational and entertainment service. Nothing posted is financial,
+  investment, or trading advice. Futures and derivatives trading involves substantial risk of loss.
+  Past performance is not indicative of future results. You are solely responsible for your own
+  trading decisions and outcomes. Consult a licensed financial advisor before making investment
+  decisions. By subscribing, you acknowledge these terms.
+</p>
+
+</body>
+</html>
