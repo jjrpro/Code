@@ -12,11 +12,17 @@ date or wrong**. Each file has a `⚠️ MOCKUP` comment at the top listing what
 confirm. **Verify with the owner before putting a site live.** Treat the copy,
 hours, services, and prices as generic placeholders.
 
+> 📋 **Full master list with contact info + best pitch channel for each:** see `ALL-SITES.md`.
+
 | Folder | Business | Address | Phone | Verified details on the site |
 |---|---|---|---|---|
 | `top-notch-barber/` | Top Notch Barber Shop | 3944 Richmond Ave | (718) 701-6649 | 4.7★/50+ reviews · hours · Fresha booking · IG + FB links · ($$ pricing) |
 | `mm-deli-bagels/` | M & M Deli & Bagels | 849 Annadale Rd | (718) 966-6826 | 3.9★ · real menu (bagels/pastrami/cheesesteaks) · Grubhub/Seamless/Uber Eats order links · review quotes |
 | `eltingville-nail-salon/` | Eltingville Nail Salon | 4328 Amboy Rd | (718) 966-1688 | 3.8★ · hours (open 7 days) · services · review themes · by appointment |
+| `annadale-bakery/` | Annadale Bakery | Annadale (verify exact) | (347) 662-0913 | Italian bakery · custom cakes/pastries · hours · IG @annadalebakery + FB |
+| `a-very-chic-boutique/` | A Very Chic Boutique | 880 Annadale Rd | (718) 948-0389 | Women's boutique · ships · "shop via Instagram DM" · IG + FB |
+| `maria-alterations/` | Maria Alterations & Tailoring | SI (verify) | DM only | 44-yr tailor · bridal/couture · IG @mariaalterationsnconcierges |
+| `cookies-n-cream/` | Cookies N Cream | Tottenville (verify) | DM only | Dessert shop · cookies/ice cream/coffee · IG @cookiesncream.sitottenville |
 
 ### What's still a placeholder (confirm with owner)
 - **Top Notch:** exact service list + prices (not published anywhere).
