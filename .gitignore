@@ -23,3 +23,7 @@ Thumbs.db
 # Telegram notifier secrets (NEVER commit the bot token)
 ops/telegram-notify/config.json
 ops/telegram-notify/sent/
+
+# Telegram bot local config (never commit keys)
+ops/telegram-bot/config*.json
+ops/telegram-bot/.env
