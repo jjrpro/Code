@@ -1,0 +1,5 @@
+{
+  "_comment": "Copy this to ~/.jaurx-telegram.json (recommended) or to config.json here. NEVER commit your real token.",
+  "token": "123456789:PASTE_YOUR_BOTFATHER_TOKEN_HERE",
+  "chatId": "PASTE_YOUR_CHAT_ID_HERE"
+}

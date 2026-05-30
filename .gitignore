@@ -19,3 +19,7 @@ Thumbs.db
 *.bak
 *.bak.*
 *.tmp
+
+# Telegram notifier secrets (NEVER commit the bot token)
+ops/telegram-notify/config.json
+ops/telegram-notify/sent/

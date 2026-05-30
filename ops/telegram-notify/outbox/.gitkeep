@@ -1,0 +1,2 @@
+# Keeps the outbox/ folder in git. Claude drops .md notes here; the Mac watcher
+# posts them to Telegram and moves them to ../sent/.
