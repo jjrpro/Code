@@ -1,18 +1,27 @@
 #!/usr/bin/env node
-// notify.js — push a one-off message to the Jaurx Telegram chat.
+// notify.js — push a one-off message (and/or file) to the Jaurx Telegram chat(s).
 // Run on the Mac (the cloud sandbox can't reach Telegram).
 //
 // Usage:
 //   node notify.js "✅ Deployed Top Notch: https://topnotchbarbershop.netlify.app"
+//   node notify.js --file ./PREVIEW-LINKS.html "📎 All site previews"
 //   echo "multi-line message" | node notify.js
 'use strict';
-const { loadConfig, sendMessage } = require('./notify-lib');
+const { loadConfig, sendMessage, sendFile } = require('./notify-lib');
 
 async function main() {
-  let text = process.argv.slice(2).join(' ').trim();
+  const argv = process.argv.slice(2);
 
-  // Allow piping text in via stdin if no args given.
-  if (!text && !process.stdin.isTTY) {
+  // Optional --file <path>
+  let filePath = null;
+  const fi = argv.indexOf('--file');
+  if (fi !== -1) {
+    filePath = argv[fi + 1];
+    argv.splice(fi, 2);
+  }
+
+  let text = argv.join(' ').trim();
+  if (!text && !filePath && !process.stdin.isTTY) {
     text = await new Promise((resolve) => {
       let buf = '';
       process.stdin.setEncoding('utf8');
@@ -21,13 +30,14 @@ async function main() {
     });
   }
 
-  if (!text) {
-    console.error('Usage: node notify.js "your message"  (or pipe text via stdin)');
+  if (!text && !filePath) {
+    console.error('Usage: node notify.js "message"   |   node notify.js --file <path> "caption"');
     process.exit(1);
   }
 
   const cfg = loadConfig();
-  await sendMessage(cfg, text);
+  if (text && !filePath) await sendMessage(cfg, text);
+  if (filePath) await sendFile(cfg, filePath, text || null);
   console.log('Sent to Telegram ✓');
 }
 
