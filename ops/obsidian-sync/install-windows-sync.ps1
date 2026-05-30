@@ -132,23 +132,35 @@ git diff --cached --quiet
 if ($LASTEXITCODE -eq 0) { exit 0 }  # nothing staged
 
 $changed = ((git diff --cached --name-only) | Measure-Object -Line).Lines
-git -c commit.gpgsign=false commit -m "obsidian-windows-sync: $changed file(s) updated" --quiet
-if ($LASTEXITCODE -ne 0) { exit 0 }
 
-# Try push; on rejection, rebase and retry
-git push origin $Branch --quiet
+# Inline -c user.name and user.email so the commit works in the scheduled-task
+# context even if no global git identity is configured. Errors no longer get
+# swallowed silently by missing config.
+$commitOut = (git `
+    -c user.name="JaurxBot (Windows)" `
+    -c user.email="admin@jjrproconsultants.com" `
+    -c commit.gpgsign=false `
+    commit -m "obsidian-windows-sync: $changed file(s) updated" 2>&1)
 if ($LASTEXITCODE -ne 0) {
-    git pull --rebase --autostash origin $Branch --quiet
+    Write-Log "ERROR: commit failed: $commitOut"
+    exit 0
+}
+
+# Try push; on rejection, rebase and retry. Capture stderr on failure so
+# we can see auth/network errors in the log instead of silently exiting.
+$pushOut = (git push origin $Branch 2>&1)
+if ($LASTEXITCODE -ne 0) {
+    $rebaseOut = (git pull --rebase --autostash origin $Branch 2>&1)
     if ($LASTEXITCODE -eq 0) {
-        git push origin $Branch --quiet
+        $pushOut2 = (git push origin $Branch 2>&1)
         if ($LASTEXITCODE -eq 0) {
             Write-Log "pushed $changed file(s) after rebase"
         } else {
-            Write-Log "WARN: push failed after rebase - check network or auth"
+            Write-Log "WARN: push failed after rebase: $pushOut2"
         }
     } else {
-        git rebase --abort
-        Write-Log "WARN: rebase conflict - resolve manually in $Vault"
+        git rebase --abort 2>$null
+        Write-Log "WARN: rebase failed: $rebaseOut"
     }
 } else {
     Write-Log "pushed $changed file(s) to $Branch"
