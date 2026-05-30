@@ -43,6 +43,8 @@ the supporting macro + technical evidence.
 - `obsidian-sync/` — Mac + Windows installers for bi-directional Obsidian ↔ repo sync
   - `install-mac-sync.sh` (LaunchAgent, every 60s)
   - `install-windows-sync.ps1` (Scheduled Task, every 1 min)
+- `telegram-notify/` — pushes finished work + pitches to Telegram (Mac watcher
+  posts `outbox/` notes via Bot API; runs on Mac, not the cloud)
 - `diagnostics/` — Mac environment check + fix scripts
 
 ### `.claude/` — Claude Code config
