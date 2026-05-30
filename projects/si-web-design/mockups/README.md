@@ -12,11 +12,22 @@ date or wrong**. Each file has a `⚠️ MOCKUP` comment at the top listing what
 confirm. **Verify with the owner before putting a site live.** Treat the copy,
 hours, services, and prices as generic placeholders.
 
-| Folder | Business | Public address | Phone (verify) | Status |
+| Folder | Business | Address | Phone | Verified details on the site |
 |---|---|---|---|---|
-| `top-notch-barber/` | Top Notch Barber Shop | 3944 Richmond Ave | (718) 701-6649 | No site found — HOT, ~4.7★ |
-| `mm-deli-bagels/` | M & M Deli & Bagels | 849 Annadale Rd | (718) 966-6826 | No site found — HOT (hours unconfirmed) |
-| `eltingville-nail-salon/` | Eltingville Nail Salon | 4328 Amboy Rd | (718) 966-1688 | No site found — HOT |
+| `top-notch-barber/` | Top Notch Barber Shop | 3944 Richmond Ave | (718) 701-6649 | 4.7★/50+ reviews · hours · Fresha booking · IG + FB links · ($$ pricing) |
+| `mm-deli-bagels/` | M & M Deli & Bagels | 849 Annadale Rd | (718) 966-6826 | 3.9★ · real menu (bagels/pastrami/cheesesteaks) · Grubhub/Seamless/Uber Eats order links · review quotes |
+| `eltingville-nail-salon/` | Eltingville Nail Salon | 4328 Amboy Rd | (718) 966-1688 | 3.8★ · hours (open 7 days) · services · review themes · by appointment |
+
+### What's still a placeholder (confirm with owner)
+- **Top Notch:** exact service list + prices (not published anywhere).
+- **M & M Deli:** real hours (not online) + full menu/prices. Hours on the site
+  are a placeholder marked "(confirm)".
+- **Eltingville Nail:** exact service prices (not published). Reviews are
+  paraphrased themes from public listings — replace with the owner's real
+  favorites once they're on board.
+
+> ⚠️ This is the nail salon at **4328 Amboy Rd** (Eltingville Nail Salon Inc),
+> NOT the separate "Eltingville Nail & Spa" at 4434 Amboy Rd. Don't mix them up.
 
 ## How to use one as a pitch
 1. Open the folder's `index.html` in a browser to preview it.
