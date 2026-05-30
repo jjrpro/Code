@@ -20,9 +20,11 @@ where noted, and log when sent.
 
 | Business | Live link | Channel | Deployed | Pitch sent? |
 |---|---|---|---|---|
-| 💈 Top Notch Barber | topnotchbarbershop.netlify.app | IG @topnotchbarbersh0p | ✅ 2026-05-30 | ☐ |
-| 🥐 Annadale Bakery | annadalebakery.netlify.app | IG @annadalebakery | ✅ 2026-05-30 | ☐ |
-| 👗 A Very Chic Boutique | a-very-chic-boutique.netlify.app | IG @averychicboutique | ✅ 2026-05-30 | ☐ |
+| 💈 Top Notch Barber | topnotchbarbershop.netlify.app | IG @topnotchbarbersh0p | ✅ 2026-05-30 | ✅ 2026-05-30 |
+| 🥐 Annadale Bakery | annadalebakery.netlify.app | IG @annadalebakery | ✅ 2026-05-30 | ✅ 2026-05-30 |
+| 👗 A Very Chic Boutique | a-very-chic-boutique.netlify.app | IG @averychicboutique | ✅ 2026-05-30 | ✅ 2026-05-30 |
+
+> **Follow-up date for all 3: 2026-06-02** (if no reply). Then one more bump ~5 days after that, then stop.
 
 > Not yet deployed: Eltingville Nail Salon, M&M Deli, Regina Meat Market,
 > Cookies N Cream, Maria Alterations. Pitches for those use the templates in
