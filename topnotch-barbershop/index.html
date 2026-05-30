@@ -492,6 +492,112 @@
     margin-left: 0.2rem;
   }
 
+  /* ── RAFFLE ── */
+  .raffle {
+    background: var(--red);
+    padding: 5rem 5%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .raffle::before {
+    content: '👟';
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%) rotate(-15deg);
+    font-size: 12rem;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .raffle-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .raffle h2 {
+    color: var(--white);
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.9;
+    margin-bottom: 1.2rem;
+  }
+
+  .raffle-sub {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+
+  .raffle-sub strong { color: var(--white); font-weight: 700; }
+
+  .raffle-badges {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .raffle-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: var(--white);
+    padding: 0.55rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .raffle-cta {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    border-radius: 4px;
+    min-width: 220px;
+  }
+
+  .raffle-cta-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+
+  .raffle-cta-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--red);
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .raffle-cta-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .raffle-cta-source {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+    width: 100%;
+    text-align: center;
+  }
+
   /* ── GALLERY STRIP ── */
   .gallery-strip {
     background: var(--off);
@@ -519,20 +625,38 @@
   .gallery-row::-webkit-scrollbar { display: none; }
 
   .gallery-thumb {
-    flex: 0 0 200px;
+    flex: 0 0 240px;
     aspect-ratio: 3/4;
-    background: var(--border);
+    background: #ddd;
     border: 2px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
-    color: #ccc;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa;
     border-radius: 2px;
     transition: border-color 0.2s;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .gallery-thumb:hover { border-color: var(--red); }
+
+  @media (max-width: 768px) {
+    .raffle-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .raffle-cta { width: 100%; }
+    .raffle::before { display: none; }
+  }
 
   /* ── LOCATION ── */
   .location {
@@ -775,6 +899,7 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#raffle">Raffle</a></li>
     <li><a href="#location">Location</a></li>
     <li><a href="tel:+17187016649" class="nav-call">Call Now</a></li>
   </ul>
@@ -793,6 +918,9 @@
       <a href="tel:+17187016649" class="btn btn-red">Call to Book</a>
       <a href="#services" class="btn btn-outline">See Services</a>
     </div>
+    <a href="#raffle" style="display:inline-flex;align-items:center;gap:0.6rem;margin-top:1.8rem;color:rgba(255,255,255,0.45);font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#D91B1B'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+      👟 Every cut = free sneaker raffle entry →
+    </a>
   </div>
 
   <div class="hero-right">
@@ -936,17 +1064,42 @@
   </div>
 </section>
 
+<!-- RAFFLE -->
+<section class="raffle" id="raffle">
+  <div class="raffle-inner">
+    <div>
+      <div class="section-label" style="color:rgba(255,255,255,0.6);">Monthly Giveaway</div>
+      <h2>FREE<br>SNEAKER<br>RAFFLE</h2>
+      <p class="raffle-sub">
+        Every haircut comes with a <strong>free raffle entry</strong>. Every month we pull a winner and send them a pair of kicks — up to <strong>$250 on StockX</strong>. Your choice.
+      </p>
+      <div class="raffle-badges">
+        <span class="raffle-badge">Free with every cut</span>
+        <span class="raffle-badge">Monthly drawing</span>
+        <span class="raffle-badge">Winner's choice</span>
+        <span class="raffle-badge">Up to $250</span>
+      </div>
+    </div>
+    <div class="raffle-cta">
+      <div class="raffle-cta-icon">👟</div>
+      <div class="raffle-cta-amount">$250</div>
+      <div class="raffle-cta-label">StockX Credit</div>
+      <div class="raffle-cta-source">Redeemed on StockX</div>
+    </div>
+  </div>
+</section>
+
 <!-- GALLERY -->
 <div class="gallery-strip">
-  <div class="gallery-label">The Shop — Add your photos here</div>
+  <div class="gallery-label">Inside the Shop</div>
   <div class="gallery-row">
-    <div class="gallery-thumb">✂</div>
-    <div class="gallery-thumb">💈</div>
-    <div class="gallery-thumb">🪒</div>
-    <div class="gallery-thumb">✂</div>
-    <div class="gallery-thumb">💈</div>
-    <div class="gallery-thumb">🪒</div>
-    <div class="gallery-thumb">✂</div>
+    <!-- Replace src="" with your actual image paths or hosted URLs -->
+    <div class="gallery-thumb"><img src="photos/shop-1.jpg" alt="Barber at work" onerror="this.parentElement.innerHTML='The Chair'"/></div>
+    <div class="gallery-thumb"><img src="photos/shop-2.jpg" alt="Reception + sneaker case" onerror="this.parentElement.innerHTML='Front Desk'"/></div>
+    <div class="gallery-thumb"><img src="photos/shop-3.jpg" alt="Waiting area + motivation wall" onerror="this.parentElement.innerHTML='Waiting Area'"/></div>
+    <div class="gallery-thumb"><img src="photos/shop-4.jpg" alt="Red barber chair" onerror="this.parentElement.innerHTML='Red Chair'"/></div>
+    <div class="gallery-thumb"><img src="photos/shop-5.jpg" alt="The shop" onerror="this.parentElement.innerHTML='The Shop'"/></div>
+    <div class="gallery-thumb"><img src="photos/shop-6.jpg" alt="The shop" onerror="this.parentElement.innerHTML='The Shop'"/></div>
   </div>
 </div>
 
