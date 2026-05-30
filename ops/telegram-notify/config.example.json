@@ -1,5 +1,5 @@
 {
-  "_comment": "Copy this to ~/.jaurx-telegram.json (recommended) or to config.json here. NEVER commit your real token.",
+  "_comment": "Copy this to ~/.jaurx-telegram.json (recommended) or to config.json here. NEVER commit your real token. chatId can be one id or a list.",
   "token": "123456789:PASTE_YOUR_BOTFATHER_TOKEN_HERE",
-  "chatId": "PASTE_YOUR_CHAT_ID_HERE"
+  "chatId": ["FIRST_CHAT_ID", "SECOND_CHAT_ID"]
 }

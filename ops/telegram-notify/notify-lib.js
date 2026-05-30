@@ -1,41 +1,59 @@
 // notify-lib.js — shared helpers for the Jaurx Telegram notifier.
 // Zero dependencies (uses Node's built-in https). Runs on the Mac, not the cloud.
+// Supports broadcasting to one OR several chat IDs.
 'use strict';
 const https = require('https');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-// Load { token, chatId } from, in order:
-//   1) env TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID
+// Normalize a chat-id value (string | number | array | comma-string) to string[].
+function toChatIds(v) {
+  if (v == null) return [];
+  if (Array.isArray(v)) return v.map((x) => String(x).trim()).filter(Boolean);
+  return String(v)
+    .split(',')
+    .map((x) => x.trim())
+    .filter(Boolean);
+}
+
+// Load { token, chatIds: [...] } from, in order:
+//   1) env TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID (chat id may be comma-separated)
 //   2) ~/.jaurx-telegram.json   (recommended — kept OUT of the synced repo)
 //   3) ./config.json            (gitignored; fallback)
+// In the JSON files, "chatId" may be a string OR an array; "chatIds" is also accepted.
 function loadConfig() {
   let token = process.env.TELEGRAM_BOT_TOKEN || '';
-  let chatId = process.env.TELEGRAM_CHAT_ID || '';
+  let chatIds = toChatIds(process.env.TELEGRAM_CHAT_ID);
 
   const candidates = [
     path.join(os.homedir(), '.jaurx-telegram.json'),
     path.join(__dirname, 'config.json'),
   ];
   for (const p of candidates) {
-    if ((!token || !chatId) && fs.existsSync(p)) {
+    if ((!token || chatIds.length === 0) && fs.existsSync(p)) {
       try {
         const f = JSON.parse(fs.readFileSync(p, 'utf8'));
         token = token || f.token || '';
-        chatId = chatId || f.chatId || '';
+        if (chatIds.length === 0) {
+          chatIds = toChatIds(f.chatIds != null ? f.chatIds : f.chatId);
+        }
       } catch (e) {
         console.error(`[notify] could not parse ${p}: ${e.message}`);
       }
     }
   }
-  if (!token || !chatId) {
+
+  // de-dupe
+  chatIds = [...new Set(chatIds)];
+
+  if (!token || chatIds.length === 0) {
     throw new Error(
       'Missing Telegram token/chatId. Set TELEGRAM_BOT_TOKEN & TELEGRAM_CHAT_ID, ' +
-      'or create ~/.jaurx-telegram.json with {"token":"...","chatId":"..."}.'
+      'or create ~/.jaurx-telegram.json with {"token":"...","chatId":["id1","id2"]}.'
     );
   }
-  return { token, chatId };
+  return { token, chatIds };
 }
 
 // Telegram caps messages at 4096 chars — split safely on line boundaries.
@@ -54,16 +72,16 @@ function chunk(text, max = 3900) {
   return out.length ? out : [''];
 }
 
-function post(cfg, text) {
+function post(token, chatId, text) {
   const data = JSON.stringify({
-    chat_id: cfg.chatId,
+    chat_id: chatId,
     text,
     parse_mode: 'Markdown',
     disable_web_page_preview: false,
   });
   const opts = {
     hostname: 'api.telegram.org',
-    path: `/bot${cfg.token}/sendMessage`,
+    path: `/bot${token}/sendMessage`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) },
   };
@@ -82,12 +100,28 @@ function post(cfg, text) {
   });
 }
 
-// Send a message, automatically splitting if it's too long.
+// Broadcast a message to every chat id, splitting long messages.
+// Resolves if at least one chat received it; throws only if ALL chats failed
+// (so e.g. a second account that hasn't pressed Start won't block the first).
 async function sendMessage(cfg, text) {
   const parts = chunk(text);
-  const results = [];
-  for (const part of parts) results.push(await post(cfg, part));
-  return results;
+  const sent = [];
+  const failed = [];
+  for (const chatId of cfg.chatIds) {
+    try {
+      for (const part of parts) await post(cfg.token, chatId, part);
+      sent.push(chatId);
+    } catch (e) {
+      failed.push({ chatId, error: e.message });
+    }
+  }
+  for (const f of failed) {
+    console.error(`[notify] failed for chat ${f.chatId}: ${f.error}`);
+  }
+  if (sent.length === 0) {
+    throw new Error(`All ${cfg.chatIds.length} chat(s) failed. First error: ${failed[0] ? failed[0].error : 'unknown'}`);
+  }
+  return { sent, failed };
 }
 
-module.exports = { loadConfig, sendMessage, chunk };
+module.exports = { loadConfig, sendMessage, chunk, toChatIds };

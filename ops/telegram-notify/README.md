@@ -28,11 +28,15 @@ Plus a manual one-off command whenever you want: `node notify.js "message"`.
    - For a group: add your new bot to the group, send any message, then open
      `https://api.telegram.org/bot<TOKEN>/getUpdates` in a browser and copy
      `"chat":{"id": ... }`.
-3. **Save your creds OUTSIDE the repo** (so the token is never committed):
+3. **Save your creds OUTSIDE the repo** (so the token is never committed).
+   `chatId` can be one id or a list — list = broadcast to several people:
    ```bash
-   echo '{"token":"YOUR_TOKEN","chatId":"YOUR_CHAT_ID"}' > ~/.jaurx-telegram.json
+   echo '{"token":"YOUR_TOKEN","chatId":["FIRST_ID","SECOND_ID"]}' > ~/.jaurx-telegram.json
    chmod 600 ~/.jaurx-telegram.json
    ```
+   > Every recipient must **press Start on the bot once** (open @JaurxDesignBot →
+   > Start), or the bot can't DM them and that id will fail with `403`. A failing
+   > id won't block the others — it just gets skipped and logged.
 4. **Install the watcher:**
    ```bash
    bash ~/Documents/Obsidian/JaurxOps/ops/telegram-notify/install-mac-notify.sh
