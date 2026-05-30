@@ -116,6 +116,52 @@ Avoid: ALL CAPS, "FREE!!!", "$$$", "act now", lots of emojis.
 
 ---
 
+## 5b) REDESIGN templates (for businesses that already have a weak/DIY site)
+
+These businesses **list an email on their current site** — that's your way in.
+Don't say "you have no website"; say "let's make the one you have better."
+Target list: `redesign-targets.csv`.
+
+**Redesign template A — "fresh look"**
+> **Subject:** A fresh look for [Business Name]'s website?
+>
+> Hi [Owner Name],
+>
+> I'm [Your Name], a local Staten Island web designer. I came across
+> [Business Name] — [genuine compliment, e.g. "20 years of pizza, love it"] —
+> and took a look at your current site. It works, but it's looking a little
+> dated and isn't easy to use on a phone (where most of your customers are).
+>
+> I put together a quick redesign concept to show what a modern version could
+> look like:
+>
+> 👉 [preview link]
+>
+> Faster, mobile-friendly, and built to show up better on Google. If you like
+> the direction, I can have it live this week — one-time [$400], or
+> [$400 + $40/mo] if you'd like me to host it and handle updates.
+>
+> The concept's yours to look at either way. Happy to walk you through it!
+>
+> [Your Name]
+> Jaurx Web Design
+> [your email] · [your phone] · [your mailing address]
+> *Not interested? Reply "no thanks" and I won't reach out again.*
+
+**Redesign template B — short version**
+> **Subject:** Quick redesign idea for [Business Name]
+>
+> Hi [Owner Name], I'm [Your Name] — local SI web designer. Your current site
+> could look a lot sharper on phones and rank better on Google. I mocked up a
+> modern version for [Business Name]: [preview link]. No obligation — if you
+> like it I can have it live this week. — [Your Name], Jaurx Web Design
+> [email · phone · address · "reply 'no thanks' to opt out"]
+
+**Tip:** build the redesign mockup the same way as the others (copy the
+template, drop in their real info), then host it free and paste the link.
+
+---
+
 ## 6) Follow-up sequence (most replies come from #2 and #3)
 
 Space them out. Stop the moment they reply or opt out.
