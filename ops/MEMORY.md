@@ -35,6 +35,24 @@ session: jaurx-launch-2026-05-29
 
 ---
 
+## New project (2026-05-30): `projects/si-web-design/` — local web design side business
+
+JR asked to "make websites for all businesses within 5 miles of 10312 SI." That
+literal ask isn't doable/appropriate (can't enumerate every business; shouldn't
+publish live sites in real businesses' names unsolicited). Reframed → reusable
+**web-design side business** kit. Built on branch `claude/local-business-websites-CztKS`:
+- `template/index.html` — self-contained 1-page template, `[[PLACEHOLDER]]`
+  Find&Replace + 2-color theming, LocalBusiness schema for SEO.
+- `demos/` — 4 filled demos (pizzeria/contractor/salon/auto), fictional 555 #s.
+- `sales/` — prospect-list method (Google Maps/Yelp/FB, find no-site businesses),
+  prospect-tracker.csv, outreach scripts (email/DM/walk-in/phone + objections),
+  pricing ($400 build / $400+$40·mo Care Plan = recurring) + delivery workflow.
+- Hosting plan: Netlify Drop (free) → connect domain later.
+- **Next session:** if JR wants, help him build first real mockups from actual
+  prospects + walk through Netlify deploy.
+
+---
+
 ## Channel Details — JAURX
 
 | Field | Value |
