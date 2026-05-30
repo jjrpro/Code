@@ -24,6 +24,14 @@ Don't add new top-level dirs without updating `PROJECTS.md`.
 
 ## Conventions
 
+- **Save every deliverable to the repo with a detailed dated title.**
+  When JR asks for analysis, copy, a plan, a walkthrough, a list, or any
+  reusable output: do NOT leave it only in chat. Save it as a file with
+  the format `YYYY-MM-DD-descriptive-kebab-name.md` (use ISO-8601 date),
+  in the most relevant `projects/<name>/` subdir, or `ops/sessions/` if
+  cross-project. The file should have a header with the full date, a
+  one-line summary, and the content. Files sync to his Obsidian vault
+  on Mac + Windows within 60 seconds.
 - **MEMORY.md is the durable state file.** Update it when you make notable
   decisions, resolve open threads, or want next-session-you to remember
   something. Don't bloat it — keep entries factual and short.

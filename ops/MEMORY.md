@@ -22,6 +22,18 @@ session: jaurx-launch-2026-05-29
 
 ---
 
+## JR's standing preferences
+
+- **Save every deliverable as a dated file.** Anything JR asks for —
+  analysis, copy, plans, walkthroughs, lists, recommendations — must be
+  saved as `YYYY-MM-DD-descriptive-kebab-name.md` in the most relevant
+  `projects/<name>/` subdir (or `ops/sessions/` if cross-project), not
+  just in chat. Files auto-sync to his Obsidian vault on Mac + Windows
+  within 60 seconds. Set: 2026-05-30. (See CLAUDE.md for the
+  full convention.)
+
+---
+
 ## TL;DR — what was accomplished
 
 - ✅ Created **JAURX** private Telegram channel — ID `-1003952631411`
