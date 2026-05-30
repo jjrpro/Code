@@ -19,20 +19,28 @@ this folder.
 si-web-design/
 ├── template/           ← the master template. Copy it per client, Find&Replace
 │   └── index.html        the [[PLACEHOLDERS]], change 2 colors, done.
-├── demos/              ← four filled-in examples to show prospects
+├── demos/              ← four FICTIONAL examples to show what you build
 │   ├── pizzeria/         (Food)          — Amboy Brick Oven
 │   ├── contractor/       (Home services) — Huguenot Home Improvement
 │   ├── salon/            (Personal care) — Eltingville Beauty Lounge
 │   └── auto/             (Auto)          — Arden Heights Auto Care
+├── mockups/            ← REAL local prospects (10312) that have no website
+│   ├── top-notch-barber/        — 3944 Richmond Ave
+│   ├── mm-deli-bagels/          — 849 Annadale Rd
+│   ├── eltingville-nail-salon/  — 4328 Amboy Rd
+│   └── README.md                — verify-before-sending notes + skip list
 └── sales/
     ├── 01-prospect-list.md       ← how to build the 5-mile-radius lead list
-    ├── prospect-tracker.csv      ← drop your leads here
+    ├── prospect-tracker.csv      ← real leads researched + your own
     ├── 02-outreach-scripts.md    ← email / DM / walk-in / phone scripts
-    └── 03-pricing-and-delivery.md← packages + step-by-step delivery
+    ├── 03-pricing-and-delivery.md← packages + step-by-step delivery
+    └── 04-deploy-guide.md        ← put a site live free on Netlify (2 min)
 ```
 
-> The demo businesses are **fictional** (555 phone numbers) — they're examples,
-> not real companies. Swap in a real prospect's info to make a custom mockup.
+> **`demos/`** are fictional (555 numbers) — generic showcases.
+> **`mockups/`** are real local businesses that appear to have no website,
+> built from public info. ⚠️ The info may be stale — **verify with the owner
+> before publishing.** See `mockups/README.md`.
 
 ## How to see the sites right now
 
