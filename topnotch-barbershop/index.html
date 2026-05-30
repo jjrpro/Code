@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Top Notch Barbershop — Staten Island, NY</title>
+<meta name="description" content="Top Notch Barbershop. Fresh cuts, clean fades, real craft. 3944 Richmond Ave, Staten Island, NY. Walk-ins welcome."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #0a0a0a;
+    --dark:    #111111;
+    --card:    #1a1a1a;
+    --border:  #2a2a2a;
+    --gold:    #c8a96e;
+    --gold-lt: #e2c98a;
+    --white:   #f5f0eb;
+    --muted:   #888;
+    --red:     #c0392b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 70px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--white); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-book {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-book:hover { background: var(--gold-lt) !important; color: var(--black) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; transition: 0.3s; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 5% 8%;
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.85) 70%, var(--black) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect width='800' height='600' fill='%23111'/%3E%3Ctext x='50%25' y='48%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia' font-size='180' fill='%23c8a96e' opacity='0.06'%3E✂%3C/text%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.01) 2px,
+      rgba(255,255,255,0.01) 4px
+    );
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 12vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+    font-size: 0.45em;
+    letter-spacing: 0.05em;
+    margin-bottom: -0.1em;
+  }
+
+  .hero-sub {
+    max-width: 480px;
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .btn-gold:hover { background: var(--gold-lt); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    position: absolute;
+    right: 5%;
+    bottom: 8%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--gold);
+    color: var(--black);
+    padding: 0.65rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    gap: 3rem;
+    animation: ticker 22s linear infinite;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 5%; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .about-visual::after {
+    content: '✂';
+    font-size: 8rem;
+    opacity: 0.06;
+    position: absolute;
+    transform: rotate(-20deg);
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    background: var(--gold);
+    color: var(--black);
+    padding: 1.2rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .about-badge span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  .about-text p strong { color: var(--white); font-weight: 600; }
+
+  .about-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+
+  .pill {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* ── SERVICES ── */
+  .services { background: var(--dark); border-top: 1px solid var(--border); }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-item {
+    background: var(--dark);
+    padding: 2rem 2rem 2.5rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-item:hover { background: var(--card); }
+
+  .service-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .service-item:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .service-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .service-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .service-price small {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    font-weight: 400;
+    margin-left: 0.2rem;
+  }
+
+  /* ── BOOKING ── */
+  .booking {
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .booking-info h2 { margin-bottom: 1rem; }
+
+  .booking-info p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hours-list { list-style: none; }
+
+  .hours-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+
+  .hours-list li:first-child { border-top: 1px solid var(--border); }
+
+  .hours-day { color: var(--muted); font-weight: 400; }
+  .hours-time { color: var(--white); font-weight: 500; }
+  .hours-closed { color: var(--red); font-weight: 500; }
+
+  .today-tag {
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-left: 0.5rem;
+  }
+
+  /* ── FORM ── */
+  .book-form {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: 4px;
+  }
+
+  .form-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.85rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23888'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: #444; }
+
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-submit:hover { background: var(--gold-lt); }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .form-success .check {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .form-success h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-success p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 300;
+  }
+
+  /* ── GALLERY STRIP ── */
+  .gallery-strip {
+    border-top: 1px solid var(--border);
+    padding: 4rem 5%;
+    overflow: hidden;
+  }
+
+  .gallery-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .gallery-row {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .gallery-row::-webkit-scrollbar { display: none; }
+
+  .gallery-thumb {
+    flex: 0 0 220px;
+    aspect-ratio: 3/4;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    opacity: 0.3;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .gallery-thumb:hover { opacity: 0.6; }
+
+  /* ── LOCATION ── */
+  .location {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .map-placeholder {
+    aspect-ratio: 16/10;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-placeholder::before {
+    content: '📍';
+    font-size: 2.5rem;
+  }
+
+  .map-placeholder a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+  }
+
+  .location-details { }
+
+  .location-details h2 { margin-bottom: 1rem; }
+
+  .location-details p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-items { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .contact-detail { }
+
+  .contact-detail strong {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-detail span {
+    font-size: 0.95rem;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .contact-detail a { color: var(--gold); text-decoration: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+
+  .footer-logo span { color: var(--white); }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .about { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-visual { aspect-ratio: 16/9; }
+
+    .services-grid { grid-template-columns: 1fr 1fr; }
+
+    .booking { grid-template-columns: 1fr; gap: 3rem; }
+
+    .location { grid-template-columns: 1fr; gap: 2.5rem; }
+
+    .hero-stats { display: none; }
+
+    h1 { font-size: clamp(3.5rem, 14vw, 6rem); }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    section { padding: 4rem 1.25rem; }
+
+    .services-grid { grid-template-columns: 1fr; }
+
+    .form-row { grid-template-columns: 1fr; }
+
+    .book-form { padding: 1.5rem; }
+
+    .location { padding: 4rem 1.25rem; }
+
+    footer { padding: 2rem 1.25rem; flex-direction: column; text-align: center; }
+  }
+
+  /* ── MOBILE NAV OPEN ── */
+  .nav-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 5%;
+    gap: 1.5rem;
+    z-index: 99;
+  }
+
+  .nav-open .nav-links a { font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Top<span>Notch</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#book">Book</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#book" class="nav-book">Book Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:70px;">
+  <div class="hero-tag">Staten Island's Finest Since Day One</div>
+  <h1><em>Top</em>Notch<br>Barbershop</h1>
+  <p class="hero-sub">Fresh fades. Clean lines. No shortcuts. Walk in looking regular, walk out looking right.</p>
+  <div class="hero-ctas">
+    <a href="#book" class="btn btn-gold">Book Your Cut</a>
+    <a href="#services" class="btn btn-outline">See Services</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Years on<br>Richmond Ave</div>
+    </div>
+    <div>
+      <div class="stat-num">★ 5.0</div>
+      <div class="stat-label">Google<br>Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Fresh Cuts&nbsp;·</span>
+    <span>Clean Fades&nbsp;·</span>
+    <span>Hot Towel Shaves&nbsp;·</span>
+    <span>Beard Trims&nbsp;·</span>
+    <span>Walk-Ins Welcome&nbsp;·</span>
+    <span>3944 Richmond Ave, Staten Island&nbsp;·</span>
+    <span>Fresh Cuts&nbsp;·</span>
+    <span>Clean Fades&nbsp;·</span>
+    <span>Hot Towel Shaves&nbsp;·</span>
+    <span>Beard Trims&nbsp;·</span>
+    <span>Walk-Ins Welcome&nbsp;·</span>
+    <span>3944 Richmond Ave, Staten Island&nbsp;·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-visual">
+      <div class="about-badge">
+        Staten Island<br>
+        <span>New York</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">Who We Are</div>
+      <h2>Real Craft.<br>Real People.</h2>
+      <p>Top Notch isn't a chain. It's not a franchise. It's <strong>a shop built on the corner of skill and respect</strong> — the kind of place where your barber knows your name, your lineup, and when something's off.</p>
+      <p>We're rooted in <strong>Staten Island</strong> and we take that seriously. Every cut matters. Every client matters. Whether you're sitting down for a quick edge-up or a full service, you're getting the same attention to detail every single time.</p>
+      <p>No gimmicks. No corporate nonsense. <strong>Just sharp cuts and good people.</strong></p>
+      <div class="about-pills">
+        <span class="pill">Fades & Tapers</span>
+        <span class="pill">Beard Sculpting</span>
+        <span class="pill">Kids Cuts</span>
+        <span class="pill">Hot Towel Shaves</span>
+        <span class="pill">Line Ups</span>
+        <span class="pill">Color</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2>The Menu</h2>
+    </div>
+    <a href="#book" class="btn btn-outline">Book Any Service</a>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-item">
+      <span class="service-icon">✂️</span>
+      <div class="service-name">Haircut</div>
+      <div class="service-desc">Classic cut, styled to your preference. Scissor or clipper, your call.</div>
+      <div class="service-price">$30 <small>& up</small></div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🔱</span>
+      <div class="service-name">Fade</div>
+      <div class="service-desc">Skin, low, mid, or high. Blended clean, no gaps, no excuses.</div>
+      <div class="service-price">$35 <small>& up</small></div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🪒</span>
+      <div class="service-name">Hot Towel Shave</div>
+      <div class="service-desc">Straight razor, hot towel, the full ritual. The way it should be done.</div>
+      <div class="service-price">$40</div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🧔</span>
+      <div class="service-name">Beard Trim</div>
+      <div class="service-desc">Shaped, lined, cleaned up. Or a full sculpt from scratch.</div>
+      <div class="service-price">$20 <small>& up</small></div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">💈</span>
+      <div class="service-name">Cut + Beard Combo</div>
+      <div class="service-desc">The full package. Walk in. Walk out looking locked in.</div>
+      <div class="service-price">$50 <small>& up</small></div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">📐</span>
+      <div class="service-name">Line Up / Edge Up</div>
+      <div class="service-desc">Fresh lines, straight edges, tight temple taper. Quick & precise.</div>
+      <div class="service-price">$15</div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">👦</span>
+      <div class="service-name">Kids Cut</div>
+      <div class="service-desc">For the little ones. Patient barbers, clean results. Under 12.</div>
+      <div class="service-price">$25</div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">🎨</span>
+      <div class="service-name">Color / Design</div>
+      <div class="service-desc">Hair color, bleach, or custom cut design. Ask your barber.</div>
+      <div class="service-price">$60 <small>& up</small></div>
+    </div>
+    <div class="service-item">
+      <span class="service-icon">👑</span>
+      <div class="service-name">VIP Full Service</div>
+      <div class="service-desc">Cut, beard sculpt, hot towel, shampoo, style. The works.</div>
+      <div class="service-price">$90</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <div class="gallery-label">Gallery — Add your photos here</div>
+  <div class="gallery-row">
+    <div class="gallery-thumb">✂</div>
+    <div class="gallery-thumb">💈</div>
+    <div class="gallery-thumb">🪒</div>
+    <div class="gallery-thumb">✂</div>
+    <div class="gallery-thumb">💈</div>
+    <div class="gallery-thumb">🪒</div>
+    <div class="gallery-thumb">✂</div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<section id="book" class="booking">
+  <div class="booking-info">
+    <div class="section-label">Schedule</div>
+    <h2>Book Your<br>Appointment</h2>
+    <p>Walk-ins always welcome. But if you want your time locked in — book ahead. We'll confirm within the hour.</p>
+
+    <ul class="hours-list">
+      <li>
+        <span class="hours-day">Monday<span id="mon-today"></span></span>
+        <span class="hours-time">9:00 AM – 8:00 PM</span>
+      </li>
+      <li>
+        <span class="hours-day">Tuesday<span id="tue-today"></span></span>
+        <span class="hours-time">9:00 AM – 8:00 PM</span>
+      </li>
+      <li>
+        <span class="hours-day">Wednesday<span id="wed-today"></span></span>
+        <span class="hours-time">9:00 AM – 8:00 PM</span>
+      </li>
+      <li>
+        <span class="hours-day">Thursday<span id="thu-today"></span></span>
+        <span class="hours-time">9:00 AM – 8:00 PM</span>
+      </li>
+      <li>
+        <span class="hours-day">Friday<span id="fri-today"></span></span>
+        <span class="hours-time">9:00 AM – 9:00 PM</span>
+      </li>
+      <li>
+        <span class="hours-day">Saturday<span id="sat-today"></span></span>
+        <span class="hours-time">8:00 AM – 8:00 PM</span>
+      </li>
+      <li>
+        <span class="hours-day">Sunday<span id="sun-today"></span></span>
+        <span class="hours-time">10:00 AM – 6:00 PM</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="book-form">
+    <div id="bookingForm">
+      <div class="form-title">Request a Booking</div>
+      <div class="form-subtitle">We'll confirm your appointment via text or call.</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="John" required/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="Smith" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="(718) 555-0100" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Service</label>
+        <select id="service" required>
+          <option value="" disabled selected>Select a service</option>
+          <option value="haircut">Haircut — $30+</option>
+          <option value="fade">Fade — $35+</option>
+          <option value="hot-towel">Hot Towel Shave — $40</option>
+          <option value="beard">Beard Trim — $20+</option>
+          <option value="combo">Cut + Beard Combo — $50+</option>
+          <option value="lineup">Line Up / Edge Up — $15</option>
+          <option value="kids">Kids Cut — $25</option>
+          <option value="color">Color / Design — $60+</option>
+          <option value="vip">VIP Full Service — $90</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date" id="date" required/>
+        </div>
+        <div class="form-group">
+          <label>Preferred Time</label>
+          <select id="time" required>
+            <option value="" disabled selected>Select time</option>
+            <option>9:00 AM</option>
+            <option>9:30 AM</option>
+            <option>10:00 AM</option>
+            <option>10:30 AM</option>
+            <option>11:00 AM</option>
+            <option>11:30 AM</option>
+            <option>12:00 PM</option>
+            <option>12:30 PM</option>
+            <option>1:00 PM</option>
+            <option>1:30 PM</option>
+            <option>2:00 PM</option>
+            <option>2:30 PM</option>
+            <option>3:00 PM</option>
+            <option>3:30 PM</option>
+            <option>4:00 PM</option>
+            <option>4:30 PM</option>
+            <option>5:00 PM</option>
+            <option>5:30 PM</option>
+            <option>6:00 PM</option>
+            <option>6:30 PM</option>
+            <option>7:00 PM</option>
+            <option>7:30 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Notes (optional)</label>
+        <textarea id="notes" placeholder="Specific barber request, style notes, anything else..."></textarea>
+      </div>
+
+      <p class="form-note">Walk-ins are always welcome. Booking guarantees your spot.</p>
+
+      <button type="button" class="btn-submit" onclick="submitBooking()">Request Appointment</button>
+    </div>
+
+    <div class="form-success" id="formSuccess">
+      <span class="check">✅</span>
+      <h3>You're On The List</h3>
+      <p>We got your request. Expect a text or call to confirm your appointment shortly.</p>
+      <br/>
+      <p style="color:var(--muted); font-size:0.8rem;">Questions? Call us or stop by 3944 Richmond Ave.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="location">
+  <div class="map-placeholder">
+    <span>3944 Richmond Ave</span>
+    <span style="color:var(--muted); font-size:0.75rem">Staten Island, NY 10312</span>
+    <a href="https://maps.google.com/?q=3944+Richmond+Ave+Staten+Island+NY" target="_blank" rel="noopener">Open in Maps ↗</a>
+  </div>
+
+  <div class="location-details">
+    <div class="section-label">Find Us</div>
+    <h2>Come<br>Through</h2>
+    <p>Right on Richmond Ave. Parking's easy. The shop's clean. The vibe's right. You already know.</p>
+
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-detail">
+          <strong>Address</strong>
+          <span>3944 Richmond Ave, Staten Island, NY 10312</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail">
+          <strong>Phone</strong>
+          <span><a href="tel:+17185550100">(718) 555-0100</a></span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-detail">
+          <strong>Hours</strong>
+          <span>Mon–Sat 9AM–8PM &nbsp;|&nbsp; Sun 10AM–6PM</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📸</div>
+        <div class="contact-detail">
+          <strong>Instagram</strong>
+          <span><a href="#" target="_blank">@topnotchbarber_si</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Top<span>Notch</span></div>
+  <p>© 2025 Top Notch Barbershop · 3944 Richmond Ave, Staten Island, NY</p>
+  <div class="footer-socials">
+    <a href="#" class="social-link" aria-label="Instagram">IG</a>
+    <a href="#" class="social-link" aria-label="Facebook">FB</a>
+    <a href="#" class="social-link" aria-label="TikTok">TK</a>
+  </div>
+</footer>
+
+<script>
+  // Mark today in hours list
+  const days = ['sun','mon','tue','wed','thu','fri','sat'];
+  const todayId = days[new Date().getDay()] + '-today';
+  const el = document.getElementById(todayId);
+  if (el) el.innerHTML = '<span class="today-tag">Today</span>';
+
+  // Set min date for booking to today
+  const dateInput = document.getElementById('date');
+  if (dateInput) {
+    const now = new Date();
+    dateInput.min = now.toISOString().split('T')[0];
+  }
+
+  // Mobile nav
+  function toggleNav() {
+    document.body.classList.toggle('nav-open');
+  }
+
+  // Close nav on link click
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => document.body.classList.remove('nav-open'));
+  });
+
+  // Booking form
+  function submitBooking() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const phone     = document.getElementById('phone').value.trim();
+    const service   = document.getElementById('service').value;
+    const date      = document.getElementById('date').value;
+    const time      = document.getElementById('time').value;
+
+    if (!firstName || !lastName || !phone || !service || !date || !time) {
+      // Shake the empty required fields
+      ['firstName','lastName','phone','service','date','time'].forEach(id => {
+        const f = document.getElementById(id);
+        if (!f.value) {
+          f.style.borderColor = '#c0392b';
+          f.style.transition = 'border-color 0.2s';
+          setTimeout(() => f.style.borderColor = '', 2000);
+        }
+      });
+      return;
+    }
+
+    // In production: POST to a backend / Calendly / Square / Booksy here
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
