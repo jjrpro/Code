@@ -84,6 +84,14 @@ with each owner before anything goes live.
 - **Notes:** cookies, ice cream, desserts & coffee
 - **Confirm before live:** phone, exact address, hours, prices
 
+## 8. 🥩 Regina Annadale Meat Market — Butcher
+- **Folder / preview:** `regina-meat-market/`
+- **Address:** 881 Annadale Rd, Staten Island, NY 10312
+- **Phone:** (718) 984-1337
+- **Best pitch channel:** 📷 Instagram DM **@reginaannadalemeatmarket** (also FB) or call
+- **Hours:** Mon–Sat 8:30–5:30 · Sun 8:30–1:30 · family-owned since 1988
+- **Confirm before live:** full product selection & prices, catering details
+
 ---
 
 ## ❌ Researched but SKIPPED (don't pitch "you have no website")
