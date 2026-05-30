@@ -22,6 +22,13 @@ Dropship store + ad scale-up.
 ### `projects/local-638/` — Steamfitters website
 Static template for Local 638 Steamfitters.
 
+### `projects/si-web-design/` — Local business websites (SI side business)
+Kit for selling websites to Staten Island small businesses (10312 + 5-mi radius).
+- **`template/`** — reusable, self-contained 1-page site template
+- **`demos/`** — 4 fictional demos (pizzeria, contractor, salon, auto shop)
+- **`mockups/`** — 3 real 10312 prospects with no website (barber, deli, nails)
+- **`sales/`** — prospect-list method, lead tracker CSV, outreach, pricing, deploy guide
+
 ### `projects/trade-analysis/` — Research & setups
 Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.
