@@ -284,11 +284,53 @@ By being in this channel, you acknowledge these terms.
 ## Where to find this file
 
 - **GitHub**: `jjrpro/code` → branch `claude/jjr-ops-handoff-QHQJj` → `ops/MEMORY.md`
-- **Pull to Mac**: `git pull origin claude/jjr-ops-handoff-QHQJj`
-- **Drop into Obsidian vault**: copy or symlink to your vault's `notes/` dir
-- **Drop into Claude memory**: copy or symlink to
-  `~/.claude/projects/-Users-johnreilly/memory/jaurx-session-2026-05-29.md`
+- **Auto-synced** to the Obsidian vault every 60s on both Mac and Windows
+  via the bi-directional sync loop (see "Sync architecture" below)
+- **Pull manually** (any platform): `git pull origin claude/jjr-ops-handoff-QHQJj`
 
 ---
 
-**Last updated**: 2026-05-29 by Claude (Opus 4.7) via web session
+## Sync architecture (bi-directional, all sessions)
+
+The flow is symmetrical — edits on any side reach every other side within
+about 60 seconds, with rebase-on-conflict to avoid push rejection.
+
+```
+                ┌───────────────────────┐
+                │  GitHub: jjrpro/code  │
+                │   branch jjr-ops-…    │
+                └───────────┬───────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+    push/pull           push/pull           push/pull
+    every 60s           every 60s           every 60s
+        │                   │                   │
+        ▼                   ▼                   ▼
+  ┌──────────┐        ┌──────────┐        ┌─────────────────┐
+  │  Mac     │        │ Windows  │        │ Claude Code Web │
+  │ Obsidian │        │ Obsidian │        │   (Stop hook)   │
+  └──────────┘        └──────────┘        └─────────────────┘
+```
+
+**Per-platform install (one-time):**
+
+| Platform | Installer | Mechanism |
+|---|---|---|
+| Mac     | `bash ops/obsidian-sync/install-mac-sync.sh`         | LaunchAgent + `jjr-obsidian-sync-loop.sh` |
+| Windows | `powershell -ExecutionPolicy Bypass -File ops/obsidian-sync/install-windows-sync.ps1` | Scheduled Task + `jjr-obsidian-sync-loop.ps1` |
+| Web     | Already configured via `.claude/hooks/sync-memory.sh` Stop hook | Auto-rebase before push |
+
+**Cross-session memory:** `CLAUDE.md` at repo root instructs every new
+Claude Code session to read this file first, so context persists across
+sessions automatically.
+
+**On rebase conflicts:** the sync scripts on Mac/Windows do NOT silently
+drop data. They abort the rebase and log a warning. Resolve by editing
+the conflicted file directly in the Obsidian vault dir, then `git add` +
+`git commit` + `git push` manually.
+
+---
+
+**Last updated**: 2026-05-30 by Claude (Opus 4.7) via web session
+(restructure into projects/ + ops/, bi-directional sync for Mac + Windows, CLAUDE.md added)

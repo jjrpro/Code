@@ -33,7 +33,9 @@ the supporting macro + technical evidence.
 ### `ops/` — Cross-project plumbing
 - `MEMORY.md` — single source of truth for session state across all projects
 - `WEEKEND-CHECKLIST.md` — multi-project sprint plan
-- `obsidian-sync/` — Mac LaunchAgent for bi-directional Obsidian ↔ repo sync
+- `obsidian-sync/` — Mac + Windows installers for bi-directional Obsidian ↔ repo sync
+  - `install-mac-sync.sh` (LaunchAgent, every 60s)
+  - `install-windows-sync.ps1` (Scheduled Task, every 1 min)
 - `diagnostics/` — Mac environment check + fix scripts
 
 ### `.claude/` — Claude Code config
