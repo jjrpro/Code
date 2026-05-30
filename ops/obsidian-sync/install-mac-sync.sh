@@ -78,6 +78,7 @@ cd "\$VAULT" || exit 0
 [ -d .git ] || exit 0
 
 ts() { date '+%Y-%m-%d %H:%M:%S'; }
+pulled_count=0
 
 # ----- 1) Pull side: fetch + fast-forward -----
 git fetch origin "\$BRANCH" --quiet 2>/dev/null
@@ -85,15 +86,21 @@ behind=\$(git rev-list --count HEAD.."origin/\$BRANCH" 2>/dev/null)
 
 if [ -n "\$behind" ] && [ "\$behind" != "0" ]; then
   if git pull origin "\$BRANCH" --ff-only --quiet 2>/dev/null; then
+    pulled_count=\$behind
     echo "[\$(ts)] pulled \$behind commit(s) from \$BRANCH"
   else
-    echo "[\$(ts)] ⚠️  pull blocked — local edits + remote edits diverged (will be handled by push step)"
+    echo "[\$(ts)] WARN pull blocked - local edits + remote edits diverged (handled by push step)"
   fi
 fi
 
 # ----- 2) Push side: commit + push any local Obsidian edits -----
 # Skip if working tree is clean
 if git diff --quiet && git diff --cached --quiet && [ -z "\$(git status --porcelain)" ]; then
+  # Heartbeat: log "tick" only if no pull happened either.
+  # Keeps the log alive as proof-of-life without doubling up on entries.
+  if [ "\$pulled_count" = "0" ]; then
+    echo "[\$(ts)] tick - up to date (HEAD: \$(git rev-parse --short HEAD))"
+  fi
   exit 0
 fi
 

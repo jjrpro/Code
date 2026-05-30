@@ -92,8 +92,14 @@ function Write-Log($msg) {
     "$ts  $msg" | Out-File -FilePath $LogFile -Append -Encoding utf8
 }
 
-if (-not (Test-Path "$Vault\.git")) { exit 0 }
+if (-not (Test-Path "$Vault\.git")) {
+    Write-Log "ERROR: vault path missing or not a git repo: $Vault"
+    exit 0
+}
 Set-Location $Vault
+
+$pulledCount = 0
+$pushedCount = 0
 
 # ----- 1) Pull side: fetch + fast-forward -----
 git fetch origin $Branch --quiet
@@ -102,6 +108,7 @@ $behind = (git rev-list --count "HEAD..origin/$Branch" 2>$null)
 if ($behind -and $behind -ne '0') {
     git pull origin $Branch --ff-only --quiet
     if ($LASTEXITCODE -eq 0) {
+        $pulledCount = $behind
         Write-Log "pulled $behind commit(s) from $Branch"
     } else {
         Write-Log "WARN: pull blocked - local + remote diverged (handled by push step)"
@@ -110,7 +117,15 @@ if ($behind -and $behind -ne '0') {
 
 # ----- 2) Push side: commit + push any local Obsidian edits -----
 $status = (git status --porcelain)
-if ([string]::IsNullOrWhiteSpace($status)) { exit 0 }
+if ([string]::IsNullOrWhiteSpace($status)) {
+    # Heartbeat: log a tick line ONLY if nothing pulled either.
+    # This keeps the log alive so JR can verify the task is firing,
+    # without doubling-up on lines when we just logged a pull.
+    if ($pulledCount -eq 0) {
+        Write-Log "tick - up to date (HEAD: $(git rev-parse --short HEAD))"
+    }
+    exit 0
+}
 
 git add -A
 git diff --cached --quiet
