@@ -86,7 +86,7 @@ npm init -y
 npm install stripe express body-parser node-fetch@2
 ```
 
-Copy these files from this `revenue/stripe-diy/` dir into `~/trading-bot/stripe-vip/`:
+Copy these files from this `projects/jaurx-vip/stripe-diy/` dir into `~/trading-bot/stripe-vip/`:
 - `server.js`
 - `public/success.html`
 - `public/cancel.html`

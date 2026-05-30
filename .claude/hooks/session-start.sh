@@ -16,10 +16,10 @@ fi
 
 REPO_ROOT="${CLAUDE_PROJECT_DIR:-/home/user/Code}"
 
-# ----- revenue/stripe-diy (express + stripe webhook server) -----
-if [ -f "$REPO_ROOT/revenue/stripe-diy/package.json" ]; then
-  echo "[session-start] installing revenue/stripe-diy deps"
-  cd "$REPO_ROOT/revenue/stripe-diy"
+# ----- projects/jaurx-vip/stripe-diy (express + stripe webhook server) -----
+if [ -f "$REPO_ROOT/projects/jaurx-vip/stripe-diy/package.json" ]; then
+  echo "[session-start] installing projects/jaurx-vip/stripe-diy deps"
+  cd "$REPO_ROOT/projects/jaurx-vip/stripe-diy"
   npm install --no-audit --no-fund --loglevel=error
 fi
 

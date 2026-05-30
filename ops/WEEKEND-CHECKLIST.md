@@ -7,9 +7,9 @@ One-page execution checklist. Print this. Tick boxes as you go.
 ## SATURDAY (~5 hrs total)
 
 ### Morning block (90 min — coffee, no socials open)
-- [ ] Run `git pull` on your Mac in `/Users/johnreilly/trading-bot/` (or wherever you keep this repo) to get the new `revenue/` docs
-- [ ] Read `revenue/SHOPIFY-ADS.md` Pre-Flight section, do all 7 checks
-- [ ] Read `revenue/VIP-LAUNCH.md` Path A (Whop) Saturday section
+- [ ] Run `git pull` on your Mac in `/Users/johnreilly/trading-bot/` (or wherever you keep this repo) to get the new `projects/` docs
+- [ ] Read `projects/shopify-dropship/SHOPIFY-ADS.md` Pre-Flight section, do all 7 checks
+- [ ] Read `projects/jaurx-vip/launch/VIP-LAUNCH.md` Path A (Whop) Saturday section
 - [ ] Verify TikTok Pixel + Meta CAPI firing via Chrome pixel helpers
 
 ### Midday block (2 hrs)
@@ -17,7 +17,7 @@ One-page execution checklist. Print this. Tick boxes as you go.
 - [ ] Create "JaurxTrades VIP" Whop
 - [ ] Create private Telegram channel, add @JaurxBot as admin
 - [ ] Get channel ID via @userinfobot, paste into `bot.js` as `VIP_CHANNEL_ID`
-- [ ] Apply patches from `revenue/bot-vip-patch.js` to bot.js
+- [ ] Apply patches from `projects/jaurx-vip/bot/bot-vip-patch.js` to bot.js
 - [ ] Restart bot, test `/vip Hello world` from your DM
 
 ### Afternoon block (90 min)

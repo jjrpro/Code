@@ -102,7 +102,7 @@ if [ -f "$BOT_FILE" ] && grep -q "async function sendVIP" "$BOT_FILE"; then
   ok "VIP patch already applied"
 elif [ -f "$BOT_FILE" ] && confirm "Apply VIP patch (sendVIP + /vip command)?"; then
   if command -v gh >/dev/null 2>&1; then
-    gh api repos/jjrpro/code/contents/revenue/patch-bot.js?ref=claude/jjr-ops-handoff-QHQJj \
+    gh api repos/jjrpro/code/contents/projects/jaurx-vip/bot/patch-bot.js?ref=claude/jjr-ops-handoff-QHQJj \
       -H "Accept: application/vnd.github.raw" > /tmp/patch-bot.js && \
     node /tmp/patch-bot.js "$BOT_FILE" && ok "VIP patch applied" || err "Patch failed"
     # Restart bot to pick up changes
@@ -127,7 +127,7 @@ if launchctl list 2>/dev/null | grep -q "$LABEL"; then
   ok "Obsidian sync already running"
 elif confirm "Install Obsidian sync LaunchAgent?"; then
   if command -v gh >/dev/null 2>&1; then
-    gh api repos/jjrpro/code/contents/revenue/obsidian-sync/install-mac-sync.sh?ref=claude/jjr-ops-handoff-QHQJj \
+    gh api repos/jjrpro/code/contents/ops/obsidian-sync/install-mac-sync.sh?ref=claude/jjr-ops-handoff-QHQJj \
       -H "Accept: application/vnd.github.raw" > /tmp/install-mac-sync.sh && \
     bash /tmp/install-mac-sync.sh && ok "Obsidian sync installed" || err "Install failed"
   else

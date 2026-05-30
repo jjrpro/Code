@@ -21,14 +21,14 @@ if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcela
   exit 0
 fi
 
-# Refresh the "modified" timestamp in revenue/MEMORY.md if it exists
-if [ -f revenue/MEMORY.md ]; then
+# Refresh the "modified" timestamp in ops/MEMORY.md if it exists
+if [ -f ops/MEMORY.md ]; then
   today=$(date +%Y-%m-%d)
   # macOS/Linux compatible sed in-place edit
   if sed --version >/dev/null 2>&1; then
-    sed -i "s/^modified: .*/modified: ${today}/" revenue/MEMORY.md 2>/dev/null || true
+    sed -i "s/^modified: .*/modified: ${today}/" ops/MEMORY.md 2>/dev/null || true
   else
-    sed -i '' "s/^modified: .*/modified: ${today}/" revenue/MEMORY.md 2>/dev/null || true
+    sed -i '' "s/^modified: .*/modified: ${today}/" ops/MEMORY.md 2>/dev/null || true
   fi
 fi
 

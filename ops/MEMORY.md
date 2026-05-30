@@ -85,24 +85,38 @@ retail traders.
 ## Repo Structure — `jjrpro/code` branch `claude/jjr-ops-handoff-QHQJj`
 
 ```
-revenue/
-├── WEEKEND-CHECKLIST.md       # hour-by-hour Sat-Mon execution
-├── SHOPIFY-ADS.md              # TikTok Spark + Meta Advantage+ ad scale-up
-├── VIP-LAUNCH.md               # $49/mo Telegram VIP launch playbook (Whop)
-├── bot-vip-patch.js            # bot.js snippets (sendVIP, /vip, etc.)
-├── launch-copy.md              # copy-paste-ready: welcome, disclaimer, FAQs
-├── patch-bot.js                # one-shot bot.js auto-patcher (idempotent)
-├── shopify-audit.md            # 18-point self-diagnostic checklist
-├── shopify-playbook.md         # blind playbook for magnetic wallet dropship
-└── stripe-diy/                 # DIY Stripe + Telegram alternative to Whop
-    ├── SETUP.md
-    ├── server.js               # Express webhook + Telegram invite gen
-    ├── package.json
-    ├── bot-stripe-patch.js     # chat_member event handler
-    └── public/
-        ├── index.html          # Stripe Payment Link landing
-        ├── success.html        # post-payment thank-you w/ invite link
-        └── cancel.html
+projects/
+├── jaurx-vip/                       # Telegram trade-alerts monetization
+│   ├── launch/
+│   │   ├── VIP-LAUNCH.md            # $49/mo Telegram VIP launch playbook (Whop)
+│   │   ├── whop-launch-pack.md      # paste-ready content for every Whop screen
+│   │   └── launch-copy.md           # copy-paste-ready: welcome, disclaimer, FAQs
+│   ├── bot/
+│   │   ├── bot-vip-patch.js         # bot.js snippets (sendVIP, /vip, etc.)
+│   │   └── patch-bot.js             # one-shot bot.js auto-patcher (idempotent)
+│   └── stripe-diy/                  # DIY Stripe + Telegram alternative to Whop
+│       ├── SETUP.md
+│       ├── server.js                # Express webhook + Telegram invite gen
+│       ├── package.json
+│       ├── bot-stripe-patch.js      # chat_member event handler
+│       └── public/
+│           ├── index.html           # Stripe Payment Link landing
+│           ├── success.html         # post-payment thank-you w/ invite link
+│           └── cancel.html
+├── shopify-dropship/                # Magnetic phone wallet store
+│   ├── SHOPIFY-ADS.md               # TikTok Spark + Meta Advantage+ ad scale-up
+│   ├── shopify-audit.md             # 18-point self-diagnostic checklist
+│   └── shopify-playbook.md          # blind playbook for magnetic wallet dropship
+├── local-638/                       # Steamfitters website template
+│   └── index.html
+└── trade-analysis/                  # Research / setups
+    └── xauusd-bearish-2026-05-29.md # Sample: full bearish gold thesis + R:R
+
+ops/                                  # Shared infrastructure (not project work)
+├── MEMORY.md                         # this file — cross-project state
+├── WEEKEND-CHECKLIST.md              # hour-by-hour Sat-Mon execution
+├── obsidian-sync/                    # Mac LaunchAgent for Obsidian Git sync
+└── diagnostics/                      # mac-check.sh / mac-fix.sh
 ```
 
 To sync on Mac:
@@ -147,7 +161,7 @@ git pull origin claude/jjr-ops-handoff-QHQJj
 ## bot.js Patcher
 
 ### What it does
-Idempotent script at `revenue/patch-bot.js` that:
+Idempotent script at `projects/jaurx-vip/bot/patch-bot.js` that:
 1. Backs up `bot.js` with timestamp
 2. Inserts `VIP_CHANNEL_ID = -1003952631411` + helper constants
 3. Inserts `sendVIP()` and `sendVIPPhoto()` functions
@@ -157,7 +171,7 @@ Idempotent script at `revenue/patch-bot.js` that:
 
 ### How to run (on Mac)
 ```bash
-gh api repos/jjrpro/code/contents/revenue/patch-bot.js?ref=claude/jjr-ops-handoff-QHQJj \
+gh api repos/jjrpro/code/contents/projects/jaurx-vip/bot/patch-bot.js?ref=claude/jjr-ops-handoff-QHQJj \
   -H "Accept: application/vnd.github.raw" > /tmp/patch-bot.js && node /tmp/patch-bot.js
 ```
 
@@ -269,7 +283,7 @@ By being in this channel, you acknowledge these terms.
 
 ## Where to find this file
 
-- **GitHub**: `jjrpro/code` → branch `claude/jjr-ops-handoff-QHQJj` → `revenue/MEMORY.md`
+- **GitHub**: `jjrpro/code` → branch `claude/jjr-ops-handoff-QHQJj` → `ops/MEMORY.md`
 - **Pull to Mac**: `git pull origin claude/jjr-ops-handoff-QHQJj`
 - **Drop into Obsidian vault**: copy or symlink to your vault's `notes/` dir
 - **Drop into Claude memory**: copy or symlink to
