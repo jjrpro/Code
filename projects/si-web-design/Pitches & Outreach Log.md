@@ -28,15 +28,21 @@ where noted, and log when sent.
 
 > **Follow-up date for first 3: 2026-06-02** (if no reply). Then one more bump ~5 days after that, then stop.
 
-## Built but NOT yet deployed/pitched
+## Complete — ready to deploy (files sent to JR, awaiting Netlify links)
 
-| Business | Folder | Channel | Status |
-|---|---|---|---|
-| 💅 Eltingville Nail Salon | mockups/eltingville-nail-salon | call / FB | Complete — ready to deploy |
-| 🥯 M & M Deli & Bagels | mockups/mm-deli-bagels | call / walk-in | Complete — ready to deploy |
-| 🥩 Regina Annadale Meat Market | mockups/regina-meat-market | IG @reginaannadalemeatmarket | Complete — ready to deploy |
-| ✂️ Maria Alterations | mockups/maria-alterations | IG @mariaalterationsnconcierges | ⚠️ Incomplete — needs phone, address, hours, prices |
-| 🍪 Cookies N Cream | mockups/cookies-n-cream | IG @cookiesncream.sitottenville | ⚠️ Incomplete — needs phone, address, hours, prices |
+All 5 are finished. Deploy each: folder → app.netlify.com/drop → Change site name.
+
+| Business | Folder | Rename site to | Channel | Real details |
+|---|---|---|---|---|
+| 💅 Eltingville Nail Salon | mockups/eltingville-nail-salon | `eltingvillenailsalon` | call / FB | 4328 Amboy Rd · (718) 966-1688 · Mon–Sat 9:30–7, Sun 10–6 |
+| 🥯 M & M Deli & Bagels | mockups/mm-deli-bagels | `mmdelibagels` | call / walk-in | 849 Annadale Rd · (718) 966-6826 |
+| 🥩 Regina Annadale Meat Market | mockups/regina-meat-market | `reginameatmarket` | IG @reginaannadalemeatmarket | 881 Annadale Rd · (718) 984-1337 · since 1988 |
+| 🍪 Cookies N Cream | mockups/cookies-n-cream | `cookiesncream-si` | IG @cookiesncream.sitottenville | 7323 Amboy Rd · (718) 865-1025 · Mon–Thu 11–10, Fri–Sat 11–11, Sun 11–10 |
+| ✂️ Maria Alterations | mockups/maria-alterations | `maria-alterations-si` | IG @mariaalterationsnconcierges | 955 Jewett Ave · (718) 442-6534 ⚠️ verify phone · Tue–Sat |
+
+> ⚠️ **Maria Alterations** — confirm the phone before pitching: public listings
+> blur "Maria Alterations by Gabriella" with a "Maria Cleaners & Tailors" at the
+> same Jewett Ave address. The IG @mariaalterationsnconcierges is the right page.
 
 ## ⚠️ EyeCandy Art Studios — before pitching Gene
 The live site's gallery currently uses **demo stock-art placeholders**. Swap in
