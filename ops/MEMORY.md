@@ -64,8 +64,13 @@ Lives in `projects/faceless-channel/`.
   plan / 10 credits can't render even one video.
 - **Realistic money:** monthly AdSense, first deposit ~5–7 months out after
   ramp; Shorts RPM $0.03–0.10 = volume game. Not week-one cash.
-- **Next for Claude:** can pre-write all 30 scripts + manifests now (front-load
-  the creative work); once credits land, render + set up daily autopilot trigger.
+- **Name LOCKED: "Curious Frame"** — tagline "One new wonder a day." Paste-ready
+  account kit (handles, bios, About text, visual signature) in `BRAND.md`.
+- **DONE 2026-05-31:** all 30 scripts pre-written (`scripts/dayNN-*.md`),
+  calendar marked `scripted`, BRAND kit ready. JR funds credits "first thing in
+  the morning"; then Claude renders + sets up daily autopilot trigger.
+- **Next for Claude:** once credits land, build per-video manifests + render the
+  ★ strong days first (1, 3, then 6/9/12…), score, package, hand off.
 - **Relation to DropVault:** both gated on the same media-credit top-up. Two
   parallel AI-content revenue streams; JR to say whether to run both or focus one.
 

@@ -1,37 +1,259 @@
 {
   "_comment": "Production queue for the Cinematic Curiosities channel. status: queued -> scripted -> rendered -> packaged -> published. Claude pulls the next 'queued' item each run.",
-  "format": { "ratio": "9:16", "length_sec": [60, 90], "script_words": [120, 180], "hook_sec": 2 },
+  "format": {
+    "ratio": "9:16",
+    "length_sec": [
+      60,
+      90
+    ],
+    "script_words": [
+      120,
+      180
+    ],
+    "hook_sec": 2
+  },
   "cta": "Follow for one new wonder a day.",
   "videos": [
-    { "day": 1, "strong": true, "topic": "What's at the bottom of the ocean's deepest point?", "angle": "Descent POV to the Mariana Trench", "status": "queued" },
-    { "day": 2, "strong": false, "topic": "Why don't we feel the Earth spinning?", "angle": "Everyday physics reveal", "status": "queued" },
-    { "day": 3, "strong": true, "topic": "What would happen if you fell into a black hole?", "angle": "Spaghettification, visualized", "status": "queued" },
-    { "day": 4, "strong": false, "topic": "The library that survived 2,000 years", "angle": "History mystery", "status": "queued" },
-    { "day": 5, "strong": false, "topic": "Why is the night sky dark? (Olbers' paradox)", "angle": "Cosmic puzzle", "status": "queued" },
-    { "day": 6, "strong": true, "topic": "What's inside the Great Pyramid we still can't reach?", "angle": "Sealed-chamber hook", "status": "queued" },
-    { "day": 7, "strong": false, "topic": "How do deep-sea creatures glow?", "angle": "Bioluminescence visuals", "status": "queued" },
-    { "day": 8, "strong": false, "topic": "The sound that no one can explain (The Bloop)", "angle": "Audio mystery", "status": "queued" },
-    { "day": 9, "strong": true, "topic": "What does Earth look like from the edge of the solar system?", "angle": "Pale blue dot zoom-out", "status": "queued" },
-    { "day": 10, "strong": false, "topic": "Why do we dream?", "angle": "Brain science", "status": "queued" },
-    { "day": 11, "strong": false, "topic": "The city that vanished overnight", "angle": "History", "status": "queued" },
-    { "day": 12, "strong": true, "topic": "What's the loneliest place on Earth?", "angle": "Point Nemo", "status": "queued" },
-    { "day": 13, "strong": false, "topic": "How big is the universe, really?", "angle": "Scale visualization", "status": "queued" },
-    { "day": 14, "strong": false, "topic": "The animal that doesn't age", "angle": "Biology hook", "status": "queued" },
-    { "day": 15, "strong": true, "topic": "What's hiding under Antarctica's ice?", "angle": "Subglacial lakes", "status": "queued" },
-    { "day": 16, "strong": false, "topic": "Why does time slow down near a black hole?", "angle": "Relativity, simply", "status": "queued" },
-    { "day": 17, "strong": false, "topic": "The message we sent to aliens in 1977", "angle": "Voyager Golden Record", "status": "queued" },
-    { "day": 18, "strong": true, "topic": "What would the last day on Earth look like?", "angle": "Sun's red-giant phase", "status": "queued" },
-    { "day": 19, "strong": false, "topic": "How do octopuses think?", "angle": "Distributed intelligence", "status": "queued" },
-    { "day": 20, "strong": false, "topic": "The lost color humans can no longer see", "angle": "Perception", "status": "queued" },
-    { "day": 21, "strong": true, "topic": "What's the oldest living thing on Earth?", "angle": "5,000-year-old organism", "status": "queued" },
-    { "day": 22, "strong": false, "topic": "Why is space silent?", "angle": "Vacuum + sound", "status": "queued" },
-    { "day": 23, "strong": false, "topic": "The door that's been sealed for 1,000 years", "angle": "History mystery", "status": "queued" },
-    { "day": 24, "strong": true, "topic": "What happens to your body in deep space?", "angle": "Survival science", "status": "queued" },
-    { "day": 25, "strong": false, "topic": "The river that flows under the ocean", "angle": "Geography surprise", "status": "queued" },
-    { "day": 26, "strong": false, "topic": "Why do we have fingerprints?", "angle": "Body science", "status": "queued" },
-    { "day": 27, "strong": true, "topic": "What's the brightest thing in the universe?", "angle": "Quasar reveal", "status": "queued" },
-    { "day": 28, "strong": false, "topic": "The map that predicted a place before it was found", "angle": "History", "status": "queued" },
-    { "day": 29, "strong": false, "topic": "How deep can we actually dig?", "angle": "Kola Superdeep Borehole", "status": "queued" },
-    { "day": 30, "strong": true, "topic": "What's the last sound you'd hear on the Moon?", "angle": "Silence payoff", "status": "queued" }
-  ]
+    {
+      "day": 1,
+      "strong": true,
+      "topic": "What's at the bottom of the ocean's deepest point?",
+      "angle": "Descent POV to the Mariana Trench",
+      "status": "scripted",
+      "script": "scripts/day01-ocean-deepest-point.md"
+    },
+    {
+      "day": 2,
+      "strong": false,
+      "topic": "Why don't we feel the Earth spinning?",
+      "angle": "Everyday physics reveal",
+      "status": "scripted",
+      "script": "scripts/day02-feel-earth-spinning.md"
+    },
+    {
+      "day": 3,
+      "strong": true,
+      "topic": "What would happen if you fell into a black hole?",
+      "angle": "Spaghettification, visualized",
+      "status": "scripted",
+      "script": "scripts/day03-falling-into-black-hole.md"
+    },
+    {
+      "day": 4,
+      "strong": false,
+      "topic": "The library that survived 2,000 years",
+      "angle": "History mystery",
+      "status": "scripted",
+      "script": "scripts/day04-herculaneum-library.md"
+    },
+    {
+      "day": 5,
+      "strong": false,
+      "topic": "Why is the night sky dark? (Olbers' paradox)",
+      "angle": "Cosmic puzzle",
+      "status": "scripted",
+      "script": "scripts/day05-olbers-paradox.md"
+    },
+    {
+      "day": 6,
+      "strong": true,
+      "topic": "What's inside the Great Pyramid we still can't reach?",
+      "angle": "Sealed-chamber hook",
+      "status": "scripted",
+      "script": "scripts/day06-great-pyramid-void.md"
+    },
+    {
+      "day": 7,
+      "strong": false,
+      "topic": "How do deep-sea creatures glow?",
+      "angle": "Bioluminescence visuals",
+      "status": "scripted",
+      "script": "scripts/day07-deep-sea-glow.md"
+    },
+    {
+      "day": 8,
+      "strong": false,
+      "topic": "The sound that no one can explain (The Bloop)",
+      "angle": "Audio mystery",
+      "status": "scripted",
+      "script": "scripts/day08-the-bloop.md"
+    },
+    {
+      "day": 9,
+      "strong": true,
+      "topic": "What does Earth look like from the edge of the solar system?",
+      "angle": "Pale blue dot zoom-out",
+      "status": "scripted",
+      "script": "scripts/day09-pale-blue-dot.md"
+    },
+    {
+      "day": 10,
+      "strong": false,
+      "topic": "Why do we dream?",
+      "angle": "Brain science",
+      "status": "scripted",
+      "script": "scripts/day10-why-we-dream.md"
+    },
+    {
+      "day": 11,
+      "strong": false,
+      "topic": "The city that vanished overnight",
+      "angle": "History",
+      "status": "scripted",
+      "script": "scripts/day11-cahokia.md"
+    },
+    {
+      "day": 12,
+      "strong": true,
+      "topic": "What's the loneliest place on Earth?",
+      "angle": "Point Nemo",
+      "status": "scripted",
+      "script": "scripts/day12-point-nemo.md"
+    },
+    {
+      "day": 13,
+      "strong": false,
+      "topic": "How big is the universe, really?",
+      "angle": "Scale visualization",
+      "status": "scripted",
+      "script": "scripts/day13-size-of-universe.md"
+    },
+    {
+      "day": 14,
+      "strong": false,
+      "topic": "The animal that doesn't age",
+      "angle": "Biology hook",
+      "status": "scripted",
+      "script": "scripts/day14-immortal-jellyfish.md"
+    },
+    {
+      "day": 15,
+      "strong": true,
+      "topic": "What's hiding under Antarctica's ice?",
+      "angle": "Subglacial lakes",
+      "status": "scripted",
+      "script": "scripts/day15-under-antarctica.md"
+    },
+    {
+      "day": 16,
+      "strong": false,
+      "topic": "Why does time slow down near a black hole?",
+      "angle": "Relativity, simply",
+      "status": "scripted",
+      "script": "scripts/day16-time-near-black-hole.md"
+    },
+    {
+      "day": 17,
+      "strong": false,
+      "topic": "The message we sent to aliens in 1977",
+      "angle": "Voyager Golden Record",
+      "status": "scripted",
+      "script": "scripts/day17-voyager-golden-record.md"
+    },
+    {
+      "day": 18,
+      "strong": true,
+      "topic": "What would the last day on Earth look like?",
+      "angle": "Sun's red-giant phase",
+      "status": "scripted",
+      "script": "scripts/day18-last-day-on-earth.md"
+    },
+    {
+      "day": 19,
+      "strong": false,
+      "topic": "How do octopuses think?",
+      "angle": "Distributed intelligence",
+      "status": "scripted",
+      "script": "scripts/day19-octopus-mind.md"
+    },
+    {
+      "day": 20,
+      "strong": false,
+      "topic": "The lost color humans can no longer see",
+      "angle": "Perception",
+      "status": "scripted",
+      "script": "scripts/day20-lost-color.md"
+    },
+    {
+      "day": 21,
+      "strong": true,
+      "topic": "What's the oldest living thing on Earth?",
+      "angle": "5,000-year-old organism",
+      "status": "scripted",
+      "script": "scripts/day21-oldest-living-thing.md"
+    },
+    {
+      "day": 22,
+      "strong": false,
+      "topic": "Why is space silent?",
+      "angle": "Vacuum + sound",
+      "status": "scripted",
+      "script": "scripts/day22-why-space-is-silent.md"
+    },
+    {
+      "day": 23,
+      "strong": false,
+      "topic": "The door that's been sealed for 1,000 years",
+      "angle": "History mystery",
+      "status": "scripted",
+      "script": "scripts/day23-sealed-door.md"
+    },
+    {
+      "day": 24,
+      "strong": true,
+      "topic": "What happens to your body in deep space?",
+      "angle": "Survival science",
+      "status": "scripted",
+      "script": "scripts/day24-body-in-deep-space.md"
+    },
+    {
+      "day": 25,
+      "strong": false,
+      "topic": "The river that flows under the ocean",
+      "angle": "Geography surprise",
+      "status": "scripted",
+      "script": "scripts/day25-undersea-river.md"
+    },
+    {
+      "day": 26,
+      "strong": false,
+      "topic": "Why do we have fingerprints?",
+      "angle": "Body science",
+      "status": "scripted",
+      "script": "scripts/day26-fingerprints.md"
+    },
+    {
+      "day": 27,
+      "strong": true,
+      "topic": "What's the brightest thing in the universe?",
+      "angle": "Quasar reveal",
+      "status": "scripted",
+      "script": "scripts/day27-brightest-quasar.md"
+    },
+    {
+      "day": 28,
+      "strong": false,
+      "topic": "The map that predicted a place before it was found",
+      "angle": "History",
+      "status": "scripted",
+      "script": "scripts/day28-piri-reis-map.md"
+    },
+    {
+      "day": 29,
+      "strong": false,
+      "topic": "How deep can we actually dig?",
+      "angle": "Kola Superdeep Borehole",
+      "status": "scripted",
+      "script": "scripts/day29-kola-borehole.md"
+    },
+    {
+      "day": 30,
+      "strong": true,
+      "topic": "What's the last sound you'd hear on the Moon?",
+      "angle": "Silence payoff",
+      "status": "scripted",
+      "script": "scripts/day30-sound-on-the-moon.md"
+    }
+  ],
+  "brand": "Curious Frame"
 }

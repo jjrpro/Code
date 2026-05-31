@@ -44,9 +44,9 @@ YouTube renamed its "repetitious content" rule to **"inauthentic content"** and 
 - Original script + original visuals = passes the 2026 authenticity bar.
 - High "rewatch + share" rate, which the Shorts algorithm rewards.
 
-**Channel identity (draft):**
+**Channel identity (LOCKED 2026-05-31):**
 
-- Name ideas: *Curious Frame*, *The Unseen Reel*, *Wonder Index*, *90 Second Universe*.
+- Name: **Curious Frame** — *"One new wonder a day."* (full kit in `BRAND.md`)
 - Voice: calm, confident, slightly cinematic narrator.
 - Visual signature: consistent color grade, same intro stinger, same caption font.
 
