@@ -79,10 +79,16 @@ Cadence: **one new pack/week** keeps the bundle valuable and the store fresh.
 - [x] Webhook fulfillment + signed, time-limited download links (`server.js`)
 - [x] Read-only revenue monitor for Claude (`monitor.js`)
 - [x] Setup guide for JR's Mac (`SETUP.md`)
+- [x] **Always-on deploy config** — `render.yaml`, `Procfile`, `.env.example`, `DEPLOY.md`
+- [x] **Pack-production pipeline** — `packs.manifest.json` (prompts) + `scripts/build-pack.sh` (zip + license)
+- [x] **Local end-to-end test passed** — catalog API, health, storefront, and
+      download-token gating all verified; fixed a bug where forged tokens
+      returned 500 instead of 403 (timingSafeEqual length guard)
 - [ ] JR: create Coinbase Commerce account + paste 3 secrets (20 min, see SETUP)
 - [ ] JR: top up media credits so Claude can generate the first 3 packs
-- [ ] Claude: generate inventory, zip, drop in `packs/`
-- [ ] Go live (ngrok now, real domain later)
+- [ ] JR: pick hosting path (A: Mac+tunnel for launch / B: Render) — see DEPLOY.md
+- [ ] Claude: once credits land, generate inventory → `build-pack.sh` → `packs/`
+- [ ] Go live
 
 ---
 

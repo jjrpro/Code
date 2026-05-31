@@ -74,13 +74,19 @@ function signToken(packId, code) {
   return `${payload}.${sig}`;
 }
 function verifyToken(token) {
-  const [payload, sig] = String(token).split('.');
-  if (!payload || !sig) return null;
-  const expected = crypto.createHmac('sha256', DOWNLOAD_SECRET).update(payload).digest('base64url');
-  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
-  const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
-  if (Date.now() > data.exp) return null;
-  return data;
+  try {
+    const [payload, sig] = String(token).split('.');
+    if (!payload || !sig) return null;
+    const expected = crypto.createHmac('sha256', DOWNLOAD_SECRET).update(payload).digest('base64url');
+    const a = Buffer.from(sig), b = Buffer.from(expected);
+    // length check first — timingSafeEqual throws on length mismatch (forged sig)
+    if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (!data || typeof data.exp !== 'number' || Date.now() > data.exp) return null;
+    return data;
+  } catch (e) {
+    return null;
+  }
 }
 
 // ---------- Coinbase Commerce helpers ----------

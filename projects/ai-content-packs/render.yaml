@@ -1,0 +1,23 @@
+# Always-on free hosting for DropVault on Render.
+# One-time: push this repo, go to render.com -> New -> Blueprint -> pick this repo.
+# Render reads this file, builds, and gives you a permanent https URL.
+# Then set CC_API_KEY / CC_WEBHOOK_SECRET / PUBLIC_URL in the Render dashboard,
+# and point your Coinbase Commerce webhook at  https://<your-render-url>/webhook
+services:
+  - type: web
+    name: dropvault-store
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: CC_API_KEY
+        sync: false          # paste in Render dashboard (secret)
+      - key: CC_WEBHOOK_SECRET
+        sync: false          # paste in Render dashboard (secret)
+      - key: DOWNLOAD_SECRET
+        generateValue: true  # Render generates a strong random value for you
+      - key: PUBLIC_URL
+        sync: false          # set to your https://<service>.onrender.com URL

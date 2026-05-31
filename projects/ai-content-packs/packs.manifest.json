@@ -1,0 +1,42 @@
+{
+  "_comment": "Generation manifest. Claude iterates these prompts via the media tools, drops outputs in an assets folder, then runs scripts/build-pack.sh <id> <assets-dir>. counts are target asset counts per pack.",
+  "packs": [
+    {
+      "id": "lux-broll-01",
+      "type": "mixed",
+      "targets": { "images": 40, "clips": 60 },
+      "aspect": "16:9",
+      "prompts": [
+        "Cinematic aerial of a white yacht cutting through deep blue ocean, golden hour, anamorphic, 4k",
+        "Slow dolly through a modern infinity-pool villa at dusk, warm interior lights, no people",
+        "Close-up of a luxury watch on marble, soft window light, shallow depth of field",
+        "First-person walk into a private jet cabin, cream leather, morning light",
+        "Supercar on a coastal road at sunset, motion blur, cinematic color grade"
+      ]
+    },
+    {
+      "id": "dark-wallpaper-01",
+      "type": "images",
+      "targets": { "images": 100 },
+      "aspect": "phone+desktop",
+      "prompts": [
+        "Minimal dark abstract gradient, deep charcoal to indigo, soft grain, centered negative space",
+        "Single neon line over matte black, brutalist minimal, 4k wallpaper",
+        "Moody fog over dark mountains, monochrome, lots of empty sky for icons",
+        "Dark liquid metal swirl, ultra minimal, premium wallpaper"
+      ]
+    },
+    {
+      "id": "motivation-reels-01",
+      "type": "video",
+      "targets": { "clips": 50 },
+      "aspect": "9:16",
+      "prompts": [
+        "Lone runner on an empty road at sunrise, slow motion, dramatic clouds, vertical",
+        "Time-lapse city skyline night to day, vertical, cinematic, space for top/bottom captions",
+        "Crashing ocean waves in slow motion, vertical, golden light",
+        "Climber reaching a mountain summit at dawn, vertical, epic scale"
+      ]
+    }
+  ]
+}
