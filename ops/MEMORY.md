@@ -71,6 +71,10 @@ Lives in `projects/faceless-channel/`.
   the morning"; then Claude renders + sets up daily autopilot trigger.
 - **Next for Claude:** once credits land, build per-video manifests + render the
   ★ strong days first (1, 3, then 6/9/12…), score, package, hand off.
+- **Funding (live pricing pulled 2026-05-31):** media plans — PLUS $39/mo annual
+  (1,000 cr) / ULTRA $99/mo annual (3,000 cr ⭐). A mini-doc ≈ 50–90 cr; ULTRA ≈
+  ~1 polished video/day. Checkout links in `2026-05-31-curious-frame-launch-checklist.md`.
+  NOTE: no video/thumbnail rendered yet — free plan, 10 cr. Don't overstate it.
 - **AUTHORITATIVE publish copy:** `2026-05-31-curious-frame-launch-pack.md` holds
   all 30 videos fully packaged (hook, script, title, description, hashtags,
   thumbnail) + final branding (tagline "One wonder a day", handle @curiousframe,
