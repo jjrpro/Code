@@ -52,6 +52,44 @@ every vial. Easy mental model: **every unit = 0.1 mg.**
 
 ---
 
+## 0b. Phased dosing plan — JR's goal: 260 → 200 (done) → 185 → recomp
+
+**Progress:** 260 lb start → **200 lb now (−60 lb)** → target **185 lb**, then build muscle while
+leaning out (recomposition).
+
+**The core principle:** Retatrutide's job is appetite suppression / forcing a deficit — the
+*opposite* of building muscle. You can't max-cut and max-build at once. So the plan splits into
+two phases and the doses move in **different directions**: Reta comes **down** for recomp;
+Tesa holds/up for recovery + lean mass; Semax just supports training focus.
+
+### Phase 1 — Final cut (200 → 185, ~15 lb)
+| Peptide | Sweet spot | Why |
+|---|---|---|
+| **Retatrutide** | **Hold 4 mg (40u)/week — do NOT climb** | Losing well, 15 lb left. Higher dose = faster loss but more muscle loss than you can train against. Slow to ~1–2 lb/wk to protect muscle. If loss stalls, tighten diet — don't raise the dose. |
+| **Tesamorelin** | **1 → 1.5–2 mg (15–20u)/night, *after baseline IGF-1*** | 2 mg = trial dose for visceral fat + recovery + lean-mass support. Move up only with IGF-1 in range. |
+| **Semax** | **300–600 mcg (3–6u) AM** | Down from 1000 mcg — no added benefit, just overstim. Focus/training tool. |
+
+Protein **~185–200 g/day** (1 g per lb of *goal* weight). Lift 3–4×/week, progressive.
+
+### Phase 2 — Recomp (at 185: muscle up, fat down)
+| Peptide | Sweet spot | Why |
+|---|---|---|
+| **Retatrutide** | **Taper to maintenance: ~2 mg (20u)/week, or every 10–14 days** — lowest dose that stops appetite rebound | **Must eat near maintenance to build muscle.** Heavy appetite suppression makes hitting protein + fueling training impossible. Biggest change of the whole plan. |
+| **Tesamorelin** | **Hold ~2 mg (20u)/night, IGF-1 in range** | GH/IGF-1 aids recovery, lipolysis, lean mass. Don't exceed 2 mg (supraphysiologic IGF-1 → insulin resistance, edema, carpal tunnel). |
+| **Semax** | **Same 300–600 mcg AM** | Training focus, unchanged. |
+
+Eat at **~maintenance (not a deficit)**, protein **185–200 g**, carbs around workouts,
+progressive overload, **7–9 h sleep**. Strong recomp candidate (post-fat-loss + returning to
+lifting) — but *training + protein + recovery* build the muscle; the peptides are at most a mild assist.
+
+**Gatekeepers / honest notes:**
+- **Baseline IGF-1 before pushing Tesa to 2 mg** — the one lab that caps the upper dose.
+- A stall at 185 is NOT "need more Reta." In recomp the scale goes **flat while waist shrinks
+  and lifts go up** — that's success. Track **waist + strength**, not just bodyweight.
+- Reasoned phasing, not a trial protocol — none of these three is studied together.
+
+---
+
 ## 1. What each compound actually is
 
 | | Semax | Retatrutide | Tesamorelin |

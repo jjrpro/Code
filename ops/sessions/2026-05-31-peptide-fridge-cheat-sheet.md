@@ -13,6 +13,20 @@
 
 ---
 
+## 🎯 PHASED PLAN (260→200 done · →185 · then recomp)
+**Rule: Reta goes DOWN to build muscle. You can't max-cut + max-build at once.**
+
+| | **Phase 1: cut to 185** | **Phase 2: recomp @185** |
+|---|---|---|
+| **Reta** | hold **4 mg (40u)/wk** — don't climb | taper **~2 mg (20u)/wk** or q10–14d |
+| **Tesa** | **1.5–2 mg (15–20u)** *after IGF-1* | hold **2 mg (20u)**, IGF-1 in range |
+| **Semax** | **300–600 mcg (3–6u) AM** | same |
+| **Eat** | deficit, protein 185–200g, ~1–2 lb/wk | **maintenance**, protein 185–200g |
+
+Stall at 185 ≠ more Reta. **Track waist + strength, not just scale.**
+
+---
+
 ## 📅 DAILY RHYTHM
 - **Wake:** Semax → biggest-protein meal → water + electrolytes
 - **Midday:** protein meal + **lift** (3–4×/wk)
