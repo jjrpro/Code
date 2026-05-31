@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Putting a Site Live — Netlify Drop (free, ~2 minutes)
 
 No account technically required to test, but make a free account so your sites

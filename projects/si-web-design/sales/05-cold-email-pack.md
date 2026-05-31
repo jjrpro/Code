@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Cold-Email Pack — Jaurx Web Design
 
 Everything to run cold email for the local-website business: setup, templates,

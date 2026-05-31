@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Building Your Prospect List — the "5-mile-radius from 10312" part
 
 You asked for "all businesses within 5 miles of 10312." There's no honest

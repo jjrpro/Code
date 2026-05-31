@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Real Prospect Mockups — Staten Island (10312 area)
 
 These are **draft sites for real, publicly-listed local businesses** that appear

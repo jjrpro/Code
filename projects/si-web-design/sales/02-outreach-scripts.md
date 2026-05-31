@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Outreach Scripts — paste-ready
 
 The winning move: **build a free 1-screen mockup of THEIR site first, then reach
