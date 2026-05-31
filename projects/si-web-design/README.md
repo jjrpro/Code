@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Jaurx Web Design — Local Business Websites (Staten Island)
 
 A complete kit to run a local web-design side business: **one reusable site

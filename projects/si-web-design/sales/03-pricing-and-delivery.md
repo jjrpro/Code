@@ -1,3 +1,11 @@
+---
+tags:
+  - jaurx-web-design
+  - jaurx
+  - web-design
+  - staten-island
+---
+
 # Pricing & Delivery
 
 ## Pricing (Staten Island small-business rates)
