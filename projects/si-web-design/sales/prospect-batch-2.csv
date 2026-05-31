@@ -1,8 +1,8 @@
 Business Name,Category,Area,Instagram/FB,Status,Notes (verify before building)
 "Eltingville Nail & Spa (Fiona)",Nail Salon,Eltingville,@eltingville_nail_spa_fiona_,NO-SITE,4434 Amboy Rd; gel/acrylic/lash; NOT the 4328 salon we did
-"Maggie Creative Nail & Spa",Nail Salon,Annadale,@creativenail855,NO-SITE,855 Annadale Rd; IG/Fresha only
-"S.I. Cleaning",House Cleaning,Staten Island,facebook.com/cleaningservicesinnewyork,NO-SITE,Family-owned cleaning; FB only — confirm local operator
-"Kleen Kuts Pet Grooming",Pet Grooming,Staten Island/10305,facebook.com/kleenkutspetgroomingsi,NO-SITE,VERIFIED no site - FB only; mobile grooming; 47 Norway Ave; (917) 860-9291; ⚠️10305 (check if within 5mi)
+"Maggie Creative Nail & Spa",Nail Salon,Annadale,@creativenail855,DEPLOYED,LIVE creative-nails-and-spa.netlify.app; 855 Annadale Rd (718) 227-8808
+"S.I. Cleaning",House Cleaning,Staten Island,facebook.com/cleaningservicesinnewyork,DEPLOYED,LIVE si-cleaners.netlify.app; confirm local operator + phone
+"Kleen Kuts Pet Grooming",Pet Grooming,Staten Island/10305,facebook.com/kleenkutspetgroomingsi,DEPLOYED,LIVE kleenkuts.netlify.app; (917) 860-9291; ⚠️verify open + 5mi radius
 "Paws Grooming Spa",Pet Grooming,Charleston/10309,@pawsgroomingspa,SKIP,Has site pawsgroomingspa.com
 "South Shore Deli & Grocery",Deli,South Shore,IG location tag,SKIP,Has site southshoredeliprovisions.com
 "Untouchable Cutz",Barber,Staten Island/10305,@untouchablecutz,CHECK,"Voted best barber"; 10305 (north of 5mi?) — confirm area+site
@@ -12,8 +12,8 @@ Business Name,Category,Area,Instagram/FB,Status,Notes (verify before building)
 "Country Donuts",Coffee/Donuts,South Shore,(find IG),CHECK,South Shore favorite — find handle + confirm
 "Sanctuary Boutique",Boutique,10304,@sanctuaryboutique,SKIP,Has site sanctuaryboutique.com; also 10304 not south shore
 "Aurora River Candles",Candles,Staten Island,@aurorarivercandles,SKIP,Has Etsy store (sells online already)
-"Dipped by Mandaa",Dessert (home),Staten Island,@dippedbymandaa,NO-SITE,Order via IG w/ 5-day notice; SI pickup
-"Grand Trine Designs",Home Decor,Staten Island,@grandtrinedesigns,NO-SITE,Handcrafted eco-resin decor; IG only
+"Dipped by Mandaa",Dessert (home),Staten Island,@dippedbymandaa,DEPLOYED,LIVE dippedbymanda.netlify.app; order via IG 5-day notice
+"Grand Trine Designs",Home Decor,Staten Island,@grandtrinedesigns,DEPLOYED,LIVE grandtrinedesigns.netlify.app; eco-resin decor IG-only
 "Evergreen Florist",Florist,Huguenot/10312,(IG),SKIP,Has site evergreenfloristonline.com
 "Eltingville Florist",Florist,Eltingville,(find IG),CHECK,Confirm no site
 "Sam Gregorio's Florist",Florist,Staten Island,(find IG),CHECK,Confirm site status
