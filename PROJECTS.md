@@ -29,6 +29,15 @@ Kit for selling websites to Staten Island small businesses (10312 + 5-mi radius)
 - **`mockups/`** — 3 real 10312 prospects with no website (barber, deli, nails)
 - **`sales/`** — prospect-list method, lead tracker CSV, outreach, pricing, deploy guide
 
+### `projects/faceless-channel/` — Cinematic Curiosities (faceless AI video)
+Hands-off AI video channel (YouTube Shorts + TikTok), 60–90s mini-docs. Built to
+clear YouTube's 2026 "inauthentic content" rule via original script + original
+AI visuals. Claude runs production; platforms pay JR directly.
+- `2026-05-31-cinematic-curiosities-blueprint.md` — strategy + monetization math
+- `calendar.json` — 30-topic production queue · `PIPELINE.md` — what Claude runs
+- `scripts/` — original narration scripts · `video.manifest.example.json` — per-video spec
+- `publish-sheet-template.md` — paste-ready upload sheet
+
 ### `projects/ai-content-packs/` — DropVault AI content-pack store
 Faceless, low-maintenance revenue stream. Claude generates AI image/video packs;
 the store sells them on autopilot. Buyers pay by card → settles to USDC instantly

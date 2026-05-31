@@ -47,6 +47,30 @@ session: jaurx-launch-2026-05-29
 
 ---
 
+## Faceless AI video channel — Cinematic Curiosities (2026-05-31)
+
+Second Claude-run revenue stream. Faceless YouTube Shorts + TikTok channel,
+60–90s AI mini-docs ("Cinematic Curiosities" niche). Designed to pass YouTube's
+2026 "inauthentic content" rule via **original written script + original AI
+visuals** (the key design choice). Claude runs production (script→manifest→
+render→score→package→handoff); platforms pay JR directly into his AdSense/bank.
+Lives in `projects/faceless-channel/`.
+
+- **Built now (no credits needed):** blueprint saved, `calendar.json` (30
+  topics), `PIPELINE.md` runbook + autopilot design, `video.manifest.example.json`
+  format, 3 sample scripts + SCRIPT-TEMPLATE, publish-sheet template.
+- **Blocked on JR:** (1) create dedicated Google/YouTube/TikTok accounts THIS
+  WEEK (starts the 6-month monetization clock); (2) fund media credits — free
+  plan / 10 credits can't render even one video.
+- **Realistic money:** monthly AdSense, first deposit ~5–7 months out after
+  ramp; Shorts RPM $0.03–0.10 = volume game. Not week-one cash.
+- **Next for Claude:** can pre-write all 30 scripts + manifests now (front-load
+  the creative work); once credits land, render + set up daily autopilot trigger.
+- **Relation to DropVault:** both gated on the same media-credit top-up. Two
+  parallel AI-content revenue streams; JR to say whether to run both or focus one.
+
+---
+
 ## New revenue stream — DropVault AI content packs (2026-05-31)
 
 Built a faceless, Claude-maintained store: AI image/video content packs sold on

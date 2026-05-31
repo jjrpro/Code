@@ -1,0 +1,51 @@
+{
+  "_comment": "The unit of production. Claude generates one of these per video: script split into timed beats, each beat paired with a cinematic visual prompt (9:16), plus the publish package. The render step feeds 'visual' prompts to the video tool and stitches clips under the narration.",
+  "day": 1,
+  "topic": "What's at the bottom of the ocean's deepest point?",
+  "ratio": "9:16",
+  "target_length_sec": 75,
+  "voice": "calm, confident, slightly cinematic narrator",
+  "grade": "deep teal-and-black, high contrast, cinematic LUT (channel signature)",
+  "beats": [
+    {
+      "t": "0:00-0:02",
+      "type": "hook",
+      "narration": "Seven miles down, the pressure could crush a tank like a soda can.",
+      "visual": "Cinematic descent POV plunging into pitch-black deep ocean, faint particles drifting past, ominous, 9:16, teal-black grade"
+    },
+    {
+      "t": "0:02-0:12",
+      "narration": "This is the Challenger Deep — the lowest point on Earth. It's deeper than Everest is tall.",
+      "visual": "Slow vertical reveal comparing Mount Everest height to ocean trench depth, dark cinematic infographic feel, 9:16"
+    },
+    {
+      "t": "0:12-0:30",
+      "narration": "Sunlight never reaches it. The water is just above freezing, and the pressure is over a thousand times what you feel right now.",
+      "visual": "Light beam fading to total darkness as camera sinks, lone submersible light cutting the black, 9:16, cinematic"
+    },
+    {
+      "t": "0:30-0:50",
+      "narration": "And yet — there's life. Tiny creatures thrive here, feeding on chemicals instead of light.",
+      "visual": "Macro of translucent deep-sea amphipod on the seafloor, bioluminescent glow, eerie beauty, 9:16"
+    },
+    {
+      "t": "0:50-1:05",
+      "narration": "We've sent more people to the Moon than to the bottom of this trench. Most of it has never been seen by human eyes.",
+      "visual": "Split contrast: astronaut on the Moon vs a tiny submersible in vast dark water, cinematic, 9:16"
+    },
+    {
+      "t": "1:05-1:15",
+      "type": "payoff",
+      "narration": "The deepest part of our own planet is still, mostly, a mystery.",
+      "visual": "Pull back to reveal the immense black trench below, scale-of-the-abyss shot, fade, 9:16"
+    }
+  ],
+  "package": {
+    "title": "What's at the bottom of the ocean's deepest point? 🌊",
+    "description": "Seven miles down lies the Challenger Deep — deeper than Everest is tall, colder than ice, and almost entirely unexplored. Here's what's down there. \n\nFollow for one new wonder a day.",
+    "hashtags": ["#oceans", "#marianatrench", "#deepsea", "#challengerdeep", "#space", "#science", "#didyouknow", "#facts", "#curiosity", "#documentary", "#shorts", "#educational", "#nature", "#mystery", "#wonder", "#learnontiktok", "#fyp", "#viral"],
+    "thumbnail_concept": "Dark abyss with a single shaft of light, bold text 'DEEPER THAN EVEREST', tiny submersible silhouette for scale"
+  },
+  "scoring": { "virality_checked": false, "min_score_to_queue": 0.6 },
+  "status": "example"
+}
