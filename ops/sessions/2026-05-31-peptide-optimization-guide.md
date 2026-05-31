@@ -20,13 +20,32 @@ Tesamorelin (~1 mg / 10u daily), all reconstituted with bacteriostatic water. Bu
 
 ---
 
-## 0. The two things that matter most (if you read nothing else)
+## 0. Your actual doses (confirmed from your reconstitutions, 2026-05-31)
 
-1. **Verify your Retatrutide dose math every single time.** "40 units" is meaningless on its
-   own — the mg depends entirely on how much BAC water you added. At the most common mix
-   (10 mg vial + 2 mL water) 40u = **2 mg**, a sane titration dose. But the *same* 40u is
-   **4 mg** if you only used 1 mL, and **8 mg** if your vial was actually 20 mg. A mixing
-   assumption error = a 2–4× overdose. See §2.
+All three are mixed to the **same concentration: 10 mg/mL → 1 unit = 0.1 mg (100 mcg)** across
+every vial. Easy mental model: **every unit = 0.1 mg.**
+
+| Peptide | Mix | Concentration | Per unit | **Your dose** |
+|---|---|---|---|---|
+| **Retatrutide** | 30 mg → 300u (3 mL) | 10 mg/mL | 0.1 mg | 40u = **4 mg/week** |
+| **Semax** | 20 mg → 200u (2 mL) | 10 mg/mL | 0.1 mg (100 mcg) | 10u = **1,000 mcg/day** |
+| **Tesamorelin** | 20 mg → 200u (2 mL) | 10 mg/mL | 0.1 mg | 10u = **1 mg/day** |
+
+- **Retatrutide 4 mg/week** = step 2 of the 1→2→4→8→12 ladder. Legit, but expect stronger
+  appetite suppression, more GI, bigger HR bump, and faster loss than 2 mg. If you jumped
+  straight to 4 (vs titrating from 2), that's why GI may be rough — hold here, don't climb.
+- **Semax 1,000 mcg/day** is ~2–5× the typical 200–600 mcg nootropic range. Wide safety margin,
+  but likely no extra benefit past ~300–600 mcg and more overstim/sleep risk. 3 units (300 mcg)
+  would hit the studied range and stretch the vial 3×.
+- **Tesamorelin 1 mg/day** is below the 2 mg approved dose — milder effects + milder sides.
+  Conservative; 20u would be the full trial-strength 2 mg if you ever wanted it (check IGF-1 first).
+
+## The two things that matter most (if you read nothing else)
+
+1. **Recompute your dose mg any time you change vial size or water volume.** Units measure
+   volume, not drug. Your current setup = 0.1 mg/unit everywhere; if a future vial or water
+   amount differs, the mg/unit changes and a wrong assumption can mean a 2–4× over/under-dose.
+   Write the mg/unit on each vial. See §2.
 2. **Protect your muscle.** Retatrutide drives fast, deep weight loss, and ~25–40% of weight
    lost on this drug class is lean mass. **High protein (1.6–2.2 g/kg) + resistance training
    2–4×/week** is the whole game. Without it you'll lose muscle along with the fat. See §6.
@@ -38,7 +57,7 @@ Tesamorelin (~1 mg / 10u daily), all reconstituted with bacteriostatic water. Bu
 | | Semax | Retatrutide | Tesamorelin |
 |---|---|---|---|
 | **Class** | ACTH(4-7) analog nootropic | GLP-1 / GIP / glucagon **triple** agonist | GHRH analog (raises your own GH) |
-| **Your dose** | ~300 mcg (10u) daily | ~40u weekly (≈2 mg if mixed 10mg+2mL) | ~1 mg (10u) daily |
+| **Your dose** | **1,000 mcg (10u) daily** | **4 mg (40u) weekly** | **1 mg (10u) daily** |
 | **Status** | Russia-approved; **not FDA** | **Investigational, not approved** | FDA-approved (HIV lipodystrophy only) |
 | **Evidence quality** | Mostly Russian + animal | Strong Phase 2/3 trials | Strong FDA-label trials (at 2 mg) |
 | **Main job here** | Focus / mood / neuroprotection | Appetite + bodyweight ↓↓↓ | Visceral fat ↓, GH/IGF-1 ↑, recovery |
@@ -65,16 +84,19 @@ Insulin syringes are **U-100: 100 units = 1 mL, so 1 unit = 0.01 mL — always.*
 > **Concentration (mg/mL) = vial mg ÷ mL of water added**
 > **mg per unit = concentration ÷ 100**
 
-For a **10 mg vial** (most common):
+**Your mix:** 30 mg vial → 300 units (3 mL) BAC water = 10 mg/mL = **0.1 mg/unit**, so
+**40 units = 4 mg/week** (and your weekly injection volume is 0.4 mL — inject slowly).
+
+For reference, how the same 40-unit mark changes with different mixes of a 30 mg vial:
 
 | Water added | Concentration | mg per unit | **40 units =** |
 |---|---|---|---|
-| 1 mL | 10 mg/mL | 0.10 mg | **4 mg** ⚠️ |
-| **2 mL** | **5 mg/mL** | **0.05 mg** | **2 mg** ← likely your dose |
-| 3 mL | 3.33 mg/mL | 0.033 mg | ~1.33 mg |
+| **3 mL (300u)** | **10 mg/mL** | **0.10 mg** | **4 mg** ← your dose |
+| 6 mL (600u) | 5 mg/mL | 0.05 mg | 2 mg |
+| 1.5 mL (150u) | 20 mg/mL | 0.20 mg | 8 mg ⚠️ |
 
-**Action:** Confirm your vial is 10 mg and you added 2 mL → you're at 2 mg, a textbook
-titration dose. If either differs, recompute. **Write the mg/unit on the vial in marker.**
+**Action:** Any time you open a new vial or change the water volume, recompute and
+**write the mg/unit on the vial in marker.**
 Most overdoses come from (a) wrong water volume, (b) wrong vial strength, (c) confusing
 units with mL, (d) a U-40 vs U-100 syringe mismatch. *(High confidence — arithmetic)*
 
@@ -105,8 +127,9 @@ vendor "retatrutide for bulking/recomp" claims — pure marketing, zero trial su
 
 **What it does:** Stimulates your pituitary to release **your own GH in natural pulses**,
 raising IGF-1, which preferentially burns **visceral (deep belly) fat**. FDA-approved at
-**2 mg/day**; **your 1 mg is sub-therapeutic** — expect milder effects *and* milder side
-effects than the trials. *(High confidence)*
+**2 mg/day**; **your 1 mg (20 mg → 200u → 10u) is half that / sub-therapeutic** — expect
+milder effects *and* milder side effects than the trials. 20u would be the full 2 mg if you
+ever want it (check IGF-1 first). *(High confidence)*
 [FDA label](https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022505s020lbl.pdf) ·
 [NEJM Falutz 2007](https://www.nejm.org/doi/full/10.1056/NEJMoa072375)
 
@@ -161,9 +184,11 @@ animals: high. Human efficacy: medium-low.)*
 - **Timing:** Morning / early afternoon, **last dose by ~3–4 PM** so it doesn't disrupt sleep.
   Dosing before a cognitively demanding block is the common practice and roughly fits the rat
   time-course (effects build over ~1.5–8 h). *(Medium)*
-- **Your 300 mcg/day** sits at the low end of the commonly cited 200–600 mcg range — conservative
-  and reasonable. (Note: with a U-100 syringe, the actual mcg depends on your reconstitution
-  concentration, not the unit mark alone.) *(High on math)*
+- **Your 1,000 mcg/day** (20 mg → 200u → 0.1 mg/unit → 10u = 1 mg) is **~2–5× the commonly
+  cited 200–600 mcg range.** Wide safety margin so not a danger flag, but likely no added
+  benefit past ~300–600 mcg, more overstim/anxiety/sleep risk, and ~3× the peptide burned.
+  **3 units (300 mcg)** would hit the studied range and stretch the vial 3×; or split AM +
+  midday. Your call — just know you're on the high end. *(High on math)*
 - **Tolerance/cycling:** No documented tolerance, but long-term data are thin. The "cycle to
   preserve receptor sensitivity" rule is **bro-science** — cycling (e.g. 4–8 wks on / 2–4 off)
   is defensible only as general caution given limited long-term safety data. *(Low on the stated rationale)*
