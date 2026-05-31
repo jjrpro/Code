@@ -89,11 +89,13 @@
     .piece:hover{transform:translateY(-8px);box-shadow:0 30px 70px rgba(224,33,138,.32)}
     .piece .art{aspect-ratio:4/5;background-size:cover;background-position:center;transition:transform .6s}
     .piece:hover .art{transform:scale(1.06)}
-    /* vibrant placeholders if no photo yet */
-    .a-lion{background-image:url('img/hero.jpg'),linear-gradient(135deg,#ff5e5b,#ffb01f)}
-    .a-fairy{background-image:url('img/fairy.jpg'),linear-gradient(135deg,#ffb01f,#e0218a)}
-    .a-angel{background-image:url('img/angel.jpg'),linear-gradient(135deg,#00c2c7,#7b2ff7)}
-    .a-moon{background-image:url('img/moon.jpg'),linear-gradient(135deg,#7b2ff7,#e0218a)}
+    /* Gene's real paintings load from img/*.jpg first; the Unsplash URLs are
+       TEMPORARY stock-art placeholders for this demo ONLY — replace before
+       showing the artist; the gradient is the final fallback. */
+    .a-lion{background-image:url('img/hero.jpg'),url('https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=900&q=70'),linear-gradient(135deg,#ff5e5b,#ffb01f)}
+    .a-fairy{background-image:url('img/fairy.jpg'),url('https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=900&q=70'),linear-gradient(135deg,#ffb01f,#e0218a)}
+    .a-angel{background-image:url('img/angel.jpg'),url('https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=900&q=70'),linear-gradient(135deg,#00c2c7,#7b2ff7)}
+    .a-moon{background-image:url('img/moon.jpg'),url('https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=900&q=70'),linear-gradient(135deg,#7b2ff7,#e0218a)}
     .piece .cap{position:absolute;left:0;right:0;bottom:0;padding:24px;color:#fff;
       background:linear-gradient(transparent,rgba(20,8,40,.85))}
     .piece .cap span{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--gold)}
@@ -161,7 +163,7 @@
     <div class="sec-head">
       <div class="kick">Selected Works</div>
       <h2>The Gallery</h2>
-      <p>Luminous, textured, alive — a glimpse of the collection.</p>
+      <p>Luminous, textured, alive — a glimpse of the collection.<br><em style="font-size:.82rem;opacity:.6">(Demo placeholders shown — replace with Gene's real paintings before publishing.)</em></p>
     </div>
     <div class="gallery">
       <div class="piece"><div class="art a-lion"></div><div class="cap"><span>Original Oil</span><h3>Pride</h3></div></div>
