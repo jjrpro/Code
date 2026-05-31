@@ -1,57 +1,72 @@
 /* ===========================================================================
    Jaurx Web Design — Obsidian color theme for THIS session's notes
    ===========================================================================
-   Colors everything in the projects/si-web-design/ folder a distinct
-   amber/gold so it stands out from your other modules (jaurx-vip, shopify,
-   local-638, trade-analysis).
+   Colors everything related to the si-web-design project a distinct amber/gold
+   so it stands out from your other modules (jaurx-vip, shopify, local-638,
+   trade-analysis).
 
    HOW TO TURN IT ON (one time, ~30 seconds):
    1. In Obsidian: Settings → Appearance → scroll to "CSS snippets".
-   2. Click the little folder icon to open the snippets folder.
-   3. Copy THIS file into that folder (keep the .css name).
+   2. Click the little FOLDER icon — this opens the correct snippets folder
+      (it's the hidden .obsidian/snippets/ folder; the folder icon finds it for you).
+   3. Copy THIS file into that folder (keep the .css extension).
    4. Back in Settings, hit the refresh icon, then toggle this snippet ON.
-   Done — the whole si-web-design folder + its notes glow amber.
+   Done — the whole si-web-design module glows amber.
 
-   Want a different color? Change every #d99a1c / #f3c14b below to your color.
+   This version matches BOTH possible vault layouts:
+     • projects/si-web-design/...   (full repo synced)
+     • si-web-design/...            (only the project subfolder synced)
+   …and also colors by the #jaurx-web-design tag, so even loose notes match.
+
+   Want a different color? Find-and-replace #d99a1c and #f3c14b below.
    ========================================================================== */
 
-/* --- File explorer (left sidebar): the whole folder + its files --- */
+/* --- File explorer: the folder title (either path) --- */
 .nav-folder-title[data-path="projects/si-web-design"],
-.nav-file-title[data-path^="projects/si-web-design/"] {
+.nav-folder-title[data-path="si-web-design"],
+.nav-folder-title[data-path$="/si-web-design"] {
   color: #d99a1c !important;
   font-weight: 600;
-}
-
-/* subtle highlight bar so the folder block reads as one "module" */
-.nav-folder-title[data-path="projects/si-web-design"] {
   background: linear-gradient(90deg, rgba(243,193,75,.16), transparent);
   border-left: 3px solid #f3c14b;
   border-radius: 4px;
 }
-.nav-file-title[data-path^="projects/si-web-design/"] {
+
+/* --- File explorer: every file inside the folder (either path) --- */
+.nav-file-title[data-path^="projects/si-web-design/"],
+.nav-file-title[data-path^="si-web-design/"],
+.nav-file-title[data-path*="/si-web-design/"] {
+  color: #d99a1c !important;
+  font-weight: 600;
   border-left: 3px solid rgba(243,193,75,.5);
 }
 
-/* hover/active state for those files */
-.nav-file-title[data-path^="projects/si-web-design/"]:hover {
+.nav-file-title[data-path^="projects/si-web-design/"]:hover,
+.nav-file-title[data-path^="si-web-design/"]:hover,
+.nav-file-title[data-path*="/si-web-design/"]:hover {
   background: rgba(243,193,75,.12) !important;
 }
-.nav-file-title.is-active[data-path^="projects/si-web-design/"] {
+.nav-file-title.is-active[data-path^="projects/si-web-design/"],
+.nav-file-title.is-active[data-path^="si-web-design/"],
+.nav-file-title.is-active[data-path*="/si-web-design/"] {
   background: rgba(243,193,75,.22) !important;
 }
 
-/* --- Open tabs/headers for these notes --- */
-.workspace-tab-header[aria-label^="projects/si-web-design"] .workspace-tab-header-inner-title {
+/* --- Open tab headers for these notes (either path) --- */
+.workspace-tab-header[aria-label*="si-web-design"] .workspace-tab-header-inner-title {
   color: #d99a1c;
 }
 
-/* --- The session tag pill (#jaurx-web-design) anywhere it appears --- */
-a.tag[href="#jaurx-web-design"] {
+/* --- The session tag pill #jaurx-web-design wherever it appears ---
+   This is the most reliable hook: every session note carries this tag, so
+   even if the folder paths don't match your layout, the tag still colors. --- */
+a.tag[href="#jaurx-web-design"],
+a.tag[href="#jaurx-web-design"]:hover {
   background: #f3c14b !important;
   color: #2a1d00 !important;
   font-weight: 700;
 }
 
-/* --- Graph view: nodes for this folder.
-   (CSS can't fully recolor graph nodes — use the Graph "Groups" method in the
-   instructions for that. This is just for the explorer/tabs/tags.) --- */
+/* --- Graph view note:
+   CSS can't recolor graph nodes. For the graph, use Graph view → Settings (gear)
+   → Groups → New group → query:  tag:#jaurx-web-design  → pick amber. --- */
