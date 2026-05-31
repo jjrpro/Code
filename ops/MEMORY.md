@@ -352,7 +352,16 @@ about 60 seconds, with rebase-on-conflict to avoid push rejection.
 |---|---|---|
 | Mac     | `bash ops/obsidian-sync/install-mac-sync.sh`         | LaunchAgent + `jjr-obsidian-sync-loop.sh` |
 | Windows | `powershell -ExecutionPolicy Bypass -File ops/obsidian-sync/install-windows-sync.ps1` | Scheduled Task + `jjr-obsidian-sync-loop.ps1` |
-| Web     | Already configured via `.claude/hooks/sync-memory.sh` Stop hook | Auto-rebase before push |
+| Web     | Already configured via `.claude/hooks/sync-memory.sh` Stop hook | Auto-rebase + **permanent vault mirror** |
+
+**Permanent vault branch (the fix for branch churn):** every web session runs
+on its own throwaway branch (`claude/<random>`), but Mac/Windows only pull ONE
+fixed branch — `claude/jjr-ops-handoff-QHQJj`, now the canonical **vault branch**.
+The Stop hook (`sync-memory.sh`) mirrors whatever session branch it's on INTO the
+vault branch on every sync (fast-forward, or merge if the vault moved). So new
+work can never again land on a branch the vault doesn't watch, and JR never has
+to touch his Mac/Windows config. To repoint the vault branch, change
+`VAULT_BRANCH` in `sync-memory.sh` (and the installers) — that's the only knob.
 
 **Cross-session memory:** `CLAUDE.md` at repo root instructs every new
 Claude Code session to read this file first, so context persists across
