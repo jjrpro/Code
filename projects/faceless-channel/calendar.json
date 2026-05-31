@@ -98,7 +98,7 @@
       "day": 11,
       "strong": false,
       "topic": "The city that vanished overnight",
-      "angle": "History",
+      "angle": "Maya collapse (Copán)",
       "status": "scripted",
       "script": "scripts/day11-cahokia.md"
     },
@@ -194,7 +194,7 @@
       "day": 23,
       "strong": false,
       "topic": "The door that's been sealed for 1,000 years",
-      "angle": "History mystery",
+      "angle": "Tutankhamun & the 'pharaoh's curse'",
       "status": "scripted",
       "script": "scripts/day23-sealed-door.md"
     },

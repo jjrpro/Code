@@ -3,19 +3,19 @@
 **Angle:** Everyday physics reveal · **Ratio:** 9:16 · **Length:** ~70s
 
 **HOOK (0–2s):**
-You're spinning at 1,000 miles an hour right now — and can't feel a thing.
+You're spinning at a thousand miles an hour right now. Feel it?
 
 **BODY:**
-The Earth rotates at about a thousand miles per hour at the equator. So why
-don't we feel it? Because everything moves with us — the ground, the air, you.
-There's no change in speed to sense. It's like a perfectly smooth flight: cruise
-at 500 miles an hour and you can sip coffee like you're sitting still. Motion
-only feels like motion when it speeds up, slows down, or turns. The Earth's spin
-is almost perfectly steady. If it suddenly stopped, the atmosphere would keep
-going — and winds would scour the planet at hundreds of miles an hour.
+Earth rotates at over a thousand miles per hour at the equator — and on top of
+that, it's hurtling around the Sun at 67,000 miles per hour. So why don't we feel
+any of it? Because the motion is perfectly smooth and constant. We only feel
+changes in speed, not speed itself — the same reason you don't feel a plane
+cruising at 500 miles an hour. Everything around you moves together: the air, the
+oceans, you. To feel the spin, you'd need something standing still to compare it
+to. And out here, there's nothing.
 
 **PAYOFF:**
-You're hurtling through space. It just feels like standing still.
+You're moving faster than a bullet — and it feels like standing still.
 
 **CTA:**
 Follow for one new wonder a day.

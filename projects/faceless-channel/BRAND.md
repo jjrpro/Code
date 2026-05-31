@@ -1,40 +1,44 @@
 # Curious Frame — Brand Kit (paste-ready for account setup)
 
 Use this when you create the Google / YouTube / TikTok accounts. Everything
-below is copy-paste ready.
+below is copy-paste ready. Full per-video pack: `2026-05-31-curious-frame-launch-pack.md`.
 
 ## Name & handles
 - **Channel name:** Curious Frame
-- **Handle (try in order):** @CuriousFrame · @CuriousFrameTV · @TheCuriousFrame · @CuriousFrameHQ
-- Use the **same handle on YouTube and TikTok** for cross-promo.
+- **Handle:** **@curiousframe** — check YouTube + TikTok, grab both the same day.
+- **Alternates if taken:** Wonder Index · 90 Second Universe · The Unseen Reel
 
 ## Tagline
-> One new wonder a day.
+> One wonder a day.
 
-## About / channel description (paste into YouTube "About" + TikTok bio)
-**Short (TikTok bio, ~80 char):**
-> Cinematic answers to the questions you didn't know you had. New wonder daily. 🌌
+## One-line description (bios)
+> Bite-sized cinematic answers to the questions you never stopped wondering about. New wonder every day.
 
-**Long (YouTube About):**
-> Curious Frame turns the most fascinating questions in science, space, history,
-> and the natural world into short cinematic stories. Every video is originally
-> researched and written, paired with original visuals — 60 to 90 seconds of
-> genuine wonder. New video most days. Follow for one new wonder a day.
+## YouTube "About" (paste-ready)
+> Curious Frame turns the universe's most fascinating questions into 90-second
+> cinematic journeys. Space, the deep ocean, lost history, the human body — every
+> video is researched, written, and built to make you see the world a little
+> differently. Subscribe for one new wonder a day.
 
-## Voice
-Calm, confident, slightly cinematic narrator. Short sentences. Lets the facts
-and visuals do the work. Never hype-y or clickbait-shouty.
+## Banner text
+> CURIOUS FRAME — one wonder a day
 
-## Visual signature (keep these identical every video = recognizable channel)
-- **Grade:** deep teal-and-black, high contrast, single cinematic LUT
-- **Captions:** one bold sans-serif font, centered, large, high-contrast
-- **Intro stinger:** ~0.5s — logo flash + a single low "whoosh" tone
-- **Aspect:** 9:16 for Shorts/TikTok (16:9 versions later for long-form)
-- **End frame:** "Follow for one new wonder a day." on black
+## Visual identity (keep identical every video = recognizable channel)
+- **Palette:** deep navy / black background, single cool-cyan accent, warm-white captions.
+- **Caption font:** bold geometric sans (Montserrat / Poppins ExtraBold), centered, high contrast.
+- **Intro stinger:** 1.5s — black screen, a cyan line draws a "frame," whoosh, then the hook line.
+- **Aspect:** 9:16 for Shorts / TikTok / Reels (16:9 compilations later for watch hours).
+- **Consistency rule:** same intro, same caption style, same narrator voice on every
+  video. Consistency trains the algorithm and the audience.
+
+## Narrator voice
+Calm, low, confident, slightly cinematic — nature-documentary narrator, unhurried.
+Pick one AI voice (or your own) and **never change it**.
 
 ## Thumbnail rule (for long-form uploads)
-Dark cinematic scene + 3–5 word bold overlay + one focal subject. No clutter.
+Dark cinematic scene + 3–5 word cyan overlay + one focal subject. No clutter.
 
 ## First-week posting
-Lead with the ★ strong-hook days from `calendar.json` (Days 1, 3, 6, 9, 12…).
-Post the single strongest (Day 1 or Day 3) first.
+Lead with the ★ strong-hook days (1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30).
+Post the single strongest (Day 1 or Day 3) first. 1/day minimum; batch a week ahead.
+Cross-post the same file to YouTube Shorts + TikTok + Instagram Reels.

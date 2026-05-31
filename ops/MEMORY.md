@@ -71,6 +71,11 @@ Lives in `projects/faceless-channel/`.
   the morning"; then Claude renders + sets up daily autopilot trigger.
 - **Next for Claude:** once credits land, build per-video manifests + render the
   ★ strong days first (1, 3, then 6/9/12…), score, package, hand off.
+- **AUTHORITATIVE publish copy:** `2026-05-31-curious-frame-launch-pack.md` holds
+  all 30 videos fully packaged (hook, script, title, description, hashtags,
+  thumbnail) + final branding (tagline "One wonder a day", handle @curiousframe,
+  navy/cyan palette). Scripts reconciled to it (Day 11=Maya/Copán, 23=Tutankhamun,
+  25=+cenote, 2=+67k mph). Per-beat visual prompts still TODO at render time.
 - **Relation to DropVault:** both gated on the same media-credit top-up. Two
   parallel AI-content revenue streams; JR to say whether to run both or focus one.
 
