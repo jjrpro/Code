@@ -1,198 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--
-  ⚠️ TO PUT THE REAL PAINTINGS IN THE PREVIEW — two ways (pick one):
+  ⚠️ REAL PAINTINGS GO IN via either:
+   (A) hosted .jpg URLs — paste them to me, I bake them into the IMG[] list below.
+   (B) files in img/:  hero.jpg (lion) · fairy.jpg · angel.jpg · moon.jpg ·
+       wave.jpg · madonna.jpg · about.jpg
+  Until then, clearly-labeled stock-art placeholders show for the demo ONLY —
+  must be replaced with Gene's real work before this is shown to him / published.
 
-  (A) FASTEST — host the images & paste the URLs to me, I bake them in:
-      Then they appear in the live preview instantly. Nothing else to do.
-
-  (B) FILES — drop the 4 photos in an "img/" folder next to this file:
-        img/hero.jpg   → red/coal LION mosaic
-        img/fairy.jpg  → golden butterfly-wing FAIRY
-        img/angel.jpg  → stone ANGEL
-        img/moon.jpg   → crescent-MOON fairy
-        img/about.jpg  → (optional) Gene / the sailboat studio
-      The CSS already points at these names. Until added, vibrant colored
-      placeholders show so the preview still looks alive.
-
-  Business: EyeCandy Art Studios — Gene Wagner (real NY oil painter)
-  Contact: Instagram DM @eyecandy_art_studios (confirmed). 3.1k followers.
+  Business: EyeCandy Art Studios — Gene Wagner, oil painter, Staten Island NY.
+  Real works seen on IG: MATER AQUA VITAE, THE 11TH COMMANDMENT, FLUID DYNAMICS
+  (oil + 24kt gold leaf + gemstones). Contact: IG DM @eyecandy_art_studios.
 -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EyeCandy Art Studios — Vibrant Original Oils by Gene Wagner</title>
-  <meta name="description" content="EyeCandy Art Studios — bold, vibrant original oil paintings by New York artist Gene Wagner. Lions, angels & fairies in luminous color. Originals, prints & commissions." />
+  <title>EyeCandy Art Studios — Original Oils by Gene Wagner · Staten Island</title>
+  <meta name="description" content="EyeCandy Art Studios — bold, luminous original oil paintings by Staten Island artist Gene Wagner. Real gold leaf & gemstones. Originals, prints & commissions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"VisualArtsEvent","name":"EyeCandy Art Studios","creator":{"@type":"Person","name":"Gene Wagner"},"sameAs":"https://www.instagram.com/eyecandy_art_studios/"}
+  {"@context":"https://schema.org","@type":"VisualArtsEvent","name":"EyeCandy Art Studios","creator":{"@type":"Person","name":"Gene Wagner"},"location":{"@type":"Place","address":"Staten Island, NY"},"sameAs":"https://www.instagram.com/eyecandy_art_studios/"}
   </script>
   <style>
     :root{
-      --ink:#1a1130; --paper:#fffdf8;
-      --magenta:#e0218a; --violet:#7b2ff7; --teal:#00c2c7; --amber:#ffb01f;
-      --coral:#ff5e5b; --gold:#f5c542; --gold-deep:#d99a1c;
-      --line:rgba(255,255,255,.18); --radius:18px; --maxw:1140px;
-      --serif:"Playfair Display",Georgia,serif;
-      --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      --ink:#160f24; --paper:#fbf7ef; --paper2:#f3ecdd;
+      --magenta:#e0218a; --violet:#7b2ff7; --teal:#06c1c7; --amber:#ffb01f; --coral:#ff5d5b; --gold:#f3c14b;
+      --maxw:1180px; --serif:"Fraunces",Georgia,serif; --sans:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap');
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
-    body{font-family:var(--sans);color:var(--ink);background:#120a24;line-height:1.6;overflow-x:hidden}
+    body{font-family:var(--sans);color:var(--ink);background:#0d0820;line-height:1.6;overflow-x:hidden}
     a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-    h1,h2,h3{font-family:var(--serif);line-height:1.1}
-    .btn{display:inline-block;font-weight:700;padding:15px 32px;border-radius:999px;letter-spacing:.03em;
-      font-size:.95rem;transition:transform .15s,box-shadow .2s;border:none;cursor:pointer}
-    .btn:hover{transform:translateY(-3px) scale(1.02)}
-    .btn-grad{background:linear-gradient(90deg,var(--magenta),var(--amber));color:#fff;
-      box-shadow:0 10px 30px rgba(224,33,138,.45)}
-    .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.5);backdrop-filter:blur(4px)}
-    .btn-ghost:hover{background:rgba(255,255,255,.22)}
-    section{padding:90px 0;position:relative}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+    h1,h2,h3{font-family:var(--serif);line-height:1.05;font-weight:700}
+    .grad-text{background:linear-gradient(90deg,var(--magenta),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;padding:16px 34px;border-radius:999px;
+      font-size:.96rem;letter-spacing:.01em;border:none;cursor:pointer;transition:transform .18s,box-shadow .25s}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-grad{background:linear-gradient(90deg,var(--magenta),var(--coral),var(--amber));background-size:200% auto;color:#fff;
+      box-shadow:0 12px 34px rgba(224,33,138,.5);animation:shine 5s linear infinite}
+    @keyframes shine{to{background-position:200% center}}
+    .btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.55);backdrop-filter:blur(6px)}
+    .btn-ghost:hover{background:rgba(255,255,255,.2)}
+    .btn-dark{background:var(--ink);color:#fff;box-shadow:0 12px 30px rgba(22,15,36,.3)}
+    section{padding:100px 0;position:relative}
 
-    /* animated rainbow backdrop */
-    .aurora{position:fixed;inset:0;z-index:-2;
-      background:linear-gradient(125deg,#7b2ff7,#e0218a,#ff5e5b,#ffb01f,#00c2c7,#7b2ff7);
-      background-size:400% 400%;animation:flow 22s ease infinite;opacity:.92}
-    .aurora::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0,transparent,rgba(18,10,36,.55) 70%)}
+    /* animated aurora */
+    .aurora{position:fixed;inset:0;z-index:-2;background:linear-gradient(125deg,#7b2ff7,#e0218a,#ff5d5b,#ffb01f,#06c1c7,#7b2ff7);
+      background-size:400% 400%;animation:flow 24s ease infinite}
     @keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .grain{position:fixed;inset:0;z-index:-1;opacity:.06;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+    /* reveal on scroll */
+    .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
 
     /* header */
-    header{position:sticky;top:0;z-index:50;background:rgba(18,10,36,.55);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-    .nav{display:flex;align-items:center;justify-content:space-between;height:74px;color:#fff}
-    .logo{font-family:var(--serif);font-weight:800;font-size:1.35rem}
+    header{position:sticky;top:0;z-index:60;background:rgba(13,8,32,.5);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.12)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:78px;color:#fff}
+    .logo{font-family:var(--serif);font-weight:700;font-size:1.4rem;letter-spacing:-.01em}
     .logo span{background:linear-gradient(90deg,var(--amber),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .nav-links{display:flex;gap:28px;align-items:center}
-    .nav-links a{font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.85)}
+    .nav-links{display:flex;gap:30px;align-items:center}
+    .nav-links a{font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.82);font-weight:700}
     .nav-links a:hover{color:#fff}
-    .nav-ig{background:linear-gradient(90deg,var(--magenta),var(--amber));padding:9px 18px;border-radius:999px;color:#fff!important;font-weight:700;letter-spacing:.06em}
+    .nav-ig{background:linear-gradient(90deg,var(--magenta),var(--amber));padding:10px 20px;border-radius:999px;color:#fff!important}
 
     /* hero */
-    .hero{min-height:92vh;display:flex;align-items:center;text-align:center;color:#fff;
-      /* img/hero.jpg (Gene's lion) wins once added; stock art is a demo placeholder */
-      background:
-        linear-gradient(rgba(18,10,36,.62),rgba(18,10,36,.78)),
-        url('img/hero.jpg'),
+    .hero{min-height:96vh;display:flex;align-items:center;text-align:center;color:#fff;position:relative;
+      background:linear-gradient(rgba(13,8,32,.55),rgba(13,8,32,.8)),url('img/hero.jpg'),
         url('https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=1600&q=70');
       background-size:cover;background-position:center}
-    .hero .badge{display:inline-block;background:rgba(255,255,255,.16);border:1px solid var(--line);
-      padding:8px 20px;border-radius:999px;letter-spacing:.26em;text-transform:uppercase;font-size:.74rem;margin-bottom:26px;backdrop-filter:blur(6px)}
-    .hero h1{font-size:clamp(3rem,9vw,6.5rem);font-weight:800;text-shadow:0 6px 40px rgba(0,0,0,.35);margin-bottom:18px}
+    .hero .badge{display:inline-flex;gap:10px;align-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+      padding:9px 22px;border-radius:999px;letter-spacing:.24em;text-transform:uppercase;font-size:.72rem;font-weight:700;margin-bottom:28px;backdrop-filter:blur(6px)}
+    .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber)}
+    .hero h1{font-size:clamp(3.2rem,10vw,7rem);font-weight:700;letter-spacing:-.02em;text-shadow:0 8px 50px rgba(0,0,0,.4)}
     .hero h1 em{font-style:italic;background:linear-gradient(90deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .hero p{font-size:1.25rem;max-width:620px;margin:0 auto 36px;color:rgba(255,255,255,.95)}
+    .hero p{font-size:1.3rem;max-width:640px;margin:22px auto 38px;color:rgba(255,255,255,.96)}
     .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:.72rem;
+      letter-spacing:.3em;text-transform:uppercase;animation:bob 2.2s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:transl(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+    /* marquee strip */
+    .strip{background:var(--ink);color:#fff;padding:18px 0;overflow:hidden;white-space:nowrap}
+    .strip .row{display:inline-block;animation:scrollx 26s linear infinite}
+    .strip span{font-family:var(--serif);font-style:italic;font-size:1.2rem;margin:0 26px;opacity:.85}
+    .strip span b{color:var(--gold);font-style:normal}
+    @keyframes scrollx{to{transform:translateX(-50%)}}
 
     /* gallery */
-    .panel{background:var(--paper);border-radius:40px 40px 0 0;margin-top:30px}
-    .sec-head{text-align:center;max-width:680px;margin:0 auto 56px}
-    .sec-head .kick{font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:.8rem;
-      background:linear-gradient(90deg,var(--magenta),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px}
-    .sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800}
-    .sec-head p{color:#6b6280;margin-top:14px;font-size:1.05rem}
-    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:34px}
-    .piece{position:relative;border-radius:var(--radius);overflow:hidden;
-      box-shadow:0 18px 50px rgba(123,47,247,.18);transition:transform .3s,box-shadow .3s}
-    .piece:hover{transform:translateY(-8px);box-shadow:0 30px 70px rgba(224,33,138,.32)}
-    .piece .art{aspect-ratio:4/5;background-size:cover;background-position:center;transition:transform .6s}
-    .piece:hover .art{transform:scale(1.06)}
-    /* Gene's real paintings load from img/*.jpg first; the Unsplash URLs are
-       TEMPORARY stock-art placeholders for this demo ONLY — replace before
-       showing the artist; the gradient is the final fallback. */
-    .a-lion{background-image:url('img/hero.jpg'),url('https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=900&q=70'),linear-gradient(135deg,#ff5e5b,#ffb01f)}
-    .a-fairy{background-image:url('img/fairy.jpg'),url('https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=900&q=70'),linear-gradient(135deg,#ffb01f,#e0218a)}
-    .a-angel{background-image:url('img/angel.jpg'),url('https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=900&q=70'),linear-gradient(135deg,#00c2c7,#7b2ff7)}
-    .a-moon{background-image:url('img/moon.jpg'),url('https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=900&q=70'),linear-gradient(135deg,#7b2ff7,#e0218a)}
-    .piece .cap{position:absolute;left:0;right:0;bottom:0;padding:24px;color:#fff;
-      background:linear-gradient(transparent,rgba(20,8,40,.85))}
-    .piece .cap span{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--gold)}
-    .piece .cap h3{font-size:1.5rem;font-weight:700;margin-top:4px}
+    .panel{background:var(--paper);border-radius:46px 46px 0 0;margin-top:-26px;position:relative;z-index:2}
+    .sec-head{text-align:center;max-width:700px;margin:0 auto 60px}
+    .sec-head .kick{font-weight:800;letter-spacing:.24em;text-transform:uppercase;font-size:.78rem;
+      background:linear-gradient(90deg,var(--magenta),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:16px}
+    .sec-head h2{font-size:clamp(2.4rem,5.5vw,3.8rem)}
+    .sec-head p{color:#6b6280;margin-top:16px;font-size:1.08rem}
+    .gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:22px}
+    .piece{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;
+      box-shadow:0 18px 50px rgba(123,47,247,.18);transition:transform .35s,box-shadow .35s}
+    .piece:hover{transform:translateY(-10px);box-shadow:0 34px 80px rgba(224,33,138,.34)}
+    .piece.big{grid-column:span 3}.piece.sm{grid-column:span 2}.piece.wide{grid-column:span 3}
+    .piece .art{width:100%;height:100%;min-height:260px;background-size:cover;background-position:center;transition:transform .7s}
+    .piece.big .art{min-height:440px}.piece.wide .art{min-height:300px}
+    .piece:hover .art{transform:scale(1.07)}
+    .piece .cap{position:absolute;left:0;right:0;bottom:0;padding:26px;color:#fff;background:linear-gradient(transparent,rgba(15,6,32,.9));transform:translateY(8px);opacity:.92;transition:.3s}
+    .piece:hover .cap{transform:none;opacity:1}
+    .piece .cap span{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;color:var(--gold)}
+    .piece .cap h3{font-family:var(--serif);font-size:1.55rem;margin-top:4px}
+    .piece .zoom{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+      background:rgba(255,255,255,.18);backdrop-filter:blur(6px);color:#fff;font-size:1rem;opacity:0;transition:.3s}
+    .piece:hover .zoom{opacity:1}
+
+    /* process */
+    .process{background:var(--paper)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px}
+    .step{background:#fff;border-radius:24px;padding:38px 30px;box-shadow:0 16px 44px rgba(123,47,247,.1);position:relative;overflow:hidden}
+    .step::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--magenta),var(--amber))}
+    .step .ic{font-size:2.2rem;margin-bottom:14px}
+    .step h3{font-size:1.4rem;margin-bottom:8px}.step p{color:#6b6280}
 
     /* about */
-    .about{background:var(--paper)}
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-    .about-img{aspect-ratio:4/5;border-radius:var(--radius);background-size:cover;background-position:center;
-      background-image:url('img/about.jpg'),linear-gradient(135deg,#7b2ff7,#00c2c7);
-      box-shadow:0 20px 60px rgba(123,47,247,.25)}
-    .about .kick{font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:.8rem;
-      background:linear-gradient(90deg,var(--teal),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px}
-    .about h2{font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:800;margin-bottom:20px}
-    .about p{color:#544c66;margin-bottom:16px;font-size:1.06rem}
-    .stats{display:flex;gap:40px;margin-top:30px}
-    .stats .n{font-family:var(--serif);font-weight:800;font-size:2.1rem;
+    .about{background:var(--paper2)}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+    .about-img{aspect-ratio:4/5;border-radius:26px;background-size:cover;background-position:center;
+      background-image:url('img/about.jpg'),url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1000&q=70');
+      box-shadow:0 24px 70px rgba(123,47,247,.28)}
+    .about .kick{font-weight:800;letter-spacing:.24em;text-transform:uppercase;font-size:.78rem;
+      background:linear-gradient(90deg,var(--teal),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:16px}
+    .about h2{font-size:clamp(2.3rem,5vw,3.4rem);margin-bottom:20px}
+    .about p{color:#544c66;margin-bottom:16px;font-size:1.08rem}
+    .stats{display:flex;gap:44px;margin-top:32px;flex-wrap:wrap}
+    .stats .n{font-family:var(--serif);font-weight:700;font-size:2.3rem;
       background:linear-gradient(90deg,var(--magenta),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .stats .l{color:#8a8298;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em}
+    .stats .l{color:#8a8298;font-size:.76rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
 
     /* commissions band */
     .band{text-align:center;color:#fff}
-    .band .inner{background:rgba(18,10,36,.34);backdrop-filter:blur(8px);border:1px solid var(--line);
-      border-radius:32px;padding:64px 28px;max-width:760px;margin:0 auto}
-    .band h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;margin-bottom:16px}
-    .band p{max-width:560px;margin:0 auto 30px;color:rgba(255,255,255,.95);font-size:1.1rem}
+    .band .inner{background:rgba(13,8,32,.4);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);
+      border-radius:36px;padding:72px 30px;max-width:820px;margin:0 auto}
+    .band h2{font-size:clamp(2.3rem,5.5vw,3.8rem);margin-bottom:18px}
+    .band p{max-width:580px;margin:0 auto 32px;color:rgba(255,255,255,.96);font-size:1.14rem}
 
     /* contact */
-    .contact{background:var(--paper);text-align:center;border-radius:0 0 40px 40px}
-    .contact .kick{font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:.8rem;
-      background:linear-gradient(90deg,var(--magenta),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:12px}
-    .contact h2{font-size:clamp(2.2rem,4.5vw,3rem);font-weight:800;margin-bottom:8px}
-    .contact .ig{font-family:var(--serif);font-weight:700;font-size:1.7rem;margin:14px 0 26px;display:inline-block;
+    .contact{background:var(--paper);text-align:center;border-radius:0 0 46px 46px}
+    .contact .kick{font-weight:800;letter-spacing:.24em;text-transform:uppercase;font-size:.78rem;
+      background:linear-gradient(90deg,var(--magenta),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px}
+    .contact h2{font-size:clamp(2.3rem,5vw,3.2rem)}
+    .contact .ig{font-family:var(--serif);font-style:italic;font-weight:700;font-size:1.9rem;margin:16px 0 28px;display:inline-block;
       background:linear-gradient(90deg,var(--violet),var(--magenta),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
-    footer{text-align:center;padding:34px 0;color:rgba(255,255,255,.75);font-size:.85rem}
+    footer{text-align:center;padding:38px 0;color:rgba(255,255,255,.78);font-size:.85rem}
     footer a{color:var(--gold)}
-    @media(max-width:820px){.nav-links a:not(.nav-ig){display:none}.gallery{grid-template-columns:1fr}.split{grid-template-columns:1fr}.about-img{max-width:440px;margin:0 auto}}
+
+    /* lightbox */
+    .lb{position:fixed;inset:0;z-index:100;background:rgba(8,4,18,.94);display:none;align-items:center;justify-content:center;padding:30px;cursor:zoom-out}
+    .lb.open{display:flex}
+    .lb img{max-width:92vw;max-height:86vh;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+    .lb .cls{position:absolute;top:24px;right:30px;color:#fff;font-size:2rem;cursor:pointer;opacity:.85}
+    .lb .cap{position:absolute;bottom:30px;left:0;right:0;text-align:center;color:#fff;font-family:var(--serif);font-style:italic;font-size:1.2rem}
+
+    @media(max-width:860px){
+      .nav-links a:not(.nav-ig){display:none}
+      .gallery{grid-template-columns:1fr 1fr}
+      .piece.big,.piece.sm,.piece.wide{grid-column:span 2}
+      .piece .art,.piece.big .art{min-height:240px}
+      .steps{grid-template-columns:1fr}.split{grid-template-columns:1fr}.about-img{max-width:440px;margin:0 auto}
+    }
   </style>
 </head>
 <body>
-  <div class="aurora"></div>
+  <div class="aurora"></div><div class="grain"></div>
 
   <header><div class="wrap nav">
     <a href="#" class="logo">EyeCandy <span>Art Studios</span></a>
     <nav class="nav-links">
-      <a href="#gallery">Gallery</a><a href="#about">About</a><a href="#commissions">Commissions</a>
+      <a href="#gallery">Gallery</a><a href="#process">Process</a><a href="#about">About</a><a href="#commissions">Commissions</a>
       <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="nav-ig">Instagram</a>
     </nav>
   </div></header>
 
   <!-- HERO -->
   <section class="hero"><div class="wrap">
-    <div class="badge">Original Oil Paintings · Staten Island, NY</div>
+    <div class="badge"><span class="dot"></span> Original Oils · Staten Island, NY</div>
     <h1>Art that <em>glows.</em></h1>
-    <p>Bold, luminous oil paintings by Gene Wagner — lions, angels, and fairies bursting with color. Every piece one of a kind.</p>
+    <p>Bold, luminous oil paintings by Gene Wagner — touched with real gold leaf and gemstones, each one truly one of a kind.</p>
     <div class="hero-actions">
-      <a href="#gallery" class="btn btn-grad">✨ View the Gallery</a>
+      <a href="#gallery" class="btn btn-grad">✨ Explore the Gallery</a>
       <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="btn btn-ghost">Follow @eyecandy_art_studios</a>
     </div>
+    <div class="scroll-hint">Scroll ↓</div>
   </div></section>
+
+  <!-- MARQUEE -->
+  <div class="strip"><div class="row">
+    <span>Oil on canvas</span><span><b>·</b></span><span>24kt gold leaf</span><span><b>·</b></span><span>Genuine gemstones</span><span><b>·</b></span><span>Commissions welcome</span><span><b>·</b></span><span>One of a kind</span><span><b>·</b></span>
+    <span>Oil on canvas</span><span><b>·</b></span><span>24kt gold leaf</span><span><b>·</b></span><span>Genuine gemstones</span><span><b>·</b></span><span>Commissions welcome</span><span><b>·</b></span><span>One of a kind</span><span><b>·</b></span>
+  </div></div>
 
   <!-- GALLERY -->
   <div class="panel">
   <section id="gallery"><div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <div class="kick">Selected Works</div>
       <h2>The Gallery</h2>
-      <p>Luminous, textured, alive — a glimpse of the collection.<br><em style="font-size:.82rem;opacity:.6">(Demo placeholders shown — replace with Gene's real paintings before publishing.)</em></p>
+      <p>Luminous, textured, alive. Tap any piece to view it larger.<br><em style="font-size:.82rem;opacity:.6">(Demo placeholders shown — swap in Gene's real paintings before publishing.)</em></p>
     </div>
     <div class="gallery">
-      <div class="piece"><div class="art a-lion"></div><div class="cap"><span>Original Oil</span><h3>Pride</h3></div></div>
-      <div class="piece"><div class="art a-fairy"></div><div class="cap"><span>Original Oil</span><h3>Golden Fae</h3></div></div>
-      <div class="piece"><div class="art a-angel"></div><div class="cap"><span>Original Oil</span><h3>Guardian</h3></div></div>
-      <div class="piece"><div class="art a-moon"></div><div class="cap"><span>Original Oil</span><h3>Moonlit</h3></div></div>
+      <!-- IMG list — replace each background-image url with Gene's real .jpg -->
+      <div class="piece big reveal" data-img="https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=1400&q=80" data-title="Pride — Oil on canvas">
+        <div class="art" style="background-image:url('img/hero.jpg'),url('https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=1000&q=75')"></div>
+        <div class="zoom">⤢</div><div class="cap"><span>Original Oil</span><h3>Pride</h3></div>
+      </div>
+      <div class="piece sm reveal" data-img="https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=1400&q=80" data-title="Golden Fae — Oil & gold leaf">
+        <div class="art" style="background-image:url('img/fairy.jpg'),url('https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=900&q=75')"></div>
+        <div class="zoom">⤢</div><div class="cap"><span>Oil + Gold Leaf</span><h3>Golden Fae</h3></div>
+      </div>
+      <div class="piece sm reveal" data-img="https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=1400&q=80" data-title="Guardian — Oil on canvas">
+        <div class="art" style="background-image:url('img/angel.jpg'),url('https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=900&q=75')"></div>
+        <div class="zoom">⤢</div><div class="cap"><span>Original Oil</span><h3>Guardian</h3></div>
+      </div>
+      <div class="piece wide reveal" data-img="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=1400&q=80" data-title="Moonlit — Oil on canvas">
+        <div class="art" style="background-image:url('img/moon.jpg'),url('https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=1000&q=75')"></div>
+        <div class="zoom">⤢</div><div class="cap"><span>Original Oil</span><h3>Moonlit</h3></div>
+      </div>
+      <div class="piece wide reveal" data-img="https://images.unsplash.com/photo-1549887534-1541e9326642?w=1400&q=80" data-title="Fluid Dynamics — Oil on canvas">
+        <div class="art" style="background-image:url('img/wave.jpg'),url('https://images.unsplash.com/photo-1549887534-1541e9326642?w=1000&q=75')"></div>
+        <div class="zoom">⤢</div><div class="cap"><span>Original Oil</span><h3>Fluid Dynamics</h3></div>
+      </div>
     </div>
-    <div style="text-align:center;margin-top:50px">
+    <div style="text-align:center;margin-top:54px" class="reveal">
       <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="btn btn-grad">See 480+ works on Instagram →</a>
+    </div>
+  </div></section>
+
+  <!-- PROCESS -->
+  <section id="process" class="process"><div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kick">How It Works</div>
+      <h2>From canvas to your wall</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="ic">🎨</div><h3>1. Discover</h3><p>Browse the gallery or Gene's Instagram and find the piece that speaks to you — or dream up a custom commission.</p></div>
+      <div class="step reveal"><div class="ic">💬</div><h3>2. Connect</h3><p>Message the studio on Instagram. Gene talks you through the piece, sizing, gold-leaf options, and pricing.</p></div>
+      <div class="step reveal"><div class="ic">🖼️</div><h3>3. Collect</h3><p>Your one-of-a-kind original — or a fine-art print — arrives ready to hang and glow on your wall.</p></div>
     </div>
   </div></section>
 
   <!-- ABOUT -->
   <section id="about" class="about"><div class="wrap split">
-    <div class="about-img" role="img" aria-label="Gene Wagner in his sailboat studio"></div>
-    <div>
+    <div class="about-img reveal" role="img" aria-label="Gene Wagner in his sailboat studio"></div>
+    <div class="reveal">
       <div class="kick">The Artist</div>
       <h2>Gene Wagner</h2>
-      <p>New York born and raised, Gene makes art from the heart — rich, expressive oils with real gold leaf and gemstones, alive with color and texture you can feel.</p>
+      <p>New York born and raised, Gene makes art from the heart — rich, expressive oils layered with 24kt gold leaf and genuine gemstones, alive with color and texture you can feel.</p>
       <p>Based in Staten Island, his studio is also his home: a sailboat where he paints alongside his wife and their dog, Mojo. Every canvas is original, one of a kind, made with love.</p>
       <div class="stats">
         <div><div class="n">480+</div><div class="l">Works</div></div>
         <div><div class="n">3,100+</div><div class="l">Followers</div></div>
+        <div><div class="n">24kt</div><div class="l">Gold Leaf</div></div>
         <div><div class="n">1 of 1</div><div class="l">Every Piece</div></div>
       </div>
     </div>
@@ -200,25 +265,42 @@
   </div>
 
   <!-- COMMISSIONS -->
-  <section id="commissions" class="band"><div class="wrap"><div class="inner">
-    <h2>Originals &amp; Commissions</h2>
-    <p>Want an original, a print, or a custom commission? Message the studio on Instagram — Gene would love to talk.</p>
+  <section id="commissions" class="band"><div class="wrap"><div class="inner reveal">
+    <h2>Originals · Prints · Commissions</h2>
+    <p>Want to bring a piece home, or have something custom dreamed up just for you? Message the studio — Gene would love to talk.</p>
     <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="btn btn-grad">💬 Inquire on Instagram</a>
   </div></div></section>
 
   <!-- CONTACT -->
-  <section id="contact" class="contact"><div class="wrap">
+  <section id="contact" class="contact"><div class="wrap reveal">
     <div class="kick">Get in Touch</div>
-    <h2>Let's Talk Art</h2>
+    <h2>Let's talk art</h2>
     <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="ig">@eyecandy_art_studios</a><br>
-    <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="btn btn-grad">Message the Studio</a>
-    <p style="color:#8a8298;margin-top:24px;font-size:.92rem;">New York · Studio aboard the sailboat <em>Eyecandy</em></p>
+    <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener" class="btn btn-dark">Message the Studio</a>
+    <p style="color:#8a8298;margin-top:26px;font-size:.92rem;">Staten Island, New York · Studio aboard the sailboat <em>Eyecandy</em></p>
   </div></section>
 
   <footer><div class="wrap">
     <p>© <span id="yr"></span> EyeCandy Art Studios — Original oils by Gene Wagner · <a href="https://www.instagram.com/eyecandy_art_studios/" target="_blank" rel="noopener">@eyecandy_art_studios</a></p>
     <p style="margin-top:8px;opacity:.6;font-size:.8rem">Website by Jaurx Web Design</p>
   </div></footer>
-  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+
+  <!-- LIGHTBOX -->
+  <div class="lb" id="lb"><span class="cls" id="lbClose">✕</span><img id="lbImg" alt=""><div class="cap" id="lbCap"></div></div>
+
+  <script>
+    document.getElementById('yr').textContent=new Date().getFullYear();
+    // scroll reveal
+    const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+    document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*70)+'ms';io.observe(el)});
+    // lightbox
+    const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+    document.querySelectorAll('.piece').forEach(p=>p.addEventListener('click',()=>{
+      lbImg.src=p.dataset.img;lbCap.textContent=p.dataset.title||'';lb.classList.add('open');
+    }));
+    function close(){lb.classList.remove('open')}
+    lb.addEventListener('click',close);document.getElementById('lbClose').addEventListener('click',close);
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+  </script>
 </body>
 </html>
