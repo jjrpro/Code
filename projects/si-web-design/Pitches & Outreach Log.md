@@ -44,6 +44,28 @@ All 5 are finished. Deploy each: folder → app.netlify.com/drop → Change site
 > blur "Maria Alterations by Gabriella" with a "Maria Cleaners & Tailors" at the
 > same Jewett Ave address. The IG @mariaalterationsnconcierges is the right page.
 
+---
+
+## Ready-to-send pitches (the 4 fully-ready sites)
+
+Deploy each, paste its Netlify link where it says **[LINK]**, then send.
+Walk-in beats DM for the food/butcher ones — show it on your phone in person.
+
+### 💅 Eltingville Nail Salon — call / Facebook DM / walk-in
+> Hi! I'm local on Staten Island and I build simple websites for shops around here. Noticed Eltingville Nail Salon doesn't have its own site yet, so I made you one to show what it could look like: [LINK] — it's got your services, hours, tap-to-call, and a clean mobile layout. No obligation, figured you'd want to see it. If you like it I can get it live on your own web address this week. 💅
+
+### 🥯 M & M Deli & Bagels — call / walk-in (best)
+> *(Walk in during a slow hour, pull it up on your phone)* "Hey, is the owner around? I'm [Your Name], I'm local — I build websites for spots around here. I actually made one for M & M already, mind if I show you?" *(show [LINK])* "It's got your menu, hours, tap-to-call. I can put it on your own web address this week — $400, or $400 + $40/mo if you want me to host it and handle changes." 🥯
+
+### 🥩 Regina Annadale Meat Market — IG DM @reginaannadalemeatmarket / call / walk-in
+> Hi! I'm local on Staten Island and I build websites for shops around here. Regina's been a neighborhood staple since '88 — figured you should have a site to match. I made you one to show what it'd look like: [LINK] — your counter, hours, tap-to-call, even holiday/catering orders. No obligation. If you like it I can get it live on your own web address this week. 🥩
+
+### 🍪 Cookies N Cream — IG DM @cookiesncream.sitottenville
+> Hey! I'm local on Staten Island and I build websites for shops around here. Love what you've got going in Tottenville — noticed Cookies N Cream doesn't have its own site yet, so I made you one: [LINK] — cookies, ice cream, hours, tap-to-call, and a spot for catering & custom boxes. Mobile-friendly, no strings. If you like it I can get it live on your own web address this week. 🍪
+
+**Follow-up (any, +3 days, no reply):**
+> Hey, just bumping this — did you get a chance to check out the site I made for [Business]? [LINK] No worries if not, didn't want it to get buried!
+
 ## ⚠️ EyeCandy Art Studios — before pitching Gene
 The live site's gallery currently uses **demo stock-art placeholders**. Swap in
 Gene's real paintings first (he's a real artist — showing someone else's art
