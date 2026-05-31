@@ -1,0 +1,6 @@
+node_modules/
+.work/
+renders/
+log.jsonl
+.env
+*.log

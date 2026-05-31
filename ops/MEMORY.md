@@ -69,8 +69,21 @@ Lives in `projects/faceless-channel/`.
 - **DONE 2026-05-31:** all 30 scripts pre-written (`scripts/dayNN-*.md`),
   calendar marked `scripted`, BRAND kit ready. JR funds credits "first thing in
   the morning"; then Claude renders + sets up daily autopilot trigger.
-- **Next for Claude:** once credits land, build per-video manifests + render the
-  ★ strong days first (1, 3, then 6/9/12…), score, package, hand off.
+- **AUTOPILOT BUILT (2026-05-31):** JR has accounts; wants full automation, Claude
+  controlling it. Locked architecture: **YouTube Data API** (full-auto publish) +
+  **always-on Render host** w/ daily cron. Built in `projects/faceless-channel/auto/`:
+  `youtube.js` (resumable upload, refresh-token auth — no passwords), `generate.js`
+  (render+stitch seam), `build-manifest.js` (script→beats, tested), `run-daily.js`
+  (daily loop, dry-run tested), `server.js` (+/cron/daily,/status), `render.yaml`
+  (web+cron), `get-youtube-token.js` (one-time OAuth), `SETUP-AUTOMATION.md`.
+  All 30 calendar items now carry curated publish copy (title/desc/hashtags/thumb).
+- **Honest limits told to JR:** no persistent 24/7 "Claude" — it's a scheduled
+  machine on Render that I drive/maintain each session. Two steps are unavoidably
+  JR's: (1) fund media credits, (2) one-time YouTube OAuth grant (mints refresh
+  token → Render secret). The 3 model-call fns in generate.js are intentionally
+  stubbed until the funded account's API surface is known (~30-line final wire).
+- **Next:** JR funds + does OAuth → Claude wires renderClip/Voice/Thumbnail, runs
+  ONE real test video, then enables the cron. TikTok/IG via authorized scheduler later.
 - **Funding (live pricing pulled 2026-05-31):** media plans — PLUS $39/mo annual
   (1,000 cr) / ULTRA $99/mo annual (3,000 cr ⭐). A mini-doc ≈ 50–90 cr; ULTRA ≈
   ~1 polished video/day. Checkout links in `2026-05-31-curious-frame-launch-checklist.md`.

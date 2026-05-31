@@ -1,0 +1,38 @@
+# Always-on host + daily cron for Curious Frame autopilot.
+# Deploy: render.com -> New -> Blueprint -> pick this repo, root = projects/faceless-channel/auto
+# Then set the secrets (sync:false ones) in the Render dashboard.
+services:
+  - type: web
+    name: curious-frame-autopilot
+    runtime: node
+    plan: starter            # needs ffmpeg; starter stays warm. free tier sleeps.
+    rootDir: projects/faceless-channel/auto
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: CRON_SECRET
+        generateValue: true   # Render generates; copy into the cron job below if editing by hand
+      - key: MEDIA_API_KEY
+        sync: false           # the FUNDED generation account's API key
+      - key: YT_CLIENT_ID
+        sync: false
+      - key: YT_CLIENT_SECRET
+        sync: false
+      - key: YT_REFRESH_TOKEN
+        sync: false           # from auto/get-youtube-token.js (one-time)
+
+# Daily trigger. Render Cron Jobs hit the web service's /cron/daily endpoint.
+crons:
+  - name: curious-frame-daily
+    schedule: "0 13 * * *"   # 13:00 UTC = 9am ET — one video/day
+    runtime: node
+    rootDir: projects/faceless-channel/auto
+    buildCommand: npm install
+    command: >
+      node -e "fetch(process.env.SELF_URL + '/cron/daily?key=' + process.env.CRON_SECRET).then(r=>r.text()).then(t=>{console.log(t)})"
+    envVars:
+      - key: SELF_URL
+        sync: false           # set to your https://curious-frame-autopilot.onrender.com
+      - key: CRON_SECRET
+        sync: false           # same value as the web service

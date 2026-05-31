@@ -1,0 +1,17 @@
+{
+  "name": "curious-frame-autopilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily AI video pipeline for Curious Frame — generate, assemble, upload to YouTube.",
+  "type": "commonjs",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js",
+    "daily": "node run-daily.js",
+    "dry": "node run-daily.js --dry",
+    "token": "node get-youtube-token.js"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  }
+}
