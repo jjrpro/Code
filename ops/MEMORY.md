@@ -47,6 +47,27 @@ session: jaurx-launch-2026-05-29
 
 ---
 
+## New revenue stream — DropVault AI content packs (2026-05-31)
+
+Built a faceless, Claude-maintained store: AI image/video content packs sold on
+autopilot. Buyer pays by card → settles to **USDC instantly** via Coinbase
+Commerce (no payout wait). Claude monitors every sale with `monitor.js` (reads
+the Commerce API from the cloud). Lives in `projects/ai-content-packs/` on branch
+`claude/eloquent-gates-kLzps`. Deliberately NOT tied to JR's trading/Shopify —
+runs independently. Why this design: it's the only combo that hits all three of
+JR's asks (easy maintain + Claude monitors + instant pay).
+
+- **Built & syntax-checked:** storefront, Coinbase Commerce checkout, webhook
+  fulfillment + signed download links, `monitor.js`, `SETUP.md`, launch plan.
+- **Blocked on JR:** (1) make Coinbase Commerce acct + paste 3 secrets (~20 min,
+  see SETUP.md); (2) top up media credits — account is free plan / 10 credits,
+  not enough to generate a full pack. JR said he'll load money later.
+- **Next for Claude:** once credits loaded, run the gen prompts in
+  `2026-05-31-ai-content-packs-launch-plan.md`, zip packs into `packs/`, go live;
+  then run `monitor.js` each session and report revenue.
+
+---
+
 ## Channel Details — JAURX
 
 | Field | Value |

@@ -1,0 +1,17 @@
+{
+  "name": "dropvault-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI content pack storefront — Coinbase Commerce (card -> instant USDC) + digital download delivery",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "monitor": "node monitor.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DropVault — AI Content Packs</title>
+<style>
+  :root { --bg:#0b0c10; --card:#15171f; --line:#262a36; --fg:#f3f4f6; --mut:#9aa3b2; --acc:#6c8cff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }
+  header { text-align:center; padding:64px 20px 24px; }
+  header h1 { font-size:40px; margin:0 0 8px; letter-spacing:-1px; }
+  header p { color:var(--mut); margin:0; font-size:18px; }
+  .grid { max-width:1040px; margin:24px auto 64px; padding:0 20px; display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+  .thumb { aspect-ratio:16/10; background:linear-gradient(135deg,#1b1f2b,#2a2140); display:flex; align-items:center; justify-content:center; color:var(--mut); font-size:13px; }
+  .thumb img { width:100%; height:100%; object-fit:cover; }
+  .body { padding:18px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .body h3 { margin:0; font-size:18px; }
+  .body p { margin:0; color:var(--mut); font-size:14px; flex:1; }
+  .row { display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
+  .price { font-size:22px; font-weight:700; }
+  button { background:var(--acc); color:#fff; border:0; padding:11px 18px; border-radius:10px; font-size:15px; font-weight:600; cursor:pointer; }
+  button:disabled { opacity:.6; cursor:wait; }
+  footer { text-align:center; color:var(--mut); font-size:13px; padding:0 20px 48px; }
+  .pay { color:var(--mut); font-size:13px; margin-top:6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="brand">DropVault</h1>
+  <p id="tagline">Plug-and-play AI content packs for faceless creators.</p>
+  <p class="pay">Pay by card or crypto · instant delivery · lifetime download</p>
+</header>
+<main class="grid" id="grid">Loading packs…</main>
+<footer>Questions? <span id="email"></span> · All sales are digital downloads.</footer>
+
+<script>
+async function load() {
+  const r = await fetch('/api/catalog');
+  const d = await r.json();
+  document.getElementById('brand').textContent = d.brand;
+  document.getElementById('tagline').textContent = d.tagline;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  for (const p of d.packs) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = `
+      <div class="thumb">${p.preview ? `<img src="${p.preview}" onerror="this.replaceWith(document.createTextNode('preview coming soon'))">` : 'preview coming soon'}</div>
+      <div class="body">
+        <h3>${p.name}</h3>
+        <p>${p.blurb}</p>
+        <div class="row">
+          <span class="price">$${p.price}</span>
+          <button data-pack="${p.id}">Buy →</button>
+        </div>
+      </div>`;
+    grid.appendChild(el);
+  }
+  grid.querySelectorAll('button').forEach(b => b.addEventListener('click', () => buy(b)));
+}
+async function buy(btn) {
+  btn.disabled = true; btn.textContent = 'Opening…';
+  try {
+    const r = await fetch('/api/checkout?pack=' + encodeURIComponent(btn.dataset.pack));
+    const d = await r.json();
+    if (d.hosted_url) location.href = d.hosted_url;
+    else throw new Error(d.error || 'failed');
+  } catch (e) { btn.disabled = false; btn.textContent = 'Try again'; }
+}
+load();
+</script>
+</body>
+</html>

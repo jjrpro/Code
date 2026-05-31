@@ -1,0 +1,44 @@
+{
+  "brand": "DropVault",
+  "tagline": "Plug-and-play AI content packs for faceless creators.",
+  "currency": "USD",
+  "support_email": "admin@jjrproconsultants.com",
+  "packs": [
+    {
+      "id": "lux-broll-01",
+      "name": "Luxury Lifestyle B-Roll Pack",
+      "blurb": "60 cinematic 4K AI clips + 40 stills. Drop-in b-roll for faceless TikTok / Reels / Shorts.",
+      "price": "19.00",
+      "file": "packs/lux-broll-01.zip",
+      "preview": "img/lux-broll-01.jpg",
+      "active": true
+    },
+    {
+      "id": "dark-wallpaper-01",
+      "name": "Dark Minimal 4K Wallpaper Pack",
+      "blurb": "100 original 4K AI wallpapers. Phone + desktop sizes included.",
+      "price": "9.00",
+      "file": "packs/dark-wallpaper-01.zip",
+      "preview": "img/dark-wallpaper-01.jpg",
+      "active": true
+    },
+    {
+      "id": "motivation-reels-01",
+      "name": "AI Motivation Reel Pack",
+      "blurb": "50 vertical 1080x1920 motion clips with caption-ready space. Post 1/day for ~2 months.",
+      "price": "29.00",
+      "file": "packs/motivation-reels-01.zip",
+      "preview": "img/motivation-reels-01.jpg",
+      "active": true
+    },
+    {
+      "id": "everything-bundle",
+      "name": "The Everything Bundle",
+      "blurb": "All current packs + every new pack free for 12 months. Best value.",
+      "price": "49.00",
+      "file": "packs/everything-bundle.zip",
+      "preview": "img/everything-bundle.jpg",
+      "active": true
+    }
+  ]
+}

@@ -29,6 +29,15 @@ Kit for selling websites to Staten Island small businesses (10312 + 5-mi radius)
 - **`mockups/`** — 3 real 10312 prospects with no website (barber, deli, nails)
 - **`sales/`** — prospect-list method, lead tracker CSV, outreach, pricing, deploy guide
 
+### `projects/ai-content-packs/` — DropVault AI content-pack store
+Faceless, low-maintenance revenue stream. Claude generates AI image/video packs;
+the store sells them on autopilot. Buyers pay by card → settles to USDC instantly
+(Coinbase Commerce, no payout wait). Claude monitors every sale via `monitor.js`.
+- `server.js` — checkout + webhook fulfillment + signed download links
+- `monitor.js` — read-only revenue dashboard Claude runs each session
+- `catalog.json` — packs + pricing · `SETUP.md` — 20-min Mac setup
+- `2026-05-31-ai-content-packs-launch-plan.md` — production pipeline + gen prompts
+
 ### `projects/trade-analysis/` — Research & setups
 Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.
