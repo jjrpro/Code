@@ -19,6 +19,11 @@ Dropship store + ad scale-up.
 - `shopify-audit.md` — 18-point conversion self-diagnostic
 - `shopify-playbook.md` — blind playbook for the magnetic wallet niche
 
+### `projects/jjrpro-site/` — JJR Pro / Jaurx flagship site
+Animated multi-service site for JR's own business (signals, TradingView/MCP
+automation, Telegram bots, web design + maintenance, AI support, managed ads,
+JaurxShops). Live CTAs: Whop VIP checkout, @JaurxBot, Shopify store, email.
+
 ### `projects/local-638/` — Steamfitters website
 Static template for Local 638 Steamfitters.
 
