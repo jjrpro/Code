@@ -119,6 +119,31 @@ JR's asks (easy maintain + Claude monitors + instant pay).
 
 ---
 
+## Session 2026-06-01 — "passive income" revisited, DropVault chosen
+
+JR re-asked for a $0 / no-effort / fully-Claude-run income source. Gave him the
+honest reality (saved `ops/sessions/2026-06-01-passive-income-honest-reality.md`):
+fully-autonomous zero-input income doesn't exist — money must land in a KYC'd
+account (his), I'm session-based not always-on, distribution always costs money
+or time. Real floor ≈ one ~$49 credit month + 2 one-time setups, then Claude runs it.
+
+- Standing rule reaffirmed by JR: **save everything to his Obsidian AI Brain
+  immediately** (= save dated files to repo; auto-syncs in 60s). Doing so.
+- JR picked **DropVault** (AI content packs) to finish over starting anything new.
+- **Blocker unchanged & verified live:** media balance = **0 credits, free plan**.
+  Worse, this workspace has **no one-time top-up** option — only subscriptions
+  (PLUS $49/mo or $39/mo annual; ULTRA $99/mo). So funding = ongoing sub, told JR.
+- **Free work done this session:** wrote the missing piece — DropVault
+  **distribution plan** (`2026-06-01-dropvault-distribution-plan.md`): 100% organic
+  channels (Reddit/TikTok/Pinterest/X), "packs are their own ads" insight, and a
+  Gumroad-as-front-door alternative that solves payment+discovery in one move.
+- **Next (blocked on JR):** fund one credit month → Claude generates 3 packs via
+  `packs.manifest.json` + `scripts/build-pack.sh`, then JR does Coinbase (or I do
+  Gumroad copy), go live, run `monitor.js` each session.
+- Branch this session: `claude/passive-income-source-WiwJQ`.
+
+---
+
 ## Channel Details — JAURX
 
 | Field | Value |
