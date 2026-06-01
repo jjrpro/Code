@@ -21,7 +21,8 @@
   <style>
     :root{
       --bg:#070a12; --bg2:#0c111d; --panel:#111827; --ink:#eaf0fb; --muted:#8a96ad;
-      --cyan:#22d3ee; --violet:#8b5cf6; --green:#34d399; --pink:#f472b6; --amber:#fbbf24;
+      /* JAURX brand palette — gold/amber on black (matches the official banner) */
+      --cyan:#f5a623; --violet:#e08a1e; --green:#34d399; --pink:#ffcf5c; --amber:#fbbf24;
       --line:rgba(255,255,255,.08); --maxw:1180px;
       --display:"Sora",-apple-system,sans-serif; --sans:"Inter",-apple-system,sans-serif;
     }
@@ -43,9 +44,9 @@
     /* animated background */
     .bgfx{position:fixed;inset:0;z-index:-2;background:var(--bg)}
     .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;animation:float 18s ease-in-out infinite}
-    .orb.a{width:520px;height:520px;background:radial-gradient(circle,#22d3ee,transparent 70%);top:-160px;left:-120px}
-    .orb.b{width:480px;height:480px;background:radial-gradient(circle,#8b5cf6,transparent 70%);top:30%;right:-160px;animation-delay:-6s}
-    .orb.c{width:440px;height:440px;background:radial-gradient(circle,#f472b6,transparent 70%);bottom:-160px;left:30%;animation-delay:-11s}
+    .orb.a{width:520px;height:520px;background:radial-gradient(circle,#f5a623,transparent 70%);top:-160px;left:-120px}
+    .orb.b{width:480px;height:480px;background:radial-gradient(circle,#b8731a,transparent 70%);top:30%;right:-160px;animation-delay:-6s}
+    .orb.c{width:440px;height:440px;background:radial-gradient(circle,#ffcf5c,transparent 70%);bottom:-160px;left:30%;animation-delay:-11s}
     @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.08)}66%{transform:translate(-30px,24px) scale(.95)}}
     .grid-overlay{position:fixed;inset:0;z-index:-1;opacity:.4;
       background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
@@ -103,6 +104,17 @@
     .scard li{font-size:.9rem;color:var(--ink);display:flex;gap:9px;align-items:flex-start}
     .scard li::before{content:"▸";color:var(--cyan);flex:none}
 
+    /* quotes */
+    .qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .quote{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:14px;
+      padding:28px 26px;font-family:var(--display);font-weight:600;font-size:1.06rem;line-height:1.45;color:var(--ink);position:relative}
+    .quote::before{content:"\201C";position:absolute;top:6px;left:14px;font-size:3rem;color:rgba(34,211,238,.22);font-family:Georgia,serif}
+    .quote:nth-child(2){border-left-color:var(--violet)}.quote:nth-child(2)::before{color:rgba(139,92,246,.22)}
+    .quote:nth-child(3){border-left-color:var(--pink)}.quote:nth-child(3)::before{color:rgba(244,114,182,.22)}
+    .quote:nth-child(4){border-left-color:var(--green)}.quote:nth-child(4)::before{color:rgba(52,211,153,.22)}
+    .quote:nth-child(5){border-left-color:var(--amber)}.quote:nth-child(5)::before{color:rgba(251,191,36,.22)}
+    .quote:nth-child(6){border-left-color:var(--cyan)}
+
     /* process */
     .process{background:var(--bg2)}
     .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:48px;counter-reset:s}
@@ -145,15 +157,23 @@
   <div class="grid-overlay"></div>
 
   <header><div class="wrap nav">
-    <a href="#" class="logo">JJR<b>Pro</b> <span style="color:var(--muted);font-weight:600;font-size:.9rem">/ Jaurx</span></a>
+    <a href="#" class="logo" style="letter-spacing:.12em">JAURX <span style="color:var(--muted);font-weight:600;font-size:.78rem;letter-spacing:.18em">/ JJR PRO</span></a>
     <nav class="nav-links">
-      <a href="#services">Services</a><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
+      <a href="#services">Services</a><a href="#about">About</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
       <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="nav-cta">Join VIP</a>
     </nav>
   </div></header>
 
   <!-- HERO -->
   <section class="hero"><div class="wrap">
+    <!-- JAURX brand banner: drop your gold banner in as img/jaurx-banner.png and it shows here.
+         Until then, the styled wordmark below stands in. -->
+    <img src="img/jaurx-banner.png" alt="JAURX — Official Channel" style="max-width:620px;width:100%;margin:0 auto 30px;display:block;border-radius:14px"
+         onerror="this.style.display='none';document.getElementById('jaurxWordmark').style.display='block'">
+    <div id="jaurxWordmark" style="display:none;margin-bottom:30px">
+      <div style="font-family:var(--display);font-weight:800;font-size:clamp(3rem,9vw,6rem);letter-spacing:.14em;background:linear-gradient(180deg,#ffe9a8,#f5a623 55%,#b8731a);-webkit-background-clip:text;background-clip:text;color:transparent">JAURX</div>
+      <div style="color:var(--muted);letter-spacing:.42em;font-size:.78rem;font-family:var(--display);font-weight:600;margin-top:6px">OFFICIAL CHANNEL</div>
+    </div>
     <span class="pill"><span class="pulse"></span> Trading signals · AI automation · web &amp; ads — one team</span>
     <h1>Your unfair advantage,<br><span class="grad">built and automated.</span></h1>
     <p>JJR Pro builds the systems that move you forward — live trade signals, AI &amp; TradingView automations, custom bots, websites that convert, and ads that actually land. One crew, every edge.</p>
@@ -204,6 +224,34 @@
       <div class="scard reveal"><div class="ic">🛍️</div><h3>JaurxShops Store</h3><p>Our own Shopify brand — magnetic MagSafe phone wallets. Fast shipping, built &amp; scaled in-house.</p>
         <ul><li>Magnetic phone wallets</li><li>Fast, tracked shipping</li><li>See what we build for ourselves</li></ul>
         <a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;color:var(--cyan);font-weight:700;font-size:.9rem">Shop JaurxShops →</a></div>
+    </div>
+  </div></section>
+
+  <!-- ABOUT JR -->
+  <section id="about"><div class="wrap">
+    <div style="max-width:780px;margin:0 auto;text-align:center" class="reveal">
+      <div class="eyebrow">The Story</div>
+      <h2>Building something <span class="grad">from the ground up</span></h2>
+      <p style="color:var(--muted);font-size:1.14rem;margin-top:20px;line-height:1.7">
+        I'm a young entrepreneur making the best out of the cards I was dealt. No shortcuts,
+        no handouts — just work, reps, and building real systems that actually move the needle.
+        Every signal, site, and bot here is something I'd stake my own name on, because I do.
+      </p>
+      <p style="color:var(--ink);font-family:var(--display);font-weight:700;font-size:1.3rem;margin-top:26px">
+        In due time. <span class="grad">We all will succeed.</span>
+      </p>
+    </div>
+  </div></section>
+
+  <!-- QUOTES -->
+  <section style="padding:40px 0 90px"><div class="wrap">
+    <div class="qgrid">
+      <blockquote class="quote reveal">"The market pays you to be disciplined, not to be right."</blockquote>
+      <blockquote class="quote reveal">"Risk first. The profit takes care of itself when you stop trying to force it."</blockquote>
+      <blockquote class="quote reveal">"A good system you follow beats a perfect one you abandon at the first red candle."</blockquote>
+      <blockquote class="quote reveal">"Patience is a position. Most of the edge is in the trades you don't take."</blockquote>
+      <blockquote class="quote reveal">"You don't rise to your hopes — you fall to your preparation."</blockquote>
+      <blockquote class="quote reveal">"Consistency is boring. Boring is what builds the account."</blockquote>
     </div>
   </div></section>
 
