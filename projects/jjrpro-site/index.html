@@ -63,11 +63,13 @@
       background:radial-gradient(circle,rgba(245,166,35,.10),transparent 65%);transform:translate(-50%,-50%);left:-999px;top:-999px;transition:opacity .3s}
     @media(hover:none){#cursorglow{display:none}}
 
-    /* reveal */
-    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
-    .reveal.in{opacity:1;transform:none}
-    /* word-by-word headline reveal */
-    .wreveal .w{display:inline-block;opacity:0;transform:translateY(28px) rotate(3deg);
+    /* reveal — FAILSAFE: content is visible by default; JS only animates it.
+       Hidden state ONLY applies when <html class="js"> is set (after JS runs ok),
+       so a script error or blocked CDN can never blank the page. */
+    .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+    .js .reveal.in{opacity:1;transform:none}
+    /* word-by-word headline reveal (also gated on .js) */
+    .js .wreveal .w{display:inline-block;opacity:0;transform:translateY(28px) rotate(3deg);
       animation:win .7s cubic-bezier(.2,.8,.2,1) forwards}
     @keyframes win{to{opacity:1;transform:none}}
     /* 3D tilt cards */
@@ -429,29 +431,23 @@
   </div></footer>
 
   <script>
-    document.getElementById('yr').textContent=new Date().getFullYear();
-    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
-    document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*60)+'ms';io.observe(el)});
+    // Mark JS active so reveal-animations engage. If this line never runs,
+    // everything stays visible (no blank page). Each effect is isolated so one
+    // failure can't take down the rest.
+    try{ document.documentElement.classList.add('js'); }catch(e){}
 
-    // word-by-word headline reveal
-    document.querySelectorAll('.wreveal .w').forEach((w,i)=>{w.style.animationDelay=(i*0.09+0.1)+'s'});
-
-    // cursor-follow glow
-    const glow=document.getElementById('cursorglow');
-    window.addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'},{passive:true});
-
-    // 3D tilt on service cards
-    document.querySelectorAll('.scard').forEach(card=>{
-      card.addEventListener('pointermove',e=>{
-        const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;
-        card.style.transform=`translateY(-6px) perspective(800px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*9).toFixed(2)}deg)`;
-      });
-      card.addEventListener('pointerleave',()=>{card.style.transform=''});
-    });
+    try{
+      document.getElementById('yr').textContent=new Date().getFullYear();
+      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+      document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*60)+'ms';io.observe(el)});
+      document.querySelectorAll('.wreveal .w').forEach((w,i)=>{w.style.animationDelay=(i*0.09+0.1)+'s'});
+    }catch(e){ /* reveals fail open — content already visible */ }
 
     // ===== 3D WebGL scene — floating gold objects (living background + 3D objects) =====
+    // Fully isolated: if Three.js didn't load or WebGL is unavailable, this just
+    // skips — the rest of the site (and the particle bg) carry the look.
+    try{ if(!window.THREE) throw 0;
     (function(){
-      if(!window.THREE) return;
       const cv=document.getElementById('scene3d');
       const renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
       renderer.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -491,8 +487,10 @@
         renderer.render(scene,cam);requestAnimationFrame(render);
       })();
     })();
+    }catch(e){ var s3=document.getElementById('scene3d'); if(s3) s3.style.display='none'; }
 
-    // interactive particle network
+    // interactive particle network (also isolated)
+    try{
     (function(){
       const c=document.getElementById('net'),x=c.getContext('2d');let w,h,pts,mx=-999,my=-999;
       const N=Math.min(90,Math.floor((innerWidth*innerHeight)/22000));
@@ -519,6 +517,18 @@
         requestAnimationFrame(loop);
       })();
     })();
+    }catch(e){ var nc=document.getElementById('net'); if(nc) nc.style.display='none'; }
+
+    // cursor glow + 3D tilt (isolated)
+    try{
+      var glow2=document.getElementById('cursorglow');
+      if(glow2) addEventListener('pointermove',function(e){glow2.style.left=e.clientX+'px';glow2.style.top=e.clientY+'px'},{passive:true});
+      document.querySelectorAll('.scard').forEach(function(card){
+        card.addEventListener('pointermove',function(e){var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;
+          card.style.transform='translateY(-6px) perspective(800px) rotateX('+(-y*7).toFixed(2)+'deg) rotateY('+(x*9).toFixed(2)+'deg)'});
+        card.addEventListener('pointerleave',function(){card.style.transform=''});
+      });
+    }catch(e){}
   </script>
 </body>
 </html>
