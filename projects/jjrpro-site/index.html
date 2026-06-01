@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  JJR PRO / JAURX — flagship multi-service site (JR's own business).
+  Services: Telegram trade signals, TradingView MCP automations, Telegram bots,
+  website building & maintenance, full AI support, paid ads management.
+  Live links wired in:
+    Whop VIP checkout: https://whop.com/checkout/plan_NRcpgDOL6DRS0/
+    Telegram bot:      https://t.me/JaurxBot   (also @jaurxreilly)
+    JaurxShops store:  https://jaurxflips.myshopify.com/
+    Email:             admin@jjrproconsultants.com
+  Optional before publish: add logo, real testimonials, swap stat numbers.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JJR Pro — Trading Signals, AI Automation & Web Design</title>
+  <meta name="description" content="JJR Pro / Jaurx — Telegram trade signals, TradingView automations, custom AI & Telegram bots, website design & maintenance, and managed ads. One team for your digital edge." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#070a12; --bg2:#0c111d; --panel:#111827; --ink:#eaf0fb; --muted:#8a96ad;
+      --cyan:#22d3ee; --violet:#8b5cf6; --green:#34d399; --pink:#f472b6; --amber:#fbbf24;
+      --line:rgba(255,255,255,.08); --maxw:1180px;
+      --display:"Sora",-apple-system,sans-serif; --sans:"Inter",-apple-system,sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    h1,h2,h3{font-family:var(--display);line-height:1.08;letter-spacing:-.02em}
+    .grad{background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:.95rem;
+      padding:14px 28px;border-radius:12px;border:none;cursor:pointer;transition:transform .16s,box-shadow .25s}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-primary{background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f;box-shadow:0 10px 36px rgba(34,211,238,.32)}
+    .btn-ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line)}
+    .btn-ghost:hover{background:rgba(255,255,255,.12)}
+    section{padding:104px 0;position:relative}
+    .eyebrow{font-family:var(--display);font-weight:700;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+
+    /* animated background */
+    .bgfx{position:fixed;inset:0;z-index:-2;background:var(--bg)}
+    .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;animation:float 18s ease-in-out infinite}
+    .orb.a{width:520px;height:520px;background:radial-gradient(circle,#22d3ee,transparent 70%);top:-160px;left:-120px}
+    .orb.b{width:480px;height:480px;background:radial-gradient(circle,#8b5cf6,transparent 70%);top:30%;right:-160px;animation-delay:-6s}
+    .orb.c{width:440px;height:440px;background:radial-gradient(circle,#f472b6,transparent 70%);bottom:-160px;left:30%;animation-delay:-11s}
+    @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.08)}66%{transform:translate(-30px,24px) scale(.95)}}
+    .grid-overlay{position:fixed;inset:0;z-index:-1;opacity:.4;
+      background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:54px 54px;mask-image:radial-gradient(circle at 50% 30%,#000,transparent 80%)}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    /* nav */
+    header{position:sticky;top:0;z-index:60;background:rgba(7,10,18,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+    .logo{font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em}
+    .logo b{color:var(--cyan)}
+    .nav-links{display:flex;gap:30px;align-items:center}
+    .nav-links a{font-size:.86rem;font-weight:600;color:var(--muted)}.nav-links a:hover{color:var(--ink)}
+    .nav-cta{background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f!important;padding:10px 20px;border-radius:10px;font-weight:700}
+
+    /* hero */
+    .hero{padding:120px 0 90px;text-align:center}
+    .hero .pill{display:inline-flex;gap:9px;align-items:center;background:rgba(255,255,255,.05);border:1px solid var(--line);
+      padding:8px 18px;border-radius:999px;font-size:.8rem;color:var(--muted);margin-bottom:30px}
+    .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}70%{box-shadow:0 0 0 12px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+    .hero h1{font-size:clamp(2.8rem,7vw,5.4rem);font-weight:800;margin-bottom:22px}
+    .hero p{font-size:1.22rem;color:var(--muted);max-width:680px;margin:0 auto 38px}
+    .hero-actions{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+
+    /* ticker */
+    .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);overflow:hidden;white-space:nowrap;padding:14px 0}
+    .ticker .row{display:inline-block;animation:scrollx 30s linear infinite;font-family:var(--display);font-weight:600;font-size:.92rem}
+    .ticker .row span{margin:0 22px;color:var(--muted)}
+    .ticker .row b{color:var(--green)}.ticker .row .red{color:var(--pink)}
+    @keyframes scrollx{to{transform:translateX(-50%)}}
+
+    /* stats */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:10px}
+    .stat{text-align:center;padding:26px 16px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+    .stat .n{font-family:var(--display);font-weight:800;font-size:2.3rem;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .stat .l{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+
+    /* services */
+    .sec-head{max-width:680px;margin:0 auto 56px;text-align:center}
+    .sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800}
+    .sec-head p{color:var(--muted);margin-top:14px;font-size:1.06rem}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .scard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:32px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
+    .scard:hover{transform:translateY(-6px);border-color:rgba(34,211,238,.4);box-shadow:0 24px 60px rgba(34,211,238,.12)}
+    .scard::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));opacity:.8}
+    .scard .ic{width:54px;height:54px;border-radius:13px;display:grid;place-items:center;font-size:1.6rem;margin-bottom:18px;
+      background:rgba(255,255,255,.05);border:1px solid var(--line)}
+    .scard h3{font-size:1.32rem;margin-bottom:8px}
+    .scard p{color:var(--muted);font-size:.97rem;margin-bottom:14px}
+    .scard ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+    .scard li{font-size:.9rem;color:var(--ink);display:flex;gap:9px;align-items:flex-start}
+    .scard li::before{content:"▸";color:var(--cyan);flex:none}
+
+    /* process */
+    .process{background:var(--bg2)}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:48px;counter-reset:s}
+    .pstep{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 24px;position:relative}
+    .pstep::before{counter-increment:s;content:"0" counter(s);position:absolute;top:18px;right:22px;font-family:var(--display);font-weight:800;font-size:2.2rem;color:rgba(255,255,255,.06)}
+    .pstep .ic{font-size:1.7rem;margin-bottom:12px}
+    .pstep h3{font-size:1.15rem;margin-bottom:6px}.pstep p{color:var(--muted);font-size:.92rem}
+
+    /* pricing */
+    .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+    .tier{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:34px;display:flex;flex-direction:column;position:relative}
+    .tier.feat{border-color:rgba(139,92,246,.6);box-shadow:0 0 0 1px rgba(139,92,246,.3),0 24px 60px rgba(139,92,246,.18)}
+    .tier .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f;font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:999px}
+    .tier h3{font-size:1.3rem;margin-bottom:6px}
+    .tier .price{font-family:var(--display);font-weight:800;font-size:2.6rem;margin:8px 0 4px}
+    .tier .price small{font-size:.95rem;color:var(--muted);font-weight:500}
+    .tier .sub{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+    .tier ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px;flex:1}
+    .tier li{font-size:.92rem;display:flex;gap:10px}.tier li::before{content:"✓";color:var(--green);font-weight:800}
+    .tier .btn{width:100%;justify-content:center}
+
+    /* CTA */
+    .cta{text-align:center}
+    .cta .box{background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(139,92,246,.12));border:1px solid var(--line);border-radius:28px;padding:72px 30px;max-width:840px;margin:0 auto}
+    .cta h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;margin-bottom:14px}
+    .cta p{color:var(--muted);max-width:520px;margin:0 auto 30px;font-size:1.1rem}
+
+    footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--muted)}
+    .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+    .foot a{color:var(--muted);font-size:.9rem}.foot a:hover{color:var(--ink)}
+    .foot .brand{font-family:var(--display);font-weight:800;color:var(--ink);font-size:1.1rem}
+
+    @media(max-width:900px){.nav-links a:not(.nav-cta){display:none}
+      .stats{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.tiers{grid-template-columns:1fr}}
+    @media(max-width:520px){.steps{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="bgfx"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+  <div class="grid-overlay"></div>
+
+  <header><div class="wrap nav">
+    <a href="#" class="logo">JJR<b>Pro</b> <span style="color:var(--muted);font-weight:600;font-size:.9rem">/ Jaurx</span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="nav-cta">Join VIP</a>
+    </nav>
+  </div></header>
+
+  <!-- HERO -->
+  <section class="hero"><div class="wrap">
+    <span class="pill"><span class="pulse"></span> Trading signals · AI automation · web &amp; ads — one team</span>
+    <h1>Your unfair advantage,<br><span class="grad">built and automated.</span></h1>
+    <p>JJR Pro builds the systems that move you forward — live trade signals, AI &amp; TradingView automations, custom bots, websites that convert, and ads that actually land. One crew, every edge.</p>
+    <div class="hero-actions">
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="btn btn-primary">🎯 Join VIP Signals — $49/mo</a>
+      <a href="#services" class="btn btn-ghost">Explore Services</a>
+    </div>
+    <p style="margin-top:18px;font-size:.86rem;color:var(--muted)">Need a site, bot, or ads instead? <a href="#contact" style="color:var(--cyan)">Start a project →</a></p>
+  </div></section>
+
+  <!-- TICKER -->
+  <div class="ticker"><div class="row">
+    <span>MGC <b>▲ entry filled</b></span><span>MNQ <b>▲ +2R</b></span><span>signal <b>sent → Telegram</b></span><span>bot <b>● online</b></span><span class="red">SL moved to BE</span><span>TradingView <b>alert → MCP</b></span><span>ad set <b>▲ scaling</b></span><span>site <b>● deployed</b></span>
+    <span>MGC <b>▲ entry filled</b></span><span>MNQ <b>▲ +2R</b></span><span>signal <b>sent → Telegram</b></span><span>bot <b>● online</b></span><span class="red">SL moved to BE</span><span>TradingView <b>alert → MCP</b></span><span>ad set <b>▲ scaling</b></span><span>site <b>● deployed</b></span>
+  </div></div>
+
+  <!-- STATS -->
+  <section style="padding:64px 0"><div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="n">24/7</div><div class="l">AI Support</div></div>
+      <div class="stat reveal"><div class="n">Live</div><div class="l">Trade Signals</div></div>
+      <div class="stat reveal"><div class="n">&lt;1 wk</div><div class="l">Site Turnaround</div></div>
+      <div class="stat reveal"><div class="n">All-in-1</div><div class="l">One Team</div></div>
+    </div>
+  </div></section>
+
+  <!-- SERVICES -->
+  <section id="services"><div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">What We Do</div>
+      <h2>Everything under <span class="grad">one roof</span></h2>
+      <p>From the trading desk to the deploy button — the full stack that powers a modern operation.</p>
+    </div>
+    <div class="cards">
+      <div class="scard reveal"><div class="ic">📈</div><h3>Telegram Trade Signals</h3><p>Live MGC &amp; MNQ futures alerts — entries, stops, targets, posted the moment they're taken.</p>
+        <ul><li>Real-time entries &amp; exits</li><li>Daily bias before NY open</li><li>Free channel + VIP tier</li></ul>
+        <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;color:var(--cyan);font-weight:700;font-size:.9rem">Join VIP — $49/mo →</a></div>
+      <div class="scard reveal"><div class="ic">🧠</div><h3>TradingView Automation</h3><p>Turn your TradingView alerts into action via MCP — auto-broadcast, log, and route signals with zero manual steps.</p>
+        <ul><li>Alert → MCP pipelines</li><li>Auto-post to Telegram/Discord</li><li>Custom strategy hooks</li></ul></div>
+      <div class="scard reveal"><div class="ic">🤖</div><h3>Custom Telegram Bots</h3><p>Bots that run your community — subscriptions, gated access, broadcasts, and AI replies, built to your flow.</p>
+        <ul><li>Paid access &amp; member gating</li><li>Auto-broadcast &amp; commands</li><li>AI-powered responses</li></ul></div>
+      <div class="scard reveal"><div class="ic">🌐</div><h3>Website Design &amp; Maintenance</h3><p>Fast, modern sites that convert — built, deployed, and kept fresh. Local business or full brand.</p>
+        <ul><li>Mobile-first, SEO-ready</li><li>Live in days, on your domain</li><li>Ongoing care &amp; edits</li></ul></div>
+      <div class="scard reveal"><div class="ic">✨</div><h3>Full AI Support</h3><p>AI woven into your business — assistants, content, automations, and tooling that save you hours every week.</p>
+        <ul><li>Custom AI assistants</li><li>Workflow automation</li><li>Content &amp; ops at scale</li></ul></div>
+      <div class="scard reveal"><div class="ic">🎯</div><h3>Managed Ads</h3><p>Paid campaigns that pay off — TikTok, Meta &amp; more, built, launched, and scaled with real tracking.</p>
+        <ul><li>Creative + targeting</li><li>Pixel/CAPI tracking setup</li><li>Scale what works</li></ul></div>
+      <div class="scard reveal"><div class="ic">🛍️</div><h3>JaurxShops Store</h3><p>Our own Shopify brand — magnetic MagSafe phone wallets. Fast shipping, built &amp; scaled in-house.</p>
+        <ul><li>Magnetic phone wallets</li><li>Fast, tracked shipping</li><li>See what we build for ourselves</li></ul>
+        <a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;color:var(--cyan);font-weight:700;font-size:.9rem">Shop JaurxShops →</a></div>
+    </div>
+  </div></section>
+
+  <!-- PROCESS -->
+  <section id="process" class="process"><div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">How It Works</div><h2>Simple to start, <span class="grad">built to last</span></h2></div>
+    <div class="steps">
+      <div class="pstep reveal"><div class="ic">💬</div><h3>Talk</h3><p>Tell us the goal. We map the fastest path to it — no jargon.</p></div>
+      <div class="pstep reveal"><div class="ic">🛠️</div><h3>Build</h3><p>We build it — site, bot, signal feed, automation, or campaign.</p></div>
+      <div class="pstep reveal"><div class="ic">🚀</div><h3>Launch</h3><p>Live and tested. You see it working before it's public.</p></div>
+      <div class="pstep reveal"><div class="ic">🔁</div><h3>Maintain</h3><p>We keep it running, updated, and improving — month after month.</p></div>
+    </div>
+  </div></section>
+
+  <!-- PRICING -->
+  <section id="pricing"><div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">Pricing</div><h2>Plans that <span class="grad">scale with you</span></h2>
+      <p>Start with what you need today. Mix and match — everything's modular.</p></div>
+    <div class="tiers">
+      <div class="tier reveal"><h3>Signals</h3><div class="price">$49<small>/mo</small></div><div class="sub">JAURX VIP trade alerts</div>
+        <ul><li>Live MGC + MNQ signals</li><li>Daily bias + weekly recap</li><li>Private Telegram channel</li><li>Cancel anytime</li></ul>
+        <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="btn btn-ghost">Join VIP</a></div>
+      <div class="tier feat reveal"><div class="tag">Most Popular</div><h3>Web + Care</h3><div class="price">$400<small> + $40/mo</small></div><div class="sub">Site built, hosted &amp; maintained</div>
+        <ul><li>Custom site on your domain</li><li>Mobile-first &amp; SEO-ready</li><li>Hosting + ongoing edits</li><li>Google Business setup</li></ul>
+        <a href="#contact" class="btn btn-primary">Get Started</a></div>
+      <div class="tier reveal"><h3>Automation &amp; Ads</h3><div class="price">Custom</div><div class="sub">Bots, AI, MCP &amp; campaigns</div>
+        <ul><li>Telegram bots &amp; AI assistants</li><li>TradingView/MCP pipelines</li><li>Managed TikTok/Meta ads</li><li>Scoped to your goals</li></ul>
+        <a href="#contact" class="btn btn-ghost">Request a Quote</a></div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.86rem;margin-top:22px">Trading content is educational &amp; entertainment only. Not financial advice.</p>
+  </div></section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="cta"><div class="wrap"><div class="box reveal">
+    <div class="eyebrow" style="display:block">Let's Build</div>
+    <h2>Ready for your <span class="grad">unfair advantage?</span></h2>
+    <p>Tell us what you're working on. We'll show you the fastest way to make it real.</p>
+    <div class="hero-actions">
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="btn btn-primary">🎯 Join VIP Signals</a>
+      <a href="https://t.me/JaurxBot" target="_blank" rel="noopener" class="btn btn-ghost">💬 Message @JaurxBot</a>
+      <a href="mailto:admin@jjrproconsultants.com" class="btn btn-ghost">✉️ Email Us</a>
+    </div>
+    <p style="font-size:.82rem;margin-top:22px;opacity:.7">JJR Pro Consultants · Jaurx · admin@jjrproconsultants.com · Telegram @jaurxreilly</p>
+  </div></div></section>
+
+  <footer><div class="wrap foot">
+    <div><div class="brand">JJR<span style="color:var(--cyan)">Pro</span> / Jaurx</div>
+      <div style="font-size:.85rem;margin-top:6px">Signals · Automation · Web · AI · Ads</div></div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <a href="#services">Services</a><a href="#pricing">Pricing</a><a href="mailto:admin@jjrproconsultants.com">Email</a><a href="#contact">Telegram</a>
+    </div>
+    <div style="font-size:.82rem">© <span id="yr"></span> JJR Pro Consultants</div>
+  </div></footer>
+
+  <script>
+    document.getElementById('yr').textContent=new Date().getFullYear();
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+    document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*60)+'ms';io.observe(el)});
+  </script>
+</body>
+</html>
