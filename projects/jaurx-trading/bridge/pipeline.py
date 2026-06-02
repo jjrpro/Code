@@ -250,6 +250,76 @@ def determine_bias(gold: dict, nq: dict, vix: dict, dxy: dict, rules: dict) -> s
     return "NEUTRAL"
 
 
+def cmd_ml(args: list):
+    """Run ML signal engine on an instrument."""
+    from bridge.ml_signals import run_pipeline, format_signal
+
+    symbol = args[0] if args else "GC=F"
+    period = args[1] if len(args) > 1 else "2y"
+
+    print(f"Running ML pipeline on {symbol} ({period})...")
+    result = run_pipeline(symbol, period=period)
+    print(format_signal(result))
+
+
+def cmd_brain(args: list):
+    """Run multi-agent decision brain on an instrument."""
+    from bridge.decision_brain import analyze_instrument, format_decision
+
+    symbol = args[0] if args else "GC=F"
+    print(f"Running decision brain on {symbol}...")
+    print("(Requires ANTHROPIC_API_KEY environment variable)")
+
+    try:
+        result = analyze_instrument(symbol, debug=True)
+        print(format_decision(result))
+    except RuntimeError as e:
+        print(f"Error: {e}")
+
+
+def cmd_full(args: list):
+    """Full JAURX pipeline: macro → ML → bias → sizing → alert."""
+    from bridge.data_engine import pull_macro, morning_macro_brief
+    from bridge.ml_signals import run_pipeline, format_signal
+    from bridge.position_sizer import size_trade, format_sizing
+    from bridge.alert_formatter import format_vip_alert
+
+    config = load_config()
+    rules = load_rules()
+
+    print("=" * 60)
+    print("STEP 1: MACRO SCAN")
+    print("=" * 60)
+    macro = pull_macro(config)
+    print(morning_macro_brief(config))
+
+    gold = macro.get("GC=F", {})
+    nq = macro.get("NQ=F", {})
+    vix = macro.get("^VIX", {})
+    dxy = macro.get("DX-Y.NYB", {})
+    bias = determine_bias(gold, nq, vix, dxy, rules)
+    print(f"\nBIAS: {bias}")
+
+    print()
+    print("=" * 60)
+    print("STEP 2: ML SIGNALS")
+    print("=" * 60)
+    for sym in ["GC=F", "NQ=F"]:
+        try:
+            result = run_pipeline(sym, period="1y")
+            print(format_signal(result))
+            print()
+        except Exception as e:
+            print(f"ML error on {sym}: {e}")
+
+    print("=" * 60)
+    print("STEP 3: READY FOR TRADE SETUP")
+    print("=" * 60)
+    print("Use 'size' or 'alert' commands with specific levels once you identify a setup.")
+    print(f"Current gold: ${gold.get('price', '?')}  |  NQ: ${nq.get('price', '?')}")
+    print(f"Bias: {bias}  |  VIX: {vix.get('price', '?')}")
+
+
 def main():
     if len(sys.argv) < 2:
         print("JAURX Trading Pipeline")
@@ -261,6 +331,9 @@ def main():
         print("  size <args>        Position sizing (e.g., size MGC 4580 4610 4500,4466,4423)")
         print("  alert <args>       Generate VIP alert (e.g., alert MGC SHORT 4580 4610 4500,4466,4423)")
         print("  backtest [sym]     Compare all 9 strategies (default: GC=F)")
+        print("  ml [sym]           Run ML signal engine (default: GC=F)")
+        print("  brain [sym]        Run multi-agent decision brain (needs API key)")
+        print("  full               Full pipeline: macro → ML → bias → ready")
         return
 
     cmd = sys.argv[1]
@@ -273,6 +346,9 @@ def main():
         "size": lambda: cmd_size(args),
         "alert": lambda: cmd_alert(args),
         "backtest": lambda: cmd_backtest(args),
+        "ml": lambda: cmd_ml(args),
+        "brain": lambda: cmd_brain(args),
+        "full": lambda: cmd_full(args),
     }
 
     handler = commands.get(cmd)

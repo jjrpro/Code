@@ -23,3 +23,5 @@ Thumbs.db
 # Telegram notifier secrets (NEVER commit the bot token)
 ops/telegram-notify/config.json
 ops/telegram-notify/sent/
+*.pyc
+__pycache__/

@@ -1,0 +1,67 @@
+{
+  "train": true,
+  "venue": "yahoo",
+  "data_folder": "data/gold",
+  "symbol": "GC=F",
+  "description": "Gold Futures 1h ML Signal Engine",
+  "freq": "1h",
+  "label_horizon": 24,
+  "features_horizon": 672,
+  "train_length": 0,
+  "predict_length": 168,
+
+  "data_sources": [
+    {"folder": "GCF", "file": "klines", "column_prefix": ""}
+  ],
+
+  "feature_sets": [
+    {"column_prefix": "", "generator": "talib", "feature_prefix": "", "config": {"columns": ["close"], "functions": ["SMA"], "windows": [1, 3, 6, 12, 24, 168, 672]}},
+    {"column_prefix": "", "generator": "talib", "feature_prefix": "", "config": {"columns": ["close"], "functions": ["LINEARREG_SLOPE"], "windows": [3, 6, 12, 24, 168, 672]}},
+    {"column_prefix": "", "generator": "talib", "feature_prefix": "", "config": {"columns": ["close"], "functions": ["STDDEV"], "windows": [3, 6, 12, 24, 168, 672]}},
+    {"column_prefix": "", "generator": "talib", "feature_prefix": "", "config": {"columns": ["close"], "functions": ["RSI"], "windows": [14]}},
+    {"column_prefix": "", "generator": "talib", "feature_prefix": "", "config": {"columns": ["close"], "functions": ["MACD"], "windows": [12, 26, 9]}}
+  ],
+
+  "label_sets": [
+    {"column_prefix": "", "generator": "highlow2", "feature_prefix": "", "config": {"columns": ["close", "high", "low"], "function": "high", "thresholds": [2.0], "tolerance": 0.2, "horizon": 24, "names": ["high_20"]}},
+    {"column_prefix": "", "generator": "highlow2", "feature_prefix": "", "config": {"columns": ["close", "high", "low"], "function": "low", "thresholds": [2.0], "tolerance": 0.2, "horizon": 24, "names": ["low_20"]}}
+  ],
+
+  "train_features": [
+    "close_SMA_1", "close_SMA_3", "close_SMA_6", "close_SMA_12", "close_SMA_24", "close_SMA_168",
+    "close_LINEARREG_SLOPE_3", "close_LINEARREG_SLOPE_6", "close_LINEARREG_SLOPE_12", "close_LINEARREG_SLOPE_24", "close_LINEARREG_SLOPE_168",
+    "close_STDDEV_3", "close_STDDEV_6", "close_STDDEV_12", "close_STDDEV_24", "close_STDDEV_168"
+  ],
+
+  "labels": ["high_20", "low_20"],
+
+  "algorithms": [
+    {
+      "name": "gb",
+      "algo": "gb",
+      "params": {"is_scale": false, "length": 8760},
+      "train": {"num_leaves": 31, "learning_rate": 0.05, "n_estimators": 200}
+    }
+  ],
+
+  "signal_sets": [
+    {
+      "generator": "combine", "config": {
+        "columns": ["high_20_gb", "low_20_gb"],
+        "names": "trade_score",
+        "combine": "difference",
+        "coefficient": 1.0, "constant": 0.0
+    }},
+    {
+      "generator": "threshold_rule", "config": {
+        "columns": "trade_score",
+        "names": ["buy_signal_column", "sell_signal_column"],
+        "parameters": {
+          "buy_signal_threshold": 0.08,
+          "sell_signal_threshold": -0.08
+        }
+    }}
+  ],
+
+  "_notes": "Gold futures ML config for JAURX. Trains on 1h bars, predicts 24h forward. Uses LightGBM (no GPU needed). Thresholds at +/-0.08 for buy/sell signals."
+}

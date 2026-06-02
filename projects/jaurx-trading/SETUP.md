@@ -150,11 +150,35 @@ This gives Claude Desktop direct access to all 110+ trading tools.
 
 From any Claude Code session on this repo:
 
-- `python3 -m bridge.pipeline macro` — live macro data
-- `python3 -m bridge.pipeline morning` — morning bias brief
-- `python3 -m bridge.pipeline size MGC 4580 4610` — position sizing
-- `python3 -m bridge.pipeline alert ...` — VIP alert formatting
-- `python3 -m bridge.pipeline backtest GC=F` — strategy comparison
+```bash
+cd projects/jaurx-trading
+
+# Live macro data (Gold, NQ, VIX, DXY, yields)
+python3 -m bridge.pipeline macro
+
+# Full morning brief with bias determination
+python3 -m bridge.pipeline morning
+
+# ML signal engine (trains LightGBM on 2y of 1h bars)
+python3 -m bridge.pipeline ml GC=F
+python3 -m bridge.pipeline ml NQ=F
+
+# Full pipeline: macro → ML signals → bias → ready
+python3 -m bridge.pipeline full
+
+# Position sizing
+python3 -m bridge.pipeline size MGC 4580 4610 4500,4466,4423
+
+# Generate VIP Telegram alert
+python3 -m bridge.pipeline alert MGC SHORT 4580 4610 4500,4466,4423 "Gold at supply zone"
+
+# Compare all 9 backtest strategies
+python3 -m bridge.pipeline backtest GC=F
+
+# Multi-agent decision brain (needs ANTHROPIC_API_KEY)
+export ANTHROPIC_API_KEY="sk-ant-..."
+python3 -m bridge.pipeline brain GC=F
+```
 
 ---
 
