@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  JJR PRO / JAURX — flagship multi-service site (JR's own business).
+  Services: Telegram trade signals, TradingView MCP automations, Telegram bots,
+  website building & maintenance, full AI support, paid ads management.
+  STATUS: LIVE → https://jaurx.netlify.app/  (deployed 2026-05-31)
+  Live links wired in:
+    Whop VIP checkout: https://whop.com/checkout/plan_NRcpgDOL6DRS0/
+    Telegram bot:      https://t.me/JaurxBot   (also @jaurxreilly)
+    JaurxShops store:  https://jaurxflips.myshopify.com/
+    Email:             admin@jjrproconsultants.com
+  Optional before publish: add logo, real testimonials, swap stat numbers.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JJR Pro — Trading Signals, AI Automation & Web Design</title>
+  <meta name="description" content="JJR Pro / Jaurx — Telegram trade signals, TradingView automations, custom AI & Telegram bots, website design & maintenance, and managed ads. One team for your digital edge." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root{
+      --bg:#070a12; --bg2:#0c111d; --panel:#111827; --ink:#eaf0fb; --muted:#8a96ad;
+      /* JAURX brand palette — gold/amber on black (matches the official banner) */
+      --cyan:#f5a623; --violet:#e08a1e; --green:#34d399; --pink:#ffcf5c; --amber:#fbbf24;
+      --line:rgba(255,255,255,.08); --maxw:1180px;
+      --display:"Sora",-apple-system,sans-serif; --sans:"Inter",-apple-system,sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    h1,h2,h3{font-family:var(--display);line-height:1.08;letter-spacing:-.02em}
+    .grad{background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:.95rem;
+      padding:14px 28px;border-radius:12px;border:none;cursor:pointer;transition:transform .16s,box-shadow .25s}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-primary{background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f;box-shadow:0 10px 36px rgba(34,211,238,.32)}
+    .btn-ghost{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line)}
+    .btn-ghost:hover{background:rgba(255,255,255,.12)}
+    section{padding:104px 0;position:relative}
+    .eyebrow{font-family:var(--display);font-weight:700;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+
+    /* animated background */
+    .bgfx{position:fixed;inset:0;z-index:-2;background:var(--bg)}
+    .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;animation:float 18s ease-in-out infinite}
+    .orb.a{width:520px;height:520px;background:radial-gradient(circle,#f5a623,transparent 70%);top:-160px;left:-120px}
+    .orb.b{width:480px;height:480px;background:radial-gradient(circle,#b8731a,transparent 70%);top:30%;right:-160px;animation-delay:-6s}
+    .orb.c{width:440px;height:440px;background:radial-gradient(circle,#ffcf5c,transparent 70%);bottom:-160px;left:30%;animation-delay:-11s}
+    @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.08)}66%{transform:translate(-30px,24px) scale(.95)}}
+    .grid-overlay{position:fixed;inset:0;z-index:-1;opacity:.4;
+      background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:54px 54px;mask-image:radial-gradient(circle at 50% 30%,#000,transparent 80%)}
+
+    /* 3D WebGL scene (living video-style background) */
+    #scene3d{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.92}
+    /* particle network canvas */
+    #net{position:fixed;inset:0;z-index:-1;pointer-events:none}
+    /* cursor-follow glow */
+    #cursorglow{position:fixed;width:380px;height:380px;border-radius:50%;pointer-events:none;z-index:0;
+      background:radial-gradient(circle,rgba(245,166,35,.10),transparent 65%);transform:translate(-50%,-50%);left:-999px;top:-999px;transition:opacity .3s}
+    @media(hover:none){#cursorglow{display:none}}
+
+    /* reveal — FAILSAFE: content is visible by default; JS only animates it.
+       Hidden state ONLY applies when <html class="js"> is set (after JS runs ok),
+       so a script error or blocked CDN can never blank the page. */
+    .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+    .js .reveal.in{opacity:1;transform:none}
+    /* word-by-word headline reveal (also gated on .js) */
+    .js .wreveal .w{display:inline-block;opacity:0;transform:translateY(28px) rotate(3deg);
+      animation:win .7s cubic-bezier(.2,.8,.2,1) forwards}
+    @keyframes win{to{opacity:1;transform:none}}
+    /* 3D tilt cards */
+    .scard{transform-style:preserve-3d;will-change:transform}
+    /* live chart frame */
+    .chartwrap{max-width:720px;margin:36px auto 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+      background:var(--panel);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+    .chartwrap .tv{height:280px;width:100%}
+    .chartwrap .lbl{display:flex;align-items:center;gap:8px;padding:11px 18px;border-bottom:1px solid var(--line);font-size:.8rem;color:var(--muted);font-family:var(--display);font-weight:600}
+    .chartwrap .lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+
+    /* nav */
+    header{position:sticky;top:0;z-index:60;background:rgba(7,10,18,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+    .logo{font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em}
+    .logo b{color:var(--cyan)}
+    .nav-links{display:flex;gap:30px;align-items:center}
+    .nav-links a{font-size:.86rem;font-weight:600;color:var(--muted)}.nav-links a:hover{color:var(--ink)}
+    .nav-cta{background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f!important;padding:10px 20px;border-radius:10px;font-weight:700}
+
+    /* JAURX CSS banner (matches official gold-on-black) */
+    .jaurx-banner{position:relative;max-width:780px;margin:0 auto 36px;padding:54px 30px 30px;border-radius:16px;
+      background:radial-gradient(120% 140% at 50% 38%,rgba(245,166,35,.18),transparent 60%),#0a0a0c;
+      border:1px solid rgba(245,166,35,.18);overflow:hidden}
+    .jaurx-banner::before{content:"";position:absolute;inset:0;opacity:.5;
+      background-image:linear-gradient(rgba(245,166,35,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.07) 1px,transparent 1px);
+      background-size:46px 46px;mask-image:radial-gradient(circle at 50% 40%,#000,transparent 78%)}
+    .jaurx-banner::after{content:"";position:absolute;top:-30%;left:-10%;width:140%;height:160%;
+      background:linear-gradient(115deg,transparent 46%,rgba(255,210,120,.5) 50%,transparent 54%);transform:rotate(8deg)}
+    .jaurx-banner .bar{position:absolute;top:30px;left:50%;transform:translateX(-50%);width:54px;height:5px;border-radius:3px;
+      background:linear-gradient(90deg,#b8731a,#ffd87a,#b8731a);box-shadow:0 0 18px rgba(255,200,100,.6)}
+    .jaurx-banner .word{position:relative;font-family:var(--display);font-weight:800;font-size:clamp(3.2rem,12vw,6.6rem);
+      letter-spacing:.16em;line-height:1;text-indent:.16em;
+      background:linear-gradient(180deg,#fff3d2 6%,#ffc24d 46%,#f5a623 64%,#9c5e16);-webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 0 26px rgba(245,166,35,.45))}
+    .jaurx-banner .sub{position:relative;display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;
+      color:#d8a23e;letter-spacing:.5em;font-family:var(--display);font-weight:600;font-size:.74rem;text-indent:.5em}
+    .jaurx-banner .sub .dash{width:34px;height:1px;background:rgba(216,162,62,.6)}
+    .jaurx-banner .dots{position:absolute;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:7px}
+    .jaurx-banner .dots.left{left:26px}.jaurx-banner .dots.right{right:26px}
+    .jaurx-banner .dots i{width:5px;height:5px;border-radius:50%;background:#d8a23e;opacity:.85}
+    .jaurx-banner .dots i:nth-child(3){opacity:.5}.jaurx-banner .dots i:nth-child(4){opacity:.3}
+    @media(max-width:560px){.jaurx-banner .dots{display:none}.jaurx-banner{padding:46px 18px 26px}}
+
+    /* hero */
+    .hero{padding:120px 0 90px;text-align:center}
+    .hero .pill{display:inline-flex;gap:9px;align-items:center;background:rgba(255,255,255,.05);border:1px solid var(--line);
+      padding:8px 18px;border-radius:999px;font-size:.8rem;color:var(--muted);margin-bottom:30px}
+    .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}70%{box-shadow:0 0 0 12px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+    .hero h1{font-size:clamp(2.8rem,7vw,5.4rem);font-weight:800;margin-bottom:22px}
+    .hero p{font-size:1.22rem;color:var(--muted);max-width:680px;margin:0 auto 38px}
+    .hero-actions{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+
+    /* ticker */
+    .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);overflow:hidden;white-space:nowrap;padding:14px 0}
+    .ticker .row{display:inline-block;animation:scrollx 30s linear infinite;font-family:var(--display);font-weight:600;font-size:.92rem}
+    .ticker .row span{margin:0 22px;color:var(--muted)}
+    .ticker .row b{color:var(--green)}.ticker .row .red{color:var(--pink)}
+    @keyframes scrollx{to{transform:translateX(-50%)}}
+
+    /* stats */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:10px}
+    .stat{text-align:center;padding:26px 16px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+    .stat .n{font-family:var(--display);font-weight:800;font-size:2.3rem;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .stat .l{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+
+    /* services */
+    .sec-head{max-width:680px;margin:0 auto 56px;text-align:center}
+    .sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800}
+    .sec-head p{color:var(--muted);margin-top:14px;font-size:1.06rem}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .scard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:32px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
+    .scard:hover{transform:translateY(-6px);border-color:rgba(34,211,238,.4);box-shadow:0 24px 60px rgba(34,211,238,.12)}
+    .scard::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));opacity:.8}
+    .scard .ic{width:54px;height:54px;border-radius:13px;display:grid;place-items:center;font-size:1.6rem;margin-bottom:18px;
+      background:rgba(255,255,255,.05);border:1px solid var(--line)}
+    .scard h3{font-size:1.32rem;margin-bottom:8px}
+    .scard p{color:var(--muted);font-size:.97rem;margin-bottom:14px}
+    .scard ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+    .scard li{font-size:.9rem;color:var(--ink);display:flex;gap:9px;align-items:flex-start}
+    .scard li::before{content:"▸";color:var(--cyan);flex:none}
+
+    /* quotes */
+    .qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .quote{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:14px;
+      padding:28px 26px;font-family:var(--display);font-weight:600;font-size:1.06rem;line-height:1.45;color:var(--ink);position:relative}
+    .quote::before{content:"\201C";position:absolute;top:6px;left:14px;font-size:3rem;color:rgba(34,211,238,.22);font-family:Georgia,serif}
+    .quote:nth-child(2){border-left-color:var(--violet)}.quote:nth-child(2)::before{color:rgba(139,92,246,.22)}
+    .quote:nth-child(3){border-left-color:var(--pink)}.quote:nth-child(3)::before{color:rgba(244,114,182,.22)}
+    .quote:nth-child(4){border-left-color:var(--green)}.quote:nth-child(4)::before{color:rgba(52,211,153,.22)}
+    .quote:nth-child(5){border-left-color:var(--amber)}.quote:nth-child(5)::before{color:rgba(251,191,36,.22)}
+    .quote:nth-child(6){border-left-color:var(--cyan)}
+
+    /* process */
+    .process{background:var(--bg2)}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:48px;counter-reset:s}
+    .pstep{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px 24px;position:relative}
+    .pstep::before{counter-increment:s;content:"0" counter(s);position:absolute;top:18px;right:22px;font-family:var(--display);font-weight:800;font-size:2.2rem;color:rgba(255,255,255,.06)}
+    .pstep .ic{font-size:1.7rem;margin-bottom:12px}
+    .pstep h3{font-size:1.15rem;margin-bottom:6px}.pstep p{color:var(--muted);font-size:.92rem}
+
+    /* pricing */
+    .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+    .tier{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:34px;display:flex;flex-direction:column;position:relative}
+    .tier.feat{border-color:rgba(139,92,246,.6);box-shadow:0 0 0 1px rgba(139,92,246,.3),0 24px 60px rgba(139,92,246,.18)}
+    .tier .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f;font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:999px}
+    .tier h3{font-size:1.3rem;margin-bottom:6px}
+    .tier .price{font-family:var(--display);font-weight:800;font-size:2.6rem;margin:8px 0 4px}
+    .tier .price small{font-size:.95rem;color:var(--muted);font-weight:500}
+    .tier .sub{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+    .tier ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px;flex:1}
+    .tier li{font-size:.92rem;display:flex;gap:10px}.tier li::before{content:"✓";color:var(--green);font-weight:800}
+    .tier .btn{width:100%;justify-content:center}
+
+    /* CTA */
+    .cta{text-align:center}
+    .cta .box{background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(139,92,246,.12));border:1px solid var(--line);border-radius:28px;padding:72px 30px;max-width:840px;margin:0 auto}
+    .cta h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;margin-bottom:14px}
+    .cta p{color:var(--muted);max-width:520px;margin:0 auto 30px;font-size:1.1rem}
+
+    footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--muted)}
+    .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+    .foot a{color:var(--muted);font-size:.9rem}.foot a:hover{color:var(--ink)}
+    .foot .brand{font-family:var(--display);font-weight:800;color:var(--ink);font-size:1.1rem}
+
+    /* ecosystem hub */
+    .hub{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .hublink{display:flex;align-items:center;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+      padding:24px 26px;transition:transform .2s,border-color .2s,box-shadow .2s}
+    .hublink:hover{transform:translateY(-4px);border-color:rgba(245,166,35,.45);box-shadow:0 20px 50px rgba(245,166,35,.12)}
+    .hublink .hi{font-size:2rem;flex:none;width:58px;height:58px;border-radius:14px;display:grid;place-items:center;background:rgba(245,166,35,.08);border:1px solid var(--line)}
+    .hublink h3{font-size:1.22rem;margin-bottom:3px}.hublink p{color:var(--muted);font-size:.9rem}
+    .hublink .arr{margin-left:auto;color:var(--cyan);font-size:1.4rem;font-weight:700;transition:transform .2s}
+    .hublink:hover .arr{transform:translateX(5px)}
+
+    /* faq */
+    .faqs{max-width:780px;margin:48px auto 0;display:flex;flex-direction:column;gap:12px}
+    .faq{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px 22px;transition:border-color .2s}
+    .faq[open]{border-color:rgba(245,166,35,.4)}
+    .faq summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.04rem;padding:18px 30px 18px 0;list-style:none;position:relative}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary::after{content:"+";position:absolute;right:2px;top:16px;color:var(--cyan);font-size:1.5rem;font-weight:400;transition:transform .2s}
+    .faq[open] summary::after{transform:rotate(45deg)}
+    .faq p{color:var(--muted);font-size:.96rem;padding:0 0 20px;line-height:1.65}
+
+    /* sticky mobile CTA */
+    .sticky-cta{position:fixed;left:16px;right:16px;bottom:16px;z-index:70;display:none;text-align:center;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));color:#06080f;font-family:var(--display);font-weight:800;
+      padding:15px;border-radius:14px;box-shadow:0 10px 34px rgba(245,166,35,.45)}
+
+    @media(max-width:900px){.nav-links a:not(.nav-cta){display:none}
+      .hub{grid-template-columns:1fr}.sticky-cta{display:block}
+      .stats{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.tiers{grid-template-columns:1fr}}
+    @media(max-width:520px){.steps{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="bgfx"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+  <canvas id="scene3d"></canvas>
+  <canvas id="net"></canvas>
+  <div id="cursorglow"></div>
+  <div class="grid-overlay"></div>
+
+  <header><div class="wrap nav">
+    <a href="#" class="logo" style="letter-spacing:.12em">JAURX <span style="color:var(--muted);font-weight:600;font-size:.78rem;letter-spacing:.18em">/ JJR PRO</span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a><a href="#about">About</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener">Shop</a>
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="nav-cta">Join VIP</a>
+    </nav>
+  </div></header>
+
+  <!-- HERO -->
+  <section class="hero"><div class="wrap">
+    <!-- JAURX brand banner — recreated in pure CSS (matches the official gold banner). -->
+    <div class="jaurx-banner reveal in">
+      <span class="bar"></span>
+      <div class="dots left"><i></i><i></i><i></i><i></i></div>
+      <div class="dots right"><i></i><i></i><i></i><i></i></div>
+      <div class="word">JAURX</div>
+      <div class="sub"><span class="dash"></span> OFFICIAL CHANNEL <span class="dash"></span></div>
+    </div>
+    <span class="pill"><span class="pulse"></span> Trading signals · AI automation · web &amp; ads — one team</span>
+    <h1 class="wreveal"><span class="w">Your</span> <span class="w">unfair</span> <span class="w">advantage,</span><br><span class="w grad">built</span> <span class="w grad">and</span> <span class="w grad">automated.</span></h1>
+    <p>JJR Pro builds the systems that move you forward — live trade signals, AI &amp; TradingView automations, custom bots, websites that convert, and ads that actually land. One crew, every edge.</p>
+    <div class="hero-actions">
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="btn btn-primary">🎯 Join VIP Signals — $49/mo</a>
+      <a href="#services" class="btn btn-ghost">Explore Services</a>
+    </div>
+    <p style="margin-top:18px;font-size:.86rem;color:var(--muted)">Need a site, bot, or ads instead? <a href="#contact" style="color:var(--cyan)">Start a project →</a></p>
+    <div class="chartwrap reveal">
+      <div class="lbl"><span class="dot"></span> LIVE · Micro Gold Futures (MGC) — what we trade</div>
+      <div class="tv"><div class="tradingview-widget-container" style="height:100%;width:100%">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {"symbol":"COMEX_MINI:MGC1!","width":"100%","height":"100%","locale":"en","dateRange":"1D","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":""}
+        </script>
+      </div></div>
+    </div>
+  </div></section>
+
+  <!-- TICKER -->
+  <div class="ticker"><div class="row">
+    <span>MGC <b>▲ entry filled</b></span><span>MNQ <b>▲ +2R</b></span><span>signal <b>sent → Telegram</b></span><span>bot <b>● online</b></span><span class="red">SL moved to BE</span><span>TradingView <b>alert → MCP</b></span><span>ad set <b>▲ scaling</b></span><span>site <b>● deployed</b></span>
+    <span>MGC <b>▲ entry filled</b></span><span>MNQ <b>▲ +2R</b></span><span>signal <b>sent → Telegram</b></span><span>bot <b>● online</b></span><span class="red">SL moved to BE</span><span>TradingView <b>alert → MCP</b></span><span>ad set <b>▲ scaling</b></span><span>site <b>● deployed</b></span>
+  </div></div>
+
+  <!-- STATS -->
+  <section style="padding:64px 0"><div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="n">24/7</div><div class="l">AI Support</div></div>
+      <div class="stat reveal"><div class="n">Live</div><div class="l">Trade Signals</div></div>
+      <div class="stat reveal"><div class="n">&lt;1 wk</div><div class="l">Site Turnaround</div></div>
+      <div class="stat reveal"><div class="n">All-in-1</div><div class="l">One Team</div></div>
+    </div>
+  </div></section>
+
+  <!-- SERVICES -->
+  <section id="services"><div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">What We Do</div>
+      <h2>Everything under <span class="grad">one roof</span></h2>
+      <p>From the trading desk to the deploy button — the full stack that powers a modern operation.</p>
+    </div>
+    <div class="cards">
+      <div class="scard reveal"><div class="ic">📈</div><h3>Telegram Trade Signals</h3><p>Live MGC &amp; MNQ futures alerts — entries, stops, targets, posted the moment they're taken.</p>
+        <ul><li>Real-time entries &amp; exits</li><li>Daily bias before NY open</li><li>Free channel + VIP tier</li></ul>
+        <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;color:var(--cyan);font-weight:700;font-size:.9rem">Join VIP — $49/mo →</a></div>
+      <div class="scard reveal"><div class="ic">🧠</div><h3>TradingView Automation</h3><p>Turn your TradingView alerts into action via MCP — auto-broadcast, log, and route signals with zero manual steps.</p>
+        <ul><li>Alert → MCP pipelines</li><li>Auto-post to Telegram/Discord</li><li>Custom strategy hooks</li></ul></div>
+      <div class="scard reveal"><div class="ic">🤖</div><h3>Custom Telegram Bots</h3><p>Bots that run your community — subscriptions, gated access, broadcasts, and AI replies, built to your flow.</p>
+        <ul><li>Paid access &amp; member gating</li><li>Auto-broadcast &amp; commands</li><li>AI-powered responses</li></ul></div>
+      <div class="scard reveal"><div class="ic">🌐</div><h3>Website Design &amp; Maintenance</h3><p>Fast, modern sites that convert — built, deployed, and kept fresh. Local business or full brand.</p>
+        <ul><li>Mobile-first, SEO-ready</li><li>Live in days, on your domain</li><li>Ongoing care &amp; edits</li></ul></div>
+      <div class="scard reveal"><div class="ic">✨</div><h3>Full AI Support</h3><p>AI woven into your business — assistants, content, automations, and tooling that save you hours every week.</p>
+        <ul><li>Custom AI assistants</li><li>Workflow automation</li><li>Content &amp; ops at scale</li></ul></div>
+      <div class="scard reveal"><div class="ic">🎯</div><h3>Managed Ads</h3><p>Paid campaigns that pay off — TikTok, Meta &amp; more, built, launched, and scaled with real tracking.</p>
+        <ul><li>Creative + targeting</li><li>Pixel/CAPI tracking setup</li><li>Scale what works</li></ul></div>
+      <div class="scard reveal"><div class="ic">🛍️</div><h3>JaurxShops Store</h3><p>Our own Shopify brand — magnetic MagSafe phone wallets. Fast shipping, built &amp; scaled in-house.</p>
+        <ul><li>Magnetic phone wallets</li><li>Fast, tracked shipping</li><li>See what we build for ourselves</li></ul>
+        <a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;color:var(--cyan);font-weight:700;font-size:.9rem">Shop JaurxShops →</a></div>
+    </div>
+  </div></section>
+
+  <!-- ABOUT JR -->
+  <section id="about"><div class="wrap">
+    <div style="max-width:780px;margin:0 auto;text-align:center" class="reveal">
+      <div class="eyebrow">The Story</div>
+      <h2>Building something <span class="grad">from the ground up</span></h2>
+      <p style="color:var(--muted);font-size:1.14rem;margin-top:20px;line-height:1.7">
+        I'm a young entrepreneur making the best out of the cards I was dealt. No shortcuts,
+        no handouts — just work, reps, and building real systems that actually move the needle.
+        Every signal, site, and bot here is something I'd stake my own name on, because I do.
+      </p>
+      <p style="color:var(--ink);font-family:var(--display);font-weight:700;font-size:1.3rem;margin-top:26px">
+        In due time. <span class="grad">We all will succeed.</span>
+      </p>
+    </div>
+  </div></section>
+
+  <!-- QUOTES -->
+  <section style="padding:40px 0 90px"><div class="wrap">
+    <div class="qgrid">
+      <blockquote class="quote reveal">"The market pays you to be disciplined, not to be right."</blockquote>
+      <blockquote class="quote reveal">"Risk first. The profit takes care of itself when you stop trying to force it."</blockquote>
+      <blockquote class="quote reveal">"A good system you follow beats a perfect one you abandon at the first red candle."</blockquote>
+      <blockquote class="quote reveal">"Patience is a position. Most of the edge is in the trades you don't take."</blockquote>
+      <blockquote class="quote reveal">"You don't rise to your hopes — you fall to your preparation."</blockquote>
+      <blockquote class="quote reveal">"Consistency is boring. Boring is what builds the account."</blockquote>
+    </div>
+  </div></section>
+
+  <!-- PROCESS -->
+  <section id="process" class="process"><div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">How It Works</div><h2>Simple to start, <span class="grad">built to last</span></h2></div>
+    <div class="steps">
+      <div class="pstep reveal"><div class="ic">💬</div><h3>Talk</h3><p>Tell us the goal. We map the fastest path to it — no jargon.</p></div>
+      <div class="pstep reveal"><div class="ic">🛠️</div><h3>Build</h3><p>We build it — site, bot, signal feed, automation, or campaign.</p></div>
+      <div class="pstep reveal"><div class="ic">🚀</div><h3>Launch</h3><p>Live and tested. You see it working before it's public.</p></div>
+      <div class="pstep reveal"><div class="ic">🔁</div><h3>Maintain</h3><p>We keep it running, updated, and improving — month after month.</p></div>
+    </div>
+  </div></section>
+
+  <!-- PRICING -->
+  <section id="pricing"><div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">Pricing</div><h2>Plans that <span class="grad">scale with you</span></h2>
+      <p>Start with what you need today. Mix and match — everything's modular.</p></div>
+    <div class="tiers">
+      <div class="tier reveal"><h3>Signals</h3><div class="price">$49<small>/mo</small></div><div class="sub">JAURX VIP trade alerts</div>
+        <ul><li>Live MGC + MNQ signals</li><li>Daily bias + weekly recap</li><li>Private Telegram channel</li><li>Cancel anytime</li></ul>
+        <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="btn btn-ghost">Join VIP</a></div>
+      <div class="tier feat reveal"><div class="tag">Most Popular</div><h3>Web + Care</h3><div class="price">$400<small> + $40/mo</small></div><div class="sub">Site built, hosted &amp; maintained</div>
+        <ul><li>Custom site on your domain</li><li>Mobile-first &amp; SEO-ready</li><li>Hosting + ongoing edits</li><li>Google Business setup</li></ul>
+        <a href="#contact" class="btn btn-primary">Get Started</a></div>
+      <div class="tier reveal"><h3>Automation &amp; Ads</h3><div class="price">Custom</div><div class="sub">Bots, AI, MCP &amp; campaigns</div>
+        <ul><li>Telegram bots &amp; AI assistants</li><li>TradingView/MCP pipelines</li><li>Managed TikTok/Meta ads</li><li>Scoped to your goals</li></ul>
+        <a href="#contact" class="btn btn-ghost">Request a Quote</a></div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.86rem;margin-top:22px">Trading content is educational &amp; entertainment only. Not financial advice.</p>
+  </div></section>
+
+  <!-- ECOSYSTEM / BRANDS HUB -->
+  <section id="brands"><div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">The Ecosystem</div><h2>Everywhere <span class="grad">JAURX</span> lives</h2>
+      <p>One brand, every channel. Tap in wherever fits you.</p></div>
+    <div class="hub">
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="hublink reveal">
+        <div class="hi">🎯</div><div><h3>JAURX VIP Signals</h3><p>Live MGC + MNQ alerts · $49/mo</p></div><span class="arr">→</span></a>
+      <a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener" class="hublink reveal">
+        <div class="hi">🛍️</div><div><h3>JaurxShops</h3><p>Magnetic MagSafe phone wallets · shop now</p></div><span class="arr">→</span></a>
+      <a href="https://t.me/JaurxBot" target="_blank" rel="noopener" class="hublink reveal">
+        <div class="hi">🤖</div><div><h3>@JaurxBot</h3><p>Questions, access &amp; AI support on Telegram</p></div><span class="arr">→</span></a>
+      <a href="https://t.me/jaurxreilly" target="_blank" rel="noopener" class="hublink reveal">
+        <div class="hi">💬</div><div><h3>Free Channel</h3><p>Daily bias &amp; market takes · @jaurxreilly</p></div><span class="arr">→</span></a>
+    </div>
+  </div></section>
+
+  <!-- FAQ -->
+  <section id="faq" class="process"><div class="wrap">
+    <div class="sec-head reveal"><div class="eyebrow">FAQ</div><h2>Good <span class="grad">questions</span></h2></div>
+    <div class="faqs">
+      <details class="faq reveal"><summary>What exactly do I get with VIP signals?</summary><p>Live MGC + MNQ futures alerts the moment I take them — entry, stop, and targets — plus a daily bias before the NY open and a weekly recap, all in a private Telegram channel. $49/mo, cancel anytime.</p></details>
+      <details class="faq reveal"><summary>Can you build me a website?</summary><p>Yes — fast, modern, mobile-first sites built and live on your own domain in days, with optional ongoing maintenance. Local business or full brand. Hit "Start a project" and tell me the goal.</p></details>
+      <details class="faq reveal"><summary>What can the automation / AI side do?</summary><p>Custom Telegram bots, TradingView→MCP alert pipelines, AI assistants, and workflow automation — built around your exact flow so it runs without you babysitting it.</p></details>
+      <details class="faq reveal"><summary>Do you run ads?</summary><p>Yes — TikTok, Meta and more: creative, targeting, pixel/CAPI tracking setup, and scaling what works. Managed end to end.</p></details>
+      <details class="faq reveal"><summary>Is this financial advice?</summary><p>No. Everything trading-related is educational and entertainment only — not financial, investment, or trading advice. You're responsible for your own decisions. NFA.</p></details>
+      <details class="faq reveal"><summary>How do I get started?</summary><p>Pick what you need above, or message @JaurxBot / email admin@jjrproconsultants.com. We map the fastest path and get moving — usually same week.</p></details>
+    </div>
+  </div></section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="cta"><div class="wrap"><div class="box reveal">
+    <div class="eyebrow" style="display:block">Let's Build</div>
+    <h2>Ready for your <span class="grad">unfair advantage?</span></h2>
+    <p>Tell us what you're working on. We'll show you the fastest way to make it real.</p>
+    <div class="hero-actions">
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="btn btn-primary">🎯 Join VIP Signals</a>
+      <a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener" class="btn btn-ghost">🛍️ Shop JaurxShops</a>
+      <a href="https://t.me/JaurxBot" target="_blank" rel="noopener" class="btn btn-ghost">💬 @JaurxBot</a>
+      <a href="mailto:admin@jjrproconsultants.com" class="btn btn-ghost">✉️ Email</a>
+    </div>
+    <p style="font-size:.82rem;margin-top:22px;opacity:.7">JJR Pro Consultants · Jaurx · admin@jjrproconsultants.com · Telegram @jaurxreilly</p>
+  </div></div></section>
+
+  <!-- sticky mobile VIP button -->
+  <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener" class="sticky-cta">🎯 Join VIP — $49/mo</a>
+
+  <footer><div class="wrap foot">
+    <div><div class="brand">JJR<span style="color:var(--cyan)">Pro</span> / Jaurx</div>
+      <div style="font-size:.85rem;margin-top:6px">Signals · Automation · Web · AI · Ads</div></div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="#services">Services</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+      <a href="https://whop.com/checkout/plan_NRcpgDOL6DRS0/" target="_blank" rel="noopener">VIP</a>
+      <a href="https://jaurxflips.myshopify.com/" target="_blank" rel="noopener">Shop</a>
+      <a href="https://t.me/JaurxBot" target="_blank" rel="noopener">Telegram</a>
+      <a href="mailto:admin@jjrproconsultants.com">Email</a>
+    </div>
+    <div style="font-size:.82rem">© <span id="yr"></span> JJR Pro Consultants</div>
+  </div></footer>
+
+  <script>
+    // Mark JS active so reveal-animations engage. If this line never runs,
+    // everything stays visible (no blank page). Each effect is isolated so one
+    // failure can't take down the rest.
+    try{ document.documentElement.classList.add('js'); }catch(e){}
+
+    try{
+      document.getElementById('yr').textContent=new Date().getFullYear();
+      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+      document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*60)+'ms';io.observe(el)});
+      document.querySelectorAll('.wreveal .w').forEach((w,i)=>{w.style.animationDelay=(i*0.09+0.1)+'s'});
+    }catch(e){ /* reveals fail open — content already visible */ }
+
+    // ===== 3D WebGL scene — floating gold objects (living background + 3D objects) =====
+    // Fully isolated: if Three.js didn't load or WebGL is unavailable, this just
+    // skips — the rest of the site (and the particle bg) carry the look.
+    try{ if(!window.THREE) throw 0;
+    (function(){
+      const cv=document.getElementById('scene3d');
+      const renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+      renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+      const scene=new THREE.Scene();
+      const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100);cam.position.z=9;
+
+      // lights — warm gold key + cool rim
+      scene.add(new THREE.AmbientLight(0x402a10,1.1));
+      const key=new THREE.PointLight(0xffbb44,2.4,60);key.position.set(6,8,10);scene.add(key);
+      const rim=new THREE.PointLight(0xff7a18,1.6,60);rim.position.set(-9,-4,4);scene.add(rim);
+
+      const gold=new THREE.MeshStandardMaterial({color:0xf5a623,metalness:1,roughness:.28,emissive:0x3a2208});
+      const wire=new THREE.MeshStandardMaterial({color:0xffd87a,metalness:.8,roughness:.4,wireframe:true,transparent:true,opacity:.5});
+
+      const objs=[];
+      function add(geo,mat,pos,sc){const m=new THREE.Mesh(geo,mat);m.position.set(...pos);m.scale.setScalar(sc);
+        m.userData={rx:(Math.random()-.5)*.004,ry:(Math.random()-.5)*.004,fy:Math.random()*6.28,base:pos[1]};scene.add(m);objs.push(m);return m}
+      add(new THREE.IcosahedronGeometry(1.5,0),gold,[-4.5,1.5,0],1);
+      add(new THREE.TorusKnotGeometry(1,.34,120,18),gold,[4.6,-1,-1],.95);
+      add(new THREE.TorusGeometry(1.3,.18,24,80),wire,[3.2,2.6,-2],1);
+      add(new THREE.OctahedronGeometry(1.2,0),wire,[-4,-2.4,-1],1);
+      add(new THREE.DodecahedronGeometry(.9,0),gold,[0,0,-3],1);
+
+      let tmx=0,tmy=0,mx=0,my=0,scrollY=0;
+      addEventListener('pointermove',e=>{tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5)},{passive:true});
+      addEventListener('scroll',()=>{scrollY=window.scrollY||0},{passive:true});
+      function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
+      addEventListener('resize',resize);resize();
+
+      const clock=new THREE.Clock();
+      (function render(){
+        const t=clock.getElapsedTime();
+        mx+=(tmx-mx)*.04;my+=(tmy-my)*.04;
+        objs.forEach((o,i)=>{o.rotation.x+=o.userData.rx;o.rotation.y+=o.userData.ry;
+          o.position.y=o.userData.base+Math.sin(t*.6+o.userData.fy)*.4;});
+        cam.position.x=mx*2.2;cam.position.y=-my*1.6 - scrollY*0.0016;cam.lookAt(0,0,0);
+        renderer.render(scene,cam);requestAnimationFrame(render);
+      })();
+    })();
+    }catch(e){ var s3=document.getElementById('scene3d'); if(s3) s3.style.display='none'; }
+
+    // interactive particle network (also isolated)
+    try{
+    (function(){
+      const c=document.getElementById('net'),x=c.getContext('2d');let w,h,pts,mx=-999,my=-999;
+      const N=Math.min(90,Math.floor((innerWidth*innerHeight)/22000));
+      function size(){w=c.width=innerWidth;h=c.height=innerHeight}
+      function init(){pts=Array.from({length:N},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))}
+      addEventListener('resize',()=>{size();init()});
+      addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
+      addEventListener('pointerleave',()=>{mx=my=-999});
+      size();init();
+      (function loop(){
+        x.clearRect(0,0,w,h);
+        for(const p of pts){
+          p.x+=p.vx;p.y+=p.vy;
+          if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;
+          const dm=Math.hypot(p.x-mx,p.y-my);
+          if(dm<140){p.x+=(p.x-mx)/dm*1.1;p.y+=(p.y-my)/dm*1.1}
+          x.beginPath();x.arc(p.x,p.y,1.7,0,7);x.fillStyle='rgba(245,166,35,.55)';x.fill();
+        }
+        for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+          const a=pts[i],b=pts[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+          if(d<128){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);
+            x.strokeStyle='rgba(245,166,35,'+(0.14*(1-d/128)).toFixed(3)+')';x.lineWidth=1;x.stroke()}
+        }
+        requestAnimationFrame(loop);
+      })();
+    })();
+    }catch(e){ var nc=document.getElementById('net'); if(nc) nc.style.display='none'; }
+
+    // cursor glow + 3D tilt (isolated)
+    try{
+      var glow2=document.getElementById('cursorglow');
+      if(glow2) addEventListener('pointermove',function(e){glow2.style.left=e.clientX+'px';glow2.style.top=e.clientY+'px'},{passive:true});
+      document.querySelectorAll('.scard').forEach(function(card){
+        card.addEventListener('pointermove',function(e){var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;
+          card.style.transform='translateY(-6px) perspective(800px) rotateX('+(-y*7).toFixed(2)+'deg) rotateY('+(x*9).toFixed(2)+'deg)'});
+        card.addEventListener('pointerleave',function(){card.style.transform=''});
+      });
+    }catch(e){}
+  </script>
+</body>
+</html>
