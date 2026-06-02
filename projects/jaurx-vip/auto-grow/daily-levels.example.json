@@ -1,0 +1,26 @@
+{
+  "mgc": {
+    "bias": "Bearish below 4584",
+    "supply": "4578-4584 (multi-touch)",
+    "demand": "4466-4423",
+    "trigger": "Reject 4578 with selling tail OR break + retest 4500"
+  },
+  "mnq": {
+    "bias": "Neutral, range",
+    "resistance": "18450 then 18620",
+    "support": "18280 then 18120",
+    "trigger": "Liquidity sweep + reclaim of either edge"
+  },
+  "catalyst": "FOMC minutes 2pm ET",
+  "eod": {
+    "mgcTrades": 2,
+    "mgcRecord": "1W 1L",
+    "mgcR": "+1.8",
+    "mnqTrades": 1,
+    "mnqRecord": "1W",
+    "mnqR": "+2.4",
+    "bestTrade": "MNQ long off 18120 sweep, +2.4R",
+    "worstTrade": "MGC short at 4578, chopped out, -1R (would do again, level just held)",
+    "tomorrowFocus": "MGC 4584 supply retest if we open lower"
+  }
+}

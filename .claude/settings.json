@@ -19,7 +19,7 @@
           {
             "type": "command",
             "command": "bash /home/user/Code/.claude/hooks/sync-memory.sh",
-            "timeout": 30,
+            "timeout": 60,
             "statusMessage": "Syncing notes to Obsidian repo…"
           }
         ]

@@ -78,6 +78,7 @@ cd "\$VAULT" || exit 0
 [ -d .git ] || exit 0
 
 ts() { date '+%Y-%m-%d %H:%M:%S'; }
+pulled_count=0
 
 # ----- 1) Pull side: fetch + fast-forward -----
 git fetch origin "\$BRANCH" --quiet 2>/dev/null
@@ -85,15 +86,21 @@ behind=\$(git rev-list --count HEAD.."origin/\$BRANCH" 2>/dev/null)
 
 if [ -n "\$behind" ] && [ "\$behind" != "0" ]; then
   if git pull origin "\$BRANCH" --ff-only --quiet 2>/dev/null; then
+    pulled_count=\$behind
     echo "[\$(ts)] pulled \$behind commit(s) from \$BRANCH"
   else
-    echo "[\$(ts)] ⚠️  pull blocked — local edits + remote edits diverged (will be handled by push step)"
+    echo "[\$(ts)] WARN pull blocked - local edits + remote edits diverged (handled by push step)"
   fi
 fi
 
 # ----- 2) Push side: commit + push any local Obsidian edits -----
 # Skip if working tree is clean
 if git diff --quiet && git diff --cached --quiet && [ -z "\$(git status --porcelain)" ]; then
+  # Heartbeat: log "tick" only if no pull happened either.
+  # Keeps the log alive as proof-of-life without doubling up on entries.
+  if [ "\$pulled_count" = "0" ]; then
+    echo "[\$(ts)] tick - up to date (HEAD: \$(git rev-parse --short HEAD))"
+  fi
   exit 0
 fi
 
@@ -102,19 +109,34 @@ git add -A 2>/dev/null
 git diff --cached --quiet && exit 0
 
 changed=\$(git diff --cached --name-only | wc -l | tr -d ' ')
-git -c commit.gpgsign=false commit -m "obsidian-mac-sync: \${changed} file(s) updated" --quiet 2>&1 >/dev/null || exit 0
+
+# Inline -c user.name and user.email so the commit works in the
+# LaunchAgent context even if no global git identity is configured.
+# Errors logged instead of silently swallowed.
+commit_out=\$(git \\
+  -c user.name="JaurxBot (Mac)" \\
+  -c user.email="admin@jjrproconsultants.com" \\
+  -c commit.gpgsign=false \\
+  commit -m "obsidian-mac-sync: \${changed} file(s) updated" 2>&1)
+if [ \$? -ne 0 ]; then
+  echo "[\$(ts)] ERROR commit failed: \$commit_out"
+  exit 0
+fi
 
 # Try push; on rejection (web pushed in parallel), rebase and retry
-if ! git push origin "\$BRANCH" --quiet 2>/dev/null; then
-  if git pull --rebase --autostash origin "\$BRANCH" --quiet 2>/dev/null; then
-    if git push origin "\$BRANCH" --quiet 2>/dev/null; then
+push_out=\$(git push origin "\$BRANCH" 2>&1)
+if [ \$? -ne 0 ]; then
+  rebase_out=\$(git pull --rebase --autostash origin "\$BRANCH" 2>&1)
+  if [ \$? -eq 0 ]; then
+    push_out2=\$(git push origin "\$BRANCH" 2>&1)
+    if [ \$? -eq 0 ]; then
       echo "[\$(ts)] pushed \${changed} file(s) after rebase"
     else
-      echo "[\$(ts)] ⚠️  push failed after rebase — check network or auth"
+      echo "[\$(ts)] WARN push failed after rebase: \$push_out2"
     fi
   else
     git rebase --abort 2>/dev/null || true
-    echo "[\$(ts)] ⚠️  rebase conflict — edit conflicts manually in \$VAULT"
+    echo "[\$(ts)] WARN rebase failed: \$rebase_out"
   fi
 else
   echo "[\$(ts)] pushed \${changed} file(s) to \$BRANCH"

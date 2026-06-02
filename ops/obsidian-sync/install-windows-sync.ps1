@@ -92,8 +92,14 @@ function Write-Log($msg) {
     "$ts  $msg" | Out-File -FilePath $LogFile -Append -Encoding utf8
 }
 
-if (-not (Test-Path "$Vault\.git")) { exit 0 }
+if (-not (Test-Path "$Vault\.git")) {
+    Write-Log "ERROR: vault path missing or not a git repo: $Vault"
+    exit 0
+}
 Set-Location $Vault
+
+$pulledCount = 0
+$pushedCount = 0
 
 # ----- 1) Pull side: fetch + fast-forward -----
 git fetch origin $Branch --quiet
@@ -102,6 +108,7 @@ $behind = (git rev-list --count "HEAD..origin/$Branch" 2>$null)
 if ($behind -and $behind -ne '0') {
     git pull origin $Branch --ff-only --quiet
     if ($LASTEXITCODE -eq 0) {
+        $pulledCount = $behind
         Write-Log "pulled $behind commit(s) from $Branch"
     } else {
         Write-Log "WARN: pull blocked - local + remote diverged (handled by push step)"
@@ -110,30 +117,50 @@ if ($behind -and $behind -ne '0') {
 
 # ----- 2) Push side: commit + push any local Obsidian edits -----
 $status = (git status --porcelain)
-if ([string]::IsNullOrWhiteSpace($status)) { exit 0 }
+if ([string]::IsNullOrWhiteSpace($status)) {
+    # Heartbeat: log a tick line ONLY if nothing pulled either.
+    # This keeps the log alive so JR can verify the task is firing,
+    # without doubling-up on lines when we just logged a pull.
+    if ($pulledCount -eq 0) {
+        Write-Log "tick - up to date (HEAD: $(git rev-parse --short HEAD))"
+    }
+    exit 0
+}
 
 git add -A
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 0) { exit 0 }  # nothing staged
 
 $changed = ((git diff --cached --name-only) | Measure-Object -Line).Lines
-git -c commit.gpgsign=false commit -m "obsidian-windows-sync: $changed file(s) updated" --quiet
-if ($LASTEXITCODE -ne 0) { exit 0 }
 
-# Try push; on rejection, rebase and retry
-git push origin $Branch --quiet
+# Inline -c user.name and user.email so the commit works in the scheduled-task
+# context even if no global git identity is configured. Errors no longer get
+# swallowed silently by missing config.
+$commitOut = (git `
+    -c user.name="JaurxBot (Windows)" `
+    -c user.email="admin@jjrproconsultants.com" `
+    -c commit.gpgsign=false `
+    commit -m "obsidian-windows-sync: $changed file(s) updated" 2>&1)
 if ($LASTEXITCODE -ne 0) {
-    git pull --rebase --autostash origin $Branch --quiet
+    Write-Log "ERROR: commit failed: $commitOut"
+    exit 0
+}
+
+# Try push; on rejection, rebase and retry. Capture stderr on failure so
+# we can see auth/network errors in the log instead of silently exiting.
+$pushOut = (git push origin $Branch 2>&1)
+if ($LASTEXITCODE -ne 0) {
+    $rebaseOut = (git pull --rebase --autostash origin $Branch 2>&1)
     if ($LASTEXITCODE -eq 0) {
-        git push origin $Branch --quiet
+        $pushOut2 = (git push origin $Branch 2>&1)
         if ($LASTEXITCODE -eq 0) {
             Write-Log "pushed $changed file(s) after rebase"
         } else {
-            Write-Log "WARN: push failed after rebase - check network or auth"
+            Write-Log "WARN: push failed after rebase: $pushOut2"
         }
     } else {
-        git rebase --abort
-        Write-Log "WARN: rebase conflict - resolve manually in $Vault"
+        git rebase --abort 2>$null
+        Write-Log "WARN: rebase failed: $rebaseOut"
     }
 } else {
     Write-Log "pushed $changed file(s) to $Branch"
@@ -150,52 +177,40 @@ $Utf8Bom = New-Object System.Text.UTF8Encoding($true)
 [System.IO.File]::WriteAllText($SyncScript, $SyncBody, $Utf8Bom)
 Write-Host "[install] wrote $SyncScript"
 
-# ----- 3) Register the Scheduled Task -----
-if (Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue) {
-    Write-Host "[install] task already exists - unregistering for clean re-install"
-    Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false
+# ----- 3) Register the Scheduled Task via schtasks.exe -----
+# We use schtasks.exe (not Register-ScheduledTask) because the cmdlet
+# requires admin to register at the default root TaskPath, even for
+# user-scope tasks with Interactive principals. schtasks.exe handles
+# user-scope tasks cleanly without elevation.
+
+# Remove any prior registration so re-install is idempotent.
+$existing = schtasks /Query /TN $TaskName 2>$null
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "[install] task already exists - removing for clean re-install"
+    schtasks /Delete /TN $TaskName /F | Out-Null
 }
 
-$Action = New-ScheduledTaskAction `
-    -Execute "powershell.exe" `
-    -Argument "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$SyncScript`""
+$TaskCmd = "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$SyncScript`""
 
-# Build trigger: at logon, then repeat every 1 minute indefinitely
-$LogonTrigger = New-ScheduledTaskTrigger -AtLogOn
-$RepeatBase   = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) `
-    -RepetitionInterval (New-TimeSpan -Minutes 1) `
-    -RepetitionDuration (New-TimeSpan -Days 9999)
-$LogonTrigger.Repetition = $RepeatBase.Repetition
+schtasks /Create `
+    /TN $TaskName `
+    /TR $TaskCmd `
+    /SC MINUTE /MO 1 `
+    /F | Out-Null
 
-$Settings = New-ScheduledTaskSettingsSet `
-    -AllowStartIfOnBatteries `
-    -DontStopIfGoingOnBatteries `
-    -StartWhenAvailable `
-    -MultipleInstances IgnoreNew `
-    -ExecutionTimeLimit (New-TimeSpan -Minutes 5)
-
-$Principal = New-ScheduledTaskPrincipal `
-    -UserId $env:USERNAME `
-    -LogonType Interactive `
-    -RunLevel Limited
-
-Register-ScheduledTask `
-    -TaskName $TaskName `
-    -Action $Action `
-    -Trigger $LogonTrigger `
-    -Settings $Settings `
-    -Principal $Principal `
-    -Description "Bi-directional sync between Obsidian vault and jjrpro/code (every 1 min)" `
-    | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[install] ERROR: schtasks /Create failed (exit $LASTEXITCODE)" -ForegroundColor Red
+    exit 1
+}
 
 Write-Host "[install] registered scheduled task: $TaskName"
 
 # ----- 4) Trigger once to verify -----
-Start-ScheduledTask -TaskName $TaskName
+schtasks /Run /TN $TaskName | Out-Null
 Start-Sleep -Seconds 3
 
-$task = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
-if ($task) {
+schtasks /Query /TN $TaskName 2>$null | Out-Null
+if ($LASTEXITCODE -eq 0) {
     Write-Host ""
     Write-Host "Obsidian sync installed and running" -ForegroundColor Green
     Write-Host ""
@@ -209,9 +224,10 @@ if ($task) {
     Write-Host "  Get-Content -Path `"$LogFile`" -Wait"
     Write-Host ""
     Write-Host "Manage the task:"
-    Write-Host "  Stop:      Disable-ScheduledTask -TaskName $TaskName"
-    Write-Host "  Resume:    Enable-ScheduledTask  -TaskName $TaskName"
-    Write-Host "  Remove:    Unregister-ScheduledTask -TaskName $TaskName -Confirm:`$false"
+    Write-Host "  Stop:      schtasks /Change /TN $TaskName /DISABLE"
+    Write-Host "  Resume:    schtasks /Change /TN $TaskName /ENABLE"
+    Write-Host "  Remove:    schtasks /Delete /TN $TaskName /F"
+    Write-Host "  Status:    schtasks /Query /TN $TaskName /V /FO LIST"
     Write-Host ""
     Write-Host "Now open Obsidian -> 'Open folder as vault' -> pick:"
     Write-Host "  $VaultPath"
