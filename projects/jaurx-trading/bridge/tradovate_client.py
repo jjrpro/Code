@@ -442,11 +442,30 @@ class OrderError(Exception):
 
 
 def load_config(path: str = None) -> dict:
-    """Load JAURX config from JSON file."""
+    """
+    Load JAURX config from JSON file, overlaying secret credentials.
+
+    Public config lives in jaurx-config.json (committed to git).
+    Secret credentials live in credentials.json (gitignored, never pushed).
+    If credentials.json exists, its 'tradovate' block is merged into
+    config['tradovate']['credentials'] so secrets never touch the repo.
+    """
+    config_dir = Path(__file__).parent.parent / "config"
     if path is None:
-        path = str(Path(__file__).parent.parent / "config" / "jaurx-config.json")
+        path = str(config_dir / "jaurx-config.json")
     with open(path) as f:
-        return json.load(f)
+        config = json.load(f)
+
+    creds_path = config_dir / "credentials.json"
+    if creds_path.exists():
+        with open(creds_path) as f:
+            secrets = json.load(f)
+        tv_secrets = secrets.get("tradovate", {})
+        if tv_secrets:
+            config.setdefault("tradovate", {}).setdefault("credentials", {}).update(tv_secrets)
+            log.info("Loaded credentials from credentials.json (gitignored)")
+
+    return config
 
 
 async def demo():

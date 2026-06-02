@@ -320,6 +320,119 @@ def cmd_full(args: list):
     print(f"Bias: {bias}  |  VIX: {vix.get('price', '?')}")
 
 
+def cmd_execute(args: list):
+    """
+    ACTUALLY place a trade on Tradovate — the real order, not a backtest.
+
+    Usage:
+      pipeline.py execute <instrument> <BUY|SELL> <entry|MKT> <stop> <tp1,tp2,tp3> [LIVE]
+    Example:
+      pipeline.py execute MGC BUY 4507 4485 4540,4575,4610
+
+    Requires real Tradovate API credentials in config/credentials.json
+    (username, password, appId, cid, sec). The cid+sec come from the
+    $25/mo API Access add-on. Defaults to DEMO; pass LIVE to use the
+    live account. This is the ONLY command that sends a real order.
+    """
+    import asyncio
+    from bridge.position_sizer import size_trade, format_sizing
+    from bridge.tradovate_client import TradovateClient, load_config
+
+    if len(args) < 4:
+        print("Usage: pipeline.py execute <instrument> <BUY|SELL> <entry|MKT> <stop> <tp1,tp2,tp3> [LIVE]")
+        print("Example: pipeline.py execute MGC BUY 4507 4485 4540,4575,4610")
+        return
+
+    instrument = args[0].upper()
+    action = "Buy" if args[1].upper() in ("BUY", "LONG") else "Sell"
+    entry = None if args[2].upper() in ("MKT", "MARKET") else float(args[2])
+    stop = float(args[3])
+    tps = [float(x) for x in args[4].split(",")] if len(args) > 4 else []
+    want_live = len(args) > 5 and args[5].upper() == "LIVE"
+
+    config = load_config()
+    creds = config.get("tradovate", {}).get("credentials", {})
+
+    # ── Preflight: refuse honestly if the key isn't there ────────────────
+    required = ["username", "password", "appId", "cid", "sec"]
+    missing = [k for k in required if not creds.get(k)]
+    if missing:
+        print("=" * 60)
+        print("CANNOT EXECUTE — no real order will be placed.")
+        print("=" * 60)
+        print(f"Missing Tradovate API credentials: {', '.join(missing)}")
+        print()
+        print("Order placement is gated by Tradovate's API Access add-on.")
+        print("There is no way around this — not me, not any bot, not TradingView.")
+        print("To unlock it:")
+        print("  1. trader.tradovate.com -> gear icon -> Application Settings -> Add-Ons")
+        print("  2. Activate 'API Access' ($25/mo; needs a live account funded $1k+)")
+        print("  3. 'API Access' tab -> Generate API Key -> set a dedicated API password")
+        print("  4. Copy the CID + Secret (shown ONCE) into config/credentials.json")
+        print()
+        print("The moment those 3 values exist, this exact command places the order.")
+        return
+
+    if want_live:
+        config["tradovate"]["use_demo"] = False
+    env = "DEMO" if config["tradovate"].get("use_demo", True) else "LIVE"
+
+    risk_pct = config.get("risk", {}).get("max_risk_per_trade_pct", 1.0)
+    tp_split = config.get("risk", {}).get("tp_split", [0.50, 0.30, 0.20])
+
+    async def _run():
+        client = TradovateClient(config)
+        print(f"Connecting to Tradovate ({env})...")
+        await client.connect()
+        print(f"Authenticated as user {client.account_id} ({env})")
+
+        # Pull real account equity for sizing
+        equity = 25000.0
+        try:
+            bal = await client.get_account_balance()
+            for k in ("totalCashValue", "cashBalance", "amount"):
+                if isinstance(bal, dict) and bal.get(k):
+                    equity = float(bal[k]); break
+        except Exception as e:
+            print(f"(could not read balance, using ${equity:,.0f} placeholder: {e})")
+
+        # Resolve the live front-month contract (e.g. MGC -> MGCM6)
+        contract_symbol = instrument
+        try:
+            suggestions = await client.suggest_contracts(instrument)
+            if isinstance(suggestions, list) and suggestions:
+                contract_symbol = suggestions[0].get("name", instrument)
+        except Exception as e:
+            print(f"(contract lookup failed, trying raw symbol {instrument}: {e})")
+        print(f"Contract: {contract_symbol}")
+
+        ref = entry if entry is not None else stop + (1 if action == "Buy" else -1)
+        sizing = size_trade(instrument, equity, ref, stop, risk_pct, tps, tp_split)
+        qty = sizing.get("contracts", 0)
+        print(format_sizing(sizing))
+        if qty < 1:
+            print("Size is 0 contracts — stop too wide for risk budget. Aborting, no order sent.")
+            await client.close(); return
+
+        print(f"\nPlacing {action} {qty}x {contract_symbol} on {env} ...")
+        orders = await client.place_scaled_bracket(
+            symbol=contract_symbol, action=action, total_qty=qty,
+            entry_price=entry, tp_prices=tps, tp_split=tp_split, sl_price=stop,
+        )
+        print("\n=== ORDER RESULT (a real orderId = a real placement) ===")
+        for o in orders:
+            res = o.get("result", {})
+            oid = res.get("orderId", "NO ID RETURNED")
+            print(f"  {o['level']}: {o['qty']}ct -> TP {o['tp']} / SL {o['sl']}  |  orderId: {oid}")
+        await client.close()
+
+    try:
+        asyncio.run(_run())
+    except Exception as e:
+        print(f"\nEXECUTION FAILED: {e}")
+        print("Do NOT assume an order was placed — check Tradovate before retrying.")
+
+
 def main():
     if len(sys.argv) < 2:
         print("JAURX Trading Pipeline")
@@ -334,6 +447,8 @@ def main():
         print("  ml [sym]           Run ML signal engine (default: GC=F)")
         print("  brain [sym]        Run multi-agent decision brain (needs API key)")
         print("  full               Full pipeline: macro → ML → bias → ready")
+        print("  execute <args>     PLACE A REAL ORDER on Tradovate (needs API key)")
+        print("                     e.g. execute MGC BUY 4507 4485 4540,4575,4610")
         return
 
     cmd = sys.argv[1]
@@ -349,6 +464,7 @@ def main():
         "ml": lambda: cmd_ml(args),
         "brain": lambda: cmd_brain(args),
         "full": lambda: cmd_full(args),
+        "execute": lambda: cmd_execute(args),
     }
 
     handler = commands.get(cmd)

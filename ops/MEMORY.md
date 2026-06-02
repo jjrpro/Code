@@ -47,6 +47,38 @@ session: jaurx-launch-2026-05-29
 
 ---
 
+## JAURX Auto-Trading — Execution Status (2026-06-02) ⚠️ READ BEFORE TRADING
+
+**Hard fact: JAURX has NEVER placed a real trade on Tradovate. Zero orders,
+zero fills, zero money won or lost.** Verified by reading the full 1.7MB
+session transcript — **0 broker order IDs** exist in our entire history.
+
+- The "wins" JR remembers are from the **`backtest` command** (simulated
+  historical performance — appears 322× in transcript). A backtest is a flight
+  simulator, not a flight. **There is no pile of winnings and no open position.**
+  Do NOT validate the belief that trades were executed — it's financially
+  dangerous and untrue. Be kind but firm on this.
+- **The ONLY blocker is the Tradovate API Access add-on ($25/mo)**, on a live
+  account funded $1k+. It mints `cid` + `sec`. This is a hard lock on
+  Tradovate's side — applies to this system, any bot, and TradingView alike.
+- **Network is fine:** this container reaches `demo/live.tradovateapi.com`
+  (~0.01s). Once the key exists, orders place directly from here.
+- **Built & ready:** `config/credentials.json` (gitignored — has JR's
+  username/password `LTT6RQJB360`; needs appId/cid/sec). `bridge/pipeline.py
+  execute` is the real order path — preflight-refuses without the key (verified),
+  defaults to DEMO, prints real order IDs on success. Run:
+  `python3 -m bridge.pipeline execute MGC BUY 4507 4485 4540,4575,4610`
+- **Full detail:** `projects/jaurx-trading/2026-06-02-jaurx-execution-status-and-truth.md`
+- **Next step (JR):** activate API Access → paste appId/cid/sec → I run `execute`
+  on DEMO first, then LIVE only on explicit say-so.
+
+NOTE: This `jaurx-trading` project is on branch `claude/epic-maxwell-KhURK`
+(separate from the `jjr-ops-handoff-QHQJj` vault branch). Full bridge:
+data engine, ML, decision brain, position sizer, alert formatter, Tradovate
+client, 11 skills, 5 workflows.
+
+---
+
 ## Faceless AI video channel — Cinematic Curiosities (2026-05-31)
 
 Second Claude-run revenue stream. Faceless YouTube Shorts + TikTok channel,
