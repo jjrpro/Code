@@ -34,6 +34,12 @@ Kit for selling websites to Staten Island small businesses (10312 + 5-mi radius)
 - **`mockups/`** — 3 real 10312 prospects with no website (barber, deli, nails)
 - **`sales/`** — prospect-list method, lead tracker CSV, outreach, pricing, deploy guide
 
+### `projects/jaurx-trading/` — JAURX AI Super Trader
+Combined AI trading system merging three open-source repos into one unified
+platform: data engine (TradingView screeners + backtesting), chart controller
+(TradingView Desktop via CDP), and decision brain (multi-agent LLM debate).
+Configured for MGC + MNQ futures on Tradovate with JR's methodology.
+
 ### `projects/trade-analysis/` — Research & setups
 Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.
