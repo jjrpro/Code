@@ -358,11 +358,12 @@ async function main() {
     console.log("trading panel while JR is logged into the broker.");
     console.log("");
     console.log("Commands:");
+    console.log("  recon                 Diagnose what your TradingView exposes (run this FIRST)");
+    console.log("  test                  Quick connection test");
     console.log("  buy <symbol> <entry> <stop> <tp1,tp2,tp3> [qty]");
     console.log("  sell <symbol> <entry> <stop> <tp1,tp2,tp3> [qty]");
     console.log("  status                Get open positions");
     console.log("  flatten               Close all positions");
-    console.log("  test                  Test connection to TradingView");
     console.log("");
     console.log("Examples:");
     console.log("  node tv_execute.js buy MGC 4507 4485 4540,4575,4610");
@@ -406,6 +407,81 @@ async function main() {
           })()
         `);
         console.log("Trading capability:", JSON.stringify(broker, null, 2));
+        break;
+      }
+
+      case "recon": {
+        // Deep diagnostic — dumps everything we need to wire order placement
+        // to YOUR specific TradingView Desktop runtime. Paste the output back.
+        console.log("=== JAURX TradingView Recon ===\n");
+
+        const recon = await evalInTV(cdp, `
+          (function() {
+            const out = {};
+
+            // 1. Page identity
+            out.url = location.href;
+            out.title = document.title;
+
+            // 2. Global objects that matter
+            out.globals = {
+              tvWidget: typeof window.tvWidget,
+              TradingView: typeof window.TradingView,
+              TradingView_widget: window.TradingView ? typeof window.TradingView.widget : 'n/a',
+            };
+
+            // 3. Widget API surface
+            const w = window.tvWidget || window.TradingView?.widget;
+            if (w) {
+              out.widgetMethods = Object.keys(w).filter(k => typeof w[k] === 'function').slice(0, 50);
+              out.hasTrading = typeof w.trading === 'function';
+              if (typeof w.trading === 'function') {
+                try {
+                  const t = w.trading();
+                  out.tradingMethods = t ? Object.keys(t).filter(k => typeof t[k] === 'function') : 'trading() returned null';
+                } catch(e) { out.tradingError = e.message; }
+              }
+              if (typeof w.activeChart === 'function') {
+                try {
+                  const c = w.activeChart();
+                  out.chartMethods = Object.keys(c).filter(k => typeof c[k] === 'function')
+                    .filter(k => /order|trade|position|broker/i.test(k));
+                  out.symbol = c.symbol();
+                } catch(e) { out.chartError = e.message; }
+              }
+            }
+
+            // 4. DOM recon — find the actual trading panel + buy/sell buttons
+            const findEls = (sel) => {
+              try { return document.querySelectorAll(sel).length; } catch(e) { return 'bad-sel'; }
+            };
+            out.dom = {
+              bottomToolbar: findEls('[data-name="bottom-toolbar"]'),
+              tradingPanel: findEls('[class*="tradingPanel"], [class*="trading-panel"]'),
+              buyButtons: findEls('[data-name*="buy"], [class*="buyButton"], [class*="buy-button"]'),
+              sellButtons: findEls('[data-name*="sell"], [class*="sellButton"], [class*="sell-button"]'),
+              orderPanel: findEls('[data-name="order-panel"], [class*="orderTicket"], [class*="order-ticket"]'),
+              brokerButton: findEls('[data-name="broker-button"], [class*="brokerButton"]'),
+            };
+
+            // 5. Any element whose text says Tradovate / connected broker
+            const allText = document.body.innerText || '';
+            out.mentionsTradovate = allText.includes('Tradovate');
+            out.mentionsConnected = /connect(ed)?/i.test(allText);
+
+            // 6. Sample data-name attributes near the bottom toolbar (for selector building)
+            const toolbar = document.querySelector('[data-name="bottom-toolbar"]');
+            if (toolbar) {
+              out.toolbarDataNames = Array.from(toolbar.querySelectorAll('[data-name]'))
+                .map(e => e.getAttribute('data-name')).slice(0, 40);
+            }
+
+            return out;
+          })()
+        `);
+
+        console.log(JSON.stringify(recon, null, 2));
+        console.log("\n=== Copy ALL of the above and paste it back so I can wire order placement to your exact setup ===");
         break;
       }
 

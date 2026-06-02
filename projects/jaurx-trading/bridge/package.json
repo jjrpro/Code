@@ -1,0 +1,13 @@
+{
+  "name": "jaurx-bridge",
+  "version": "1.0.0",
+  "description": "JAURX execution bridges — TradingView Desktop + Jackson MCP chart control",
+  "type": "module",
+  "scripts": {
+    "recon": "node tv_execute.js recon",
+    "test": "node tv_execute.js test"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
