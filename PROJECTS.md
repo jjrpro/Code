@@ -34,6 +34,12 @@ Kit for selling websites to Staten Island small businesses (10312 + 5-mi radius)
 - **`mockups/`** — 3 real 10312 prospects with no website (barber, deli, nails)
 - **`sales/`** — prospect-list method, lead tracker CSV, outreach, pricing, deploy guide
 
+### `projects/real-estate-flip/` — NY/NJ wholesale & flip deal-sourcing
+Middleman (contract-assignment) and flip deal screening for the NY/NJ metro.
+- `2026-06-02-nynj-flip-deal-screening-worksheet.md` — search filters, deal
+  math, county distressed-property sources, 12-point screen, NY/NJ legal
+  guardrails (HETPA / NJ Foreclosure Rescue Fraud Prevention Act)
+
 ### `projects/trade-analysis/` — Research & setups
 Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.
