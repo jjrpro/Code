@@ -1,11 +1,11 @@
 # JAURX Super Trader — Combined Tooling Inventory
 
 **Date**: 2026-06-02
-**Purpose**: Master inventory of the four repos being merged into the JAURX AI trading system.
+**Purpose**: Master inventory of the five repos being merged into the JAURX AI trading system.
 
 ---
 
-## The Four Source Repos
+## The Five Source Repos
 
 | Repo | Language | Role | Tools |
 |---|---|---|---|
@@ -13,6 +13,9 @@
 | `tradingview-mcp-jackson` (LewisWJackson) | Node.js | **Chart Layer** — TradingView Desktop control, Pine Script, replay | 81 |
 | `TradingAgents` (TauricResearch) | Python | **Decision Layer** — multi-agent firm simulation, risk mgmt, memory | Full pipeline |
 | `bitget-trading-bot` (jerome78b) | Python | **Execution Layer** — live order execution, TP/SL/TPP, Telegram alerts | Single bot |
+| `intelligent-trading-bot` (asavinov) | Python | **ML Signal Layer** — trained ML models, feature engineering, MT5 execution | Full pipeline |
+| `claude-trading-skills` (tradermonty) | Python | **Skills Layer** — 56 Claude skills, workflows, journaling, regime detection | 56 skills |
+| `council-review` (ngmeyer) | Markdown | **Council Layer** — 5-advisor AI deliberation for high-stakes trade decisions | 6 modes |
 
 ---
 
@@ -211,7 +214,195 @@ RSI_PERIOD = 14           # RSI period
 
 ---
 
-## Layer 5: JR'S RULES (to be taught)
+## Layer 5: ML SIGNAL ENGINE (intelligent-trading-bot)
+
+Machine learning pipeline that trains models on historical data, generates predictive signals (-1 to +1), and executes trades via MetaTrader 5 or Binance. Offline training + online real-time prediction.
+
+### ML Models (4 classifiers)
+- **Neural Network** — TensorFlow/Keras, configurable layers/dropout
+- **Gradient Boosting** — LightGBM, fast + accurate on tabular data
+- **SVC** — Support Vector Classifier (scikit-learn)
+- **Linear Classifier** — lightweight baseline
+
+### Feature Engineering Pipeline
+- **talib** — TA-Lib: SMA, EMA, RSI, MACD, Bollinger, LINEARREG_SLOPE, STDDEV
+- **itbstats** — statistical: skew, kurtosis, slope over rolling windows
+- **tsfresh** — automated time-series feature extraction
+- Custom Python functions supported
+- Configurable rolling windows (e.g., 1, 3, 6, 12, 24, 168, 672 bars)
+
+### Label Generation
+- **highlow2** — predicts if price will hit a high/low threshold within N bars
+- Configurable thresholds (e.g., 3% move) and tolerance
+- Generates supervised learning targets from future price action
+
+### Signal Generation
+- Score from -1 (strong sell) to +1 (strong buy)
+- Combines high-probability and low-probability scores
+- Configurable buy/sell thresholds with band system:
+  - `> 0.08` = BUY ZONE
+  - `> 0.04` = strong
+  - `> 0.02` = weak
+  - `< -0.08` = SELL ZONE
+
+### Walk-Forward Backtesting
+- Rolling train/predict splits with configurable steps
+- Grid search for optimal signal thresholds
+- Multiprocessing support for speed
+- Stores top N parameter combinations
+
+### Data Sources
+- **Binance** — crypto OHLCV (primary)
+- **Yahoo Finance** — stocks, futures, ETFs
+- **MetaTrader 5** — futures, forex, stocks via broker
+
+### Trade Execution
+- **MetaTrader 5** — direct order placement via MT5 Python API
+  - Account login, order management, position tracking
+  - Relevant for futures (MGC/MNQ if JR's broker supports MT5)
+- **Binance** — crypto spot/futures
+- **Telegram** — signal notifications with score diagrams
+
+### Pipeline (8 steps)
+```
+download → merge → features → labels → train → predict → signals → output
+```
+
+### Configuration (JSON)
+```json
+{
+  "symbol": "BTCUSDT",
+  "freq": "1h",
+  "feature_sets": [talib SMA/SLOPE/STDDEV across windows],
+  "algorithms": [{"algo": "svc", "params": {"length": 26280}}],
+  "signal_sets": [combine scores → threshold rules],
+  "output_sets": [telegram notifications + trade simulation]
+}
+```
+
+### Adaptation for JR
+- Train on GC=F (gold) and NQ=F (Nasdaq) historical data via Yahoo Finance
+- Add JR's custom features: FVG detection, supply/demand zone proximity, session time
+- Use MT5 execution if JR's futures broker supports it (many do)
+- Feed ML scores into TradingAgents as an additional analyst input
+- Walk-forward validate JR's methodology quantitatively
+
+---
+
+## Layer 6: CLAUDE TRADING SKILLS (claude-trading-skills)
+
+56 purpose-built Claude skills with structured YAML workflows. The discipline layer — journaling, regime detection, position sizing, trade review. Designed for Claude Code and Claude web.
+
+### Market Regime Skills (11)
+- `market-breadth-analyzer` — breadth analysis from public CSV data
+- `uptrend-analyzer` — uptrend participation scoring
+- `ibd-distribution-day-monitor` — IBD-style distribution day tracking
+- `ftd-detector` — follow-through day detection
+- `market-top-detector` — market topping pattern recognition
+- `macro-regime-detector` — macro regime transitions
+- `sector-analyst` — sector rotation analysis
+- `exposure-coach` — daily exposure posture (allow/restrict/cash-priority)
+- `us-market-bubble-detector` — bubble risk scoring
+- `downtrend-duration-analyzer` — how long downtrends typically last
+- `market-news-analyst` — news impact assessment
+
+### Core Portfolio Skills (6)
+- `portfolio-manager` — portfolio analysis via Alpaca API
+- `value-dividend-screener` — value + dividend screening
+- `dividend-growth-pullback-screener` — dividend growth on pullback
+- `kanchi-dividend-review-monitor` — dividend monitoring rules
+- `kanchi-dividend-sop` — dividend SOP framework
+- `kanchi-dividend-us-tax-accounting` — tax accounting for dividends
+
+### Swing Opportunity Skills (5)
+- `vcp-screener` — Volatility Contraction Pattern screener (Minervini)
+- `canslim-screener` — O'Neil CANSLIM screening
+- `breakout-trade-planner` — breakout trade setup planning
+- `theme-detector` — emerging market theme detection
+- `finviz-screener` — FinViz integration for screening
+
+### Trade Planning Skills (3)
+- `position-sizer` — risk-based sizing (Fixed Fractional, ATR, Kelly)
+- `technical-analyst` — technical analysis framework
+- `us-stock-analysis` — comprehensive stock analysis
+
+### Trade Memory Skills (3)
+- `trader-memory-core` — trade journaling in YAML
+- `signal-postmortem` — post-trade review framework
+- `trade-hypothesis-ideator` — hypothesis-driven trade ideas
+
+### Strategy Research Skills (9)
+- `backtest-expert` — backtesting framework
+- `edge-pipeline-orchestrator` — full edge research pipeline
+- `edge-candidate-agent` / `edge-concept-synthesizer` / `edge-strategy-designer` / `edge-strategy-reviewer` — edge discovery chain
+- `scenario-analyzer` — what-if scenario analysis
+- `stanley-druckenmiller-investment` — Druckenmiller-style synthesis
+- `strategy-pivot-designer` — strategy adaptation
+
+### Advanced Skills (6)
+- `earnings-trade-analyzer` — earnings play analysis
+- `institutional-flow-tracker` — smart money flow tracking
+- `options-strategy-advisor` — options strategy selection
+- `pair-trade-screener` — pairs trading opportunities
+- `parabolic-short-trade-planner` — parabolic short setups
+- `pead-screener` — post-earnings announcement drift
+
+### Structured Workflows (5 daily/weekly/monthly)
+```yaml
+market-regime-daily:     breadth → uptrend → top risk → exposure decision (15 min)
+core-portfolio-weekly:   portfolio review → dividend monitor → rebalance
+swing-opportunity-daily: VCP screen → breakout plan → position size
+trade-memory-loop:       journal → postmortem → hypothesis → coaching
+monthly-performance:     full month review → strategy adjustment
+```
+
+### Adaptation for JR
+- Replace stock-focused screeners with futures equivalents (MGC/MNQ)
+- Use `position-sizer` directly — already supports 1% risk, ATR stops
+- `trader-memory-core` → JAURX trade journal (syncs to Obsidian vault)
+- `market-regime-daily` workflow → JR's morning bias framework
+- `exposure-coach` → daily "am I trading today?" gate
+- Build custom JAURX skills: `fvg-scanner`, `supply-demand-zone-validator`, `session-timing-gate`
+
+---
+
+## Layer 7: COUNCIL REVIEW (council-review)
+
+5-advisor AI deliberation system for vetting high-stakes decisions. Routes trade setups, plans, and strategies through structured multi-agent debate before execution.
+
+### The Five Advisors
+| Advisor | Method | Trading Application |
+|---|---|---|
+| **Contrarian** | Inversion logic | "What kills this trade?" — finds failure points |
+| **First Principles** | Decomposition | Breaks thesis into testable claims |
+| **Expansionist** | Analogy-drawing | "What similar setup worked/failed before?" |
+| **Outsider** | Naive questioning | Challenges assumptions JR takes for granted |
+| **Executor** | Dependency graphing | "What has to happen first for this to work?" |
+
+### Operating Modes
+- **Full** (11 calls) — high-stakes trade decisions
+- **Quick** (4 calls) — routine daily setups
+- **Adaptive** — convergence-aware, stops when advisors agree
+- **Confidence** — self-rated confidence weighting
+- **Jury** — 3 independent judges synthesize verdicts
+
+### Output Format
+- Where the council agrees (high-confidence signals)
+- Where the council clashes (value tensions vs error catches)
+- Blind spots revealed
+- Clear recommendation (not "it depends")
+- What you lose if you follow the recommendation
+- One concrete next step
+
+### Adaptation for JR
+- Route every JAURX VIP trade alert through Quick Council before posting
+- Use Full Council for position sizing decisions above 2% risk
+- Feed council output into trade journal for postmortem comparison
+- "Should I take this gold short at $4,580?" → 5 advisors debate it
+
+---
+
+## Layer 8: JR'S RULES (to be taught)
 
 The custom edge that makes this JAURX, not generic. JR needs to teach:
 
@@ -231,41 +422,47 @@ These get encoded into:
 
 ---
 
-## Combined JAURX Architecture
+## Combined JAURX Architecture (6 repos + JR's rules)
 
 ```
-                    ┌─────────────────────────────┐
-                    │     JR's Rules (Layer 5)     │
-                    │  FVG · S/D zones · Timing    │
-                    └──────────────┬──────────────┘
-                                   │
-       ┌───────────────┬───────────┼───────────┬───────────────┐
-       │               │           │           │               │
-       ▼               ▼           ▼           ▼               │
-┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐   │
-│   Data     │ │   Chart    │ │  Decision  │ │ Execution  │   │
-│  Engine    │ │  Control   │ │   Brain    │ │  Engine    │   │
-│ (Python)   │ │ (Node.js)  │ │ (Python)   │ │ (Python)   │   │
-│            │ │            │ │            │ │            │   │
-│ Screeners  │ │ TV Desktop │ │ Analysts   │ │ Orders     │   │
-│ Backtest   │ │ Pine Script│ │ Bull/Bear  │ │ TP/SL/TPP  │   │
-│ Sentiment  │ │ Morning    │ │ Risk Mgmt  │ │ Telegram   │   │
-│ News       │ │ Replay     │ │ Memory     │ │ Dashboard  │   │
-│ Options    │ │ Drawings   │ │ Portfolio  │ │ Bitget API │   │
-│ Multi-TF   │ │ Screenshots│ │ BUY/SELL   │ │ Demo mode  │   │
-└─────┬──────┘ └─────┬──────┘ └─────┬──────┘ └─────┬──────┘   │
-      │               │             │               │           │
-      └───────────────┴──────┬──────┴───────────────┘           │
-                             │                                  │
-              ┌──────────────▼──────────────┐                   │
-              │    JAURX Unified Pipeline   │                   │
-              │                             │                   │
-              │  1. Morning scan + bias     │                   │
-              │  2. Multi-agent debate      │◄──────────────────┘
-              │  3. Trade decision          │
-              │  4. Auto-execute or alert   │
-              │  5. → JAURX VIP Telegram    │
-              └─────────────────────────────┘
+                    ┌─────────────────────────────────┐
+                    │      JR's Rules (Layer 7)        │
+                    │   FVG · S/D zones · Timing       │
+                    │   The custom edge that makes     │
+                    │   this JAURX, not generic         │
+                    └───────────────┬─────────────────┘
+                                    │ configures all layers
+      ┌──────────┬──────────┬───────┼───────┬──────────┬──────────┐
+      │          │          │       │       │          │          │
+      ▼          ▼          ▼       │       ▼          ▼          │
+ ┌─────────┐┌─────────┐┌─────────┐ │ ┌─────────┐┌─────────┐┌─────────┐
+ │  DATA   ││ CHART   ││DECISION │ │ │EXECUTION││   ML    ││ SKILLS  │
+ │ ENGINE  ││CONTROL  ││  BRAIN  │ │ │ ENGINE  ││ SIGNALS ││  (56)   │
+ │ Lyr 1   ││ Lyr 2   ││ Lyr 3   │ │ │ Lyr 4   ││ Lyr 5   ││ Lyr 6   │
+ │         ││         ││         │ │ │         ││         ││         │
+ │Screeners││TV Dsktp ││Analysts │ │ │Orders   ││NeuralNet││Regime   │
+ │Backtest ││Pine Sct ││Bull/Bear│ │ │TP/SL    ││LightGBM ││Pos Size │
+ │Sentiment││Morning  ││Risk Mgt │ │ │Telegram ││SVC      ││Journal  │
+ │News     ││Replay   ││Memory   │ │ │Dashboard││Features ││Exposure │
+ │Options  ││Drawings ││Portfolio│ │ │Bitget   ││Walk-Fwd ││Workflow │
+ │Multi-TF ││Screensht││BUY/SELL │ │ │MT5      ││MT5 Exec ││Postmrtm│
+ └────┬────┘└────┬────┘└────┬────┘ │ └────┬────┘└────┬────┘└────┬────┘
+      │          │          │      │      │          │          │
+      └──────────┴──────┬───┴──────┘──────┴──────────┴──────────┘
+                        │
+         ┌──────────────▼──────────────────┐
+         │     JAURX Daily Pipeline         │
+         │                                  │
+         │  1. Regime check (skills L6)     │
+         │  2. ML models score (L5)         │
+         │  3. Morning scan + bias (L1+L2)  │
+         │  4. Multi-agent debate (L3)      │
+         │  5. Chart verification (L2)      │
+         │  6. Position sizing (L6)         │
+         │  7. Execute or alert (L4)        │
+         │  8. Journal + memory (L6+L3)     │
+         │  9. → JAURX VIP Telegram         │
+         └─────────────────────────────────┘
 ```
 
 ---
@@ -278,6 +475,7 @@ These get encoded into:
 | Chart Controller (Jackson MCP) | Mac only | Needs TradingView Desktop + CDP |
 | Decision Brain (TradingAgents) | Mac (preferred) or Cloud | Needs Anthropic API key |
 | Execution Engine (Bitget bot) | Mac or VPS | Needs exchange API keys + always-on |
+| ML Signal Engine (intelligent-trading-bot) | Mac or VPS | Needs training data + compute for ML |
 | JR's Rules | Everywhere | JSON config files |
 | JAURX VIP alerts | Mac → Telegram Bot API | Egress-blocked from cloud |
 
