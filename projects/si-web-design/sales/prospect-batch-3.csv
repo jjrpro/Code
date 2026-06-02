@@ -1,12 +1,12 @@
 Business Name,Category,Area / ZIP,Instagram/FB,Status,Notes
 "--- VERIFIED NO-SITE — wider-area expansion (batch 3) ---",,,,,
-"Richie's Barber Shop",Barber,Great Kills 10308,@richies_barbershop,NO-SITE,VERIFIED no site (IG/Yelp only); 305B Nelson Ave; (718) 308-6818; est 2012; appt
-"Retro Barbershop",Barber,Great Kills 10308,(IG),NO-SITE,3937 Amboy Rd; (929) 407-6054; walk-ins; only Yelp/IG found — quick reconfirm
-"New Dorp Central Deli",Deli,New Dorp 10306,@centraldeli360,NO-SITE,IG only; New Dorp deli — confirm phone
-"New Coco Nails",Nail Salon,New Dorp 10306,@new_coco_nails_ndl,NO-SITE,164 New Dorp Ln; IG only
-"La Belle Nail Spa",Nail Salon,New Dorp 10306,@290_labelle,NO-SITE,290 New Dorp Ln; IG only
-"Drew's Auto Detailing",Auto Detailing (mobile),Staten Island,@drews.auto.detailing,NO-SITE,Mobile detailing; 1.1k followers; IG only — great fit
-"New Diva's Island Threading",Brow/Threading,New Dorp 10306,@(find handle),NO-SITE,New Dorp Lane district; IG only — confirm handle
+"Richie's Barber Shop",Barber,Great Kills 10308,@richies_barbershop,BUILT,mockups/richies-barber; 305B Nelson Ave (718) 308-6818; ready to deploy
+"Retro Barbershop",Barber,Great Kills 10308,(IG),SKIP,Has site retrobarbershopny.com — verified, dropped
+"New Dorp Central Deli",Deli,New Dorp 10306,@centraldeli360,BUILT,mockups/newdorp-central-deli; IG only; confirm addr/phone/hours
+"New Coco Nails",Nail Salon,New Dorp 10306,@new_coco_nails_ndl,BUILT,mockups/new-coco-nails; 164 New Dorp Ln; ready
+"La Belle Nail Spa",Nail Salon,New Dorp 10306,@290_labelle,BUILT,mockups/labelle-nail-spa; 290 New Dorp Ln; ready
+"Drew's Auto Detailing",Auto Detailing (mobile),Staten Island,@drews.auto.detailing,BUILT,mockups/drews-auto-detailing; 1.1k followers; ready
+"New Diva's Island Threading",Brow/Threading,New Dorp 10306,(IG),SKIP,Has site newdivassalon.com — verified, dropped
 ,,,,,
 "--- CHECKED & REJECTED (have sites — did NOT list to save your time) ---",,,,,
 "Fresh Kills Barbershop",Barber,Great Kills,@freshkillsbarbershop,SKIP,Has site freshkillsbarbershop.com
