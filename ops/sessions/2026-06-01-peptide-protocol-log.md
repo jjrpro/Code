@@ -11,13 +11,16 @@ training/nutrition plan, and lab checklist in `ops/sessions/`.
 
 ## Current protocol (as of 2026-06-01)
 
-| Peptide | Dose | = | Schedule | Notes |
-|---|---|---|---|---|
-| **Retatrutide** | 40u | **4 mg** | weekly | Cut dose — hold, don't climb |
-| **Semax** | 6.5u | **650 mcg** | daily AM | Trimmed from 1000 mcg |
-| **Tesamorelin** | 10u | **1 mg** | nightly, fasted | Holding until baseline IGF-1 |
+| Peptide | Dose | = | Schedule | Started | Duration | Notes |
+|---|---|---|---|---|---|---|
+| **Retatrutide** | 40u | **4 mg** | weekly | **Feb 10** | ~16 wks | Cut dose — hold, don't climb; well-adapted |
+| **Semax** | 6.5u | **650 mcg** | daily AM | **May 21** | ~11 days | Trimmed from 1000 mcg |
+| **Tesamorelin** | 10u | **1 mg** | nightly, fasted | **May 13** | ~2.7 wks | Holding until IGF-1 check; effects still building |
 
 All vials mixed to **10 mg/mL → 0.1 mg per unit.**
+
+**Loss rate:** 260 → 200 lb in ~16 wks ≈ **~3.7 lb/week (fast).** Slow toward ~1–2 lb/wk for the
+final 15 lb to protect muscle + reduce gallstone risk.
 
 ---
 
@@ -25,7 +28,11 @@ All vials mixed to **10 mg/mL → 0.1 mg per unit.**
 
 | Date | Event | Details |
 |---|---|---|
+| Feb 10 | **Retatrutide started** | Running 40u (4 mg)/week |
+| May 13 | **Tesamorelin started** | 10u (1 mg)/night |
+| May 21 | **Semax started** | originally 10u (1000 mcg) |
 | 2026-06-01 | **Protocol revision — Day 1** | Reta 40u (4 mg) · Semax **10u → 6.5u** (650 mcg) · Tesa 10u (1 mg, holding) |
+| 2026-06-01 | Note | Bad diarrhea after heavy beer — attributed to alcohol (Reta well-adapted at 16 wks); no pain, hydrating |
 | | | |
 
 *(Add rows below as you go.)*
