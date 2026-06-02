@@ -320,6 +320,46 @@ def cmd_full(args: list):
     print(f"Bias: {bias}  |  VIX: {vix.get('price', '?')}")
 
 
+def cmd_trade(args: list):
+    """Place a real trade via webhook (for prop firm accounts like Lucid Trading)."""
+    from bridge.webhook_execute import execute, load_webhook_url
+    from bridge.position_sizer import size_trade, format_sizing
+
+    if len(args) < 4:
+        print("Usage: pipeline.py trade <buy|sell> <instrument> <entry> <stop> <tp1,tp2,tp3>")
+        print("Example: pipeline.py trade buy MGC 4507 4485 4540,4575,4610")
+        return
+
+    action = args[0].lower()
+    symbol = args[1].upper()
+    entry = float(args[2])
+    stop = float(args[3])
+    tps = [float(x) for x in args[4].split(",")] if len(args) > 4 else []
+
+    config = load_config()
+    risk_pct = config.get("risk", {}).get("max_risk_per_trade_pct", 1.0)
+    tp_split = config.get("risk", {}).get("tp_split", [0.50, 0.30, 0.20])
+
+    sizing = size_trade(symbol, 25000, entry, stop, risk_pct, tps, tp_split)
+    qty = sizing.get("contracts", 0) or 1
+    print(format_sizing(sizing))
+    print()
+
+    result = execute(action, symbol, entry, stop, tps, qty)
+
+    if not result["success"] and "fix" in result:
+        print("=" * 60)
+        print("CANNOT EXECUTE — webhook not configured yet")
+        print("=" * 60)
+        for line in result["fix"]:
+            print(f"  {line}")
+    elif result["success"]:
+        print()
+        print("ORDER SENT SUCCESSFULLY")
+        print(f"Platform: {result['platform']}")
+        print("Check your Tradovate/TradingView for the fill.")
+
+
 def cmd_execute(args: list):
     """
     ACTUALLY place a trade on Tradovate — the real order, not a backtest.
@@ -449,6 +489,8 @@ def main():
         print("  full               Full pipeline: macro → ML → bias → ready")
         print("  execute <args>     PLACE A REAL ORDER on Tradovate (needs API key)")
         print("                     e.g. execute MGC BUY 4507 4485 4540,4575,4610")
+        print("  trade <args>       PLACE via webhook (prop firm accounts — Lucid etc.)")
+        print("                     e.g. trade buy MGC 4507 4485 4540,4575,4610")
         return
 
     cmd = sys.argv[1]
@@ -465,6 +507,7 @@ def main():
         "brain": lambda: cmd_brain(args),
         "full": lambda: cmd_full(args),
         "execute": lambda: cmd_execute(args),
+        "trade": lambda: cmd_trade(args),
     }
 
     handler = commands.get(cmd)
