@@ -1,0 +1,101 @@
+{
+  "watchlist": ["COMEX:MGC1!", "CME_MINI:MNQ1!"],
+  "default_timeframe": "240",
+
+  "strategy": {
+    "name": "JAURX Supply/Demand + FVG",
+    "sources": [
+      "Supply/demand zone identification on 4H and Daily",
+      "Fair Value Gap (FVG) confirmation on 1H",
+      "Macro alignment: Fed stance, DXY, yields, VIX",
+      "Session timing: NY open + London overlap"
+    ],
+    "primary_timeframes": [
+      "Daily (bias direction)",
+      "4H (zone identification)",
+      "1H (entry confirmation via FVG)",
+      "15m (precision entry)"
+    ]
+  },
+
+  "indicators": {
+    "supply_demand_zones": "4H/Daily zones where price reversed with momentum. Valid if: (1) strong departure, (2) not yet retested, (3) imbalance visible.",
+    "fvg": "Fair Value Gap on 1H — 3-candle pattern where candle 1 high < candle 3 low (bullish) or candle 1 low > candle 3 high (bearish). Entry on retest of gap.",
+    "vix": "Below 20 = normal risk-on. Above 25 = caution. Above 30 = defensive only.",
+    "dxy": "Dollar strength inversely correlated with gold. Rising DXY = bearish MGC bias.",
+    "us10y": "Rising yields = bearish gold (opportunity cost). Watch ^TNX.",
+    "rsi_14": "Divergence confirmation only. Not used as standalone signal.",
+    "volume": "Zone validation — departure from zone should show volume spike."
+  },
+
+  "bias_criteria": {
+    "bullish": [
+      "Price approaching or sitting in a valid demand zone (4H/Daily)",
+      "FVG present above current price on 1H (unfilled)",
+      "DXY weakening or flat",
+      "VIX below 25",
+      "NY session or London overlap timing"
+    ],
+    "bearish": [
+      "Price approaching or sitting in a valid supply zone (4H/Daily)",
+      "FVG present below current price on 1H (unfilled)",
+      "DXY strengthening",
+      "US10Y rising",
+      "NY session or London overlap timing"
+    ],
+    "neutral": [
+      "Price in mid-range — not near any valid S/D zone",
+      "VIX above 30 (too volatile for directional bias)",
+      "No clear FVG structure on 1H",
+      "Outside active session hours (12:00-14:00 ET lunch chop)",
+      "Major news event within 30 minutes (FOMC, NFP, CPI)"
+    ]
+  },
+
+  "entry_rules": {
+    "long": [
+      "Price retests a valid demand zone on 4H/Daily",
+      "1H FVG confirms bullish structure (unfilled gap above)",
+      "15m candle shows rejection wick or bullish engulfing at zone",
+      "RSI not overbought (below 70)",
+      "Enter limit order at zone boundary or market on confirmation candle close"
+    ],
+    "short": [
+      "Price retests a valid supply zone on 4H/Daily",
+      "1H FVG confirms bearish structure (unfilled gap below)",
+      "15m candle shows rejection wick or bearish engulfing at zone",
+      "RSI not oversold (above 30)",
+      "Enter limit order at zone boundary or market on confirmation candle close"
+    ]
+  },
+
+  "exit_rules": [
+    "TP1 (50%): First significant S/D level or round number",
+    "Move SL to breakeven after TP1 hit",
+    "TP2 (30%): Next major S/D level",
+    "TP3 (20%): Extended target or measured move",
+    "Hard SL: Above/below the zone + ATR buffer",
+    "Time stop: Close if trade hasn't moved in 4 hours (chop)"
+  ],
+
+  "risk_rules": [
+    "1% of account equity per trade maximum",
+    "Maximum 3 open positions simultaneously",
+    "Maximum 3% daily drawdown — stop trading for the day",
+    "No trading during major news (FOMC, NFP, CPI) — wait 15 min after",
+    "No trading outside active session hours",
+    "No averaging down — ever",
+    "If 2 consecutive losses, reduce to 0.5% risk for next trade"
+  ],
+
+  "kill_switches": [
+    "VIX above 35 — cash only",
+    "3% daily drawdown hit — done for the day",
+    "3 consecutive losses — done for the day",
+    "Major geopolitical event breaking — cash only until dust settles",
+    "Fed surprise announcement — flatten and wait",
+    "Weekend gap risk — no positions held over weekend (futures)"
+  ],
+
+  "notes": "PLACEHOLDER — JR needs to confirm/modify these rules with his actual methodology. These are educated guesses based on his XAUUSD analysis style and stated preferences. The FVG rules, zone criteria, and session timing need his specific parameters."
+}
