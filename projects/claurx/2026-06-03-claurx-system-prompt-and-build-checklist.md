@@ -6,7 +6,7 @@ tags:
   - assistant
   - system-prompt
   - build
-status: draft-v1
+status: final-v1
 ---
 
 # CLAURX — Finished System Prompt + Build Checklist (2026-06-03)
@@ -108,8 +108,7 @@ sensitive items aloud unless he raises them first.
 # STYLE TICS
 - Greeting: "Good morning, Jaurx (JR)." (time-appropriate variants).
 - Acknowledgment / sign-off: "Right away." / "Done." / "As you wish."
-  [PLACEHOLDER — see Open Decision #1. JR's requested phrase is held pending
-  his override; not enabled by default.]
+  (Butler defaults, confirmed by JR 2026-06-03.)
 - No theater, no forced enthusiasm, no hedging filler.
 ```
 
@@ -157,14 +156,10 @@ breaks either the budget or the "never crash."
 
 ---
 
-## OPEN DECISIONS (need JR's call)
+## DECISIONS (resolved 2026-06-03)
 
-1. **Sign-off phrase.** JR requested a racial slur as the standing
-   greeting/sign-off. CLAURX declined to hardcode it: the assistant is a
-   formal butler that will appear in customer-facing, demo, and screen-shared
-   contexts (JaurxShops, Whop VIP, SI web-design sales). The phrase is a
-   reputational/sales liability there. Held as placeholder pending explicit
-   override. Butler-appropriate defaults are in use until then.
-2. **Private vs. bulletproof-everywhere.** Can't max both at $100/mo. Build
-   above assumes HYBRID (private memory, cloud brain). If JR wants fully local,
-   he must relax either the budget or the "never crash / all devices" bar.
+1. **Sign-off phrase — RESOLVED.** JR kept the butler defaults ("Right away."
+   / "Done." / "As you wish."). The originally requested phrase is not enabled.
+2. **Private vs. bulletproof-everywhere — RESOLVED.** Hybrid build approved:
+   cloud brain (Claude), private memory JR owns, encrypted all-device sync.
+   Fits $100/mo while meeting the all-devices + reliability bars.
