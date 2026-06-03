@@ -493,10 +493,10 @@ journal (`trades.csv`) with two no-deps/no-network Node tools:
   deferred Tradovate API Access (paid add-on + live acct >$1k, see auto-trading
   section). When he gets it, the live feed just replaces the manual `--start`
   number; scoreboard stays identical. JR logs trades as he goes.
-- **Open thread:** first real trade pending — MGC, 1 contract, ~+$16 unrealized
-  @ 4467.7 (11:25, 2026-06-03), on a HERMES-zone setup with +50pt/+$500 TP &
-  -15pt/-$150 SL (~3.3:1). Awaiting JR's confirm of direction + exit/final P&L
-  before logging (no fabricated rows in the journal).
+- **Status:** scoreboard live + empty by design. JR starts logging from his next
+  fill onward (the 2026-06-03 MGC position was closed & deemed irrelevant — not
+  logged). Just-say-it logging → CLAURX appends to trades.csv → `equity.mjs`/
+  `review.mjs` render.
 
 ---
 
