@@ -14,23 +14,54 @@
 //   API_VERSION          Admin API version (default: 2025-01)
 
 const STORE = process.env.SHOPIFY_STORE || "jaurxflips";
-const TOKEN = process.env.SHOPIFY_TOKEN;
+const TOKEN = process.env.SHOPIFY_TOKEN;            // optional legacy static shpat_
+const CLIENT_ID = process.env.SHOPIFY_CLIENT_ID;     // dev-dashboard app
+const CLIENT_SECRET = process.env.SHOPIFY_CLIENT_SECRET;
 const THRESHOLD = Number(process.env.LOW_STOCK_THRESHOLD || 5);
 const API = process.env.API_VERSION || "2025-01";
 const JSON_OUT = process.argv.includes("--json");
 const TIER_PRICES = [16.99, 19.99, 24.99];
 const TZ = "America/New_York";
 
-if (!TOKEN) {
+if (!TOKEN && !(CLIENT_ID && CLIENT_SECRET)) {
   console.error(
-    "CLAURX: missing SHOPIFY_TOKEN. Set it in your env (do NOT commit it).\n" +
-      "  export SHOPIFY_TOKEN=shpat_...   export SHOPIFY_STORE=jaurxflips"
+    "CLAURX: missing credentials. Provide EITHER client-credentials (dev dashboard)\n" +
+      "  SHOPIFY_CLIENT_ID=...  SHOPIFY_CLIENT_SECRET=...\n" +
+      "or a legacy static token  SHOPIFY_TOKEN=shpat_...  — plus SHOPIFY_STORE=jaurxflips.\n" +
+      "Never commit these."
   );
   process.exit(1);
 }
 
-const BASE = `https://${STORE}.myshopify.com/admin/api/${API}`;
-const headers = { "X-Shopify-Access-Token": TOKEN, "Content-Type": "application/json" };
+const ORIGIN = `https://${STORE}.myshopify.com`;
+const BASE = `${ORIGIN}/admin/api/${API}`;
+let headers = { "Content-Type": "application/json" }; // access token set after auth
+
+// Acquire an Admin API access token. Uses a static token if supplied;
+// otherwise mints a 24h token via the OAuth client-credentials grant — the
+// path required for apps created in the Shopify dev dashboard (post-2026).
+async function authenticate() {
+  if (TOKEN) {
+    headers["X-Shopify-Access-Token"] = TOKEN;
+    return;
+  }
+  const res = await fetch(`${ORIGIN}/admin/oauth/access_token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      grant_type: "client_credentials",
+    }),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`auth ${res.status} (client credentials): ${body.slice(0, 300)}`);
+  }
+  const j = await res.json();
+  if (!j.access_token) throw new Error("auth succeeded but no access_token in response");
+  headers["X-Shopify-Access-Token"] = j.access_token;
+}
 
 // --- HTTP helpers (REST, with Link-header pagination) ---------------------
 async function rest(path) {
@@ -200,6 +231,7 @@ function render(orders30, variants) {
 // --- main -----------------------------------------------------------------
 (async () => {
   try {
+    await authenticate();
     const since = startOfDayISO(29); // 30-day window covers today+7d+trend
     const [orders30, variants] = await Promise.all([getOrdersSince(since), getVariants()]);
     if (JSON_OUT) {
