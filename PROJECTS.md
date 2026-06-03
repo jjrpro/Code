@@ -44,6 +44,12 @@ Configured for MGC + MNQ futures on Tradovate with JR's methodology.
 Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.
 
+### `projects/claurx/` — CLAURX personal-assistant build
+JR's JARVIS-style personal AI assistant. Finished system prompt + phased
+build checklist (hybrid: cloud brain, private memory, all-device sync).
+- `2026-06-03-claurx-system-prompt-and-build-checklist.md` — copy-paste prompt
+  + build plan; two open decisions flagged (sign-off phrase, private-vs-budget).
+
 ---
 
 ## Shared infrastructure
