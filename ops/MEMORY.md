@@ -498,9 +498,30 @@ journal (`trades.csv`) with two no-deps/no-network Node tools:
   logged). Just-say-it logging → CLAURX appends to trades.csv → `equity.mjs`/
   `review.mjs` render.
 
+**Phase 3 — Daily briefing + always-on plan (`projects/claurx/briefing/` + plan doc):**
+- `briefing.mjs` — built + tested 2026-06-03. Generates the 11AM morning
+  briefing + evening recap in butler voice. HONEST BY DESIGN: composes the real
+  trade scoreboard (spawns `equity.mjs`) + open loops (`open-loops.md`) offline;
+  every unwired source (store/weather/news/calendar) renders "not connected,"
+  never fabricated. Toggles in `briefing.config.json`. Cron-ready (11:00 +
+  21:30 lines in README). No deps.
+- **JR asked "can the JARVIS system be done today?"** — answered honestly:
+  *functional* CLAURX (brain + memory + journal + briefing engine) is up today;
+  *self-driving always-on JARVIS* is NOT a one-day build. Hard gate = I run in an
+  ephemeral container (summoned, not 24/7); needs a box JR owns + ~5 accounts/keys
+  only he can create. He picked: build briefing script (done) + plan the box +
+  "journal's enough for now" (so Shopify unblock stays parked).
+- `2026-06-03-claurx-always-on-box-plan.md` — the always-on path: Option A home
+  mini-PC (~$150–220 once, ~$3/mo power, most private) vs **Option B small VM
+  (~$6–12/mo, recommended for v1, never-miss)**. Setup checklist split JR-side
+  (stand up box + create keys: Shopify approve, weather/news/calendar/delivery)
+  vs mine (deploy, cron, wire delivery, triggers — ~1–2h once his side is ready).
+  Voice = optional Phase 4 last.
+
 ---
 
 **Last updated**: 2026-06-03 by CLAURX (Opus 4.8) via web session
-(built journal `equity.mjs` scoreboard — $500/day target + equity curve)
+(built briefing.mjs + always-on box plan; answered "done today" honestly)
+**Prior**: 2026-06-03 by CLAURX (Opus 4.8) — journal `equity.mjs` scoreboard
 **Prior**: 2026-05-30 by Claude (Opus 4.7) via web session
 (restructure into projects/ + ops/, bi-directional sync for Mac + Windows, CLAUDE.md added)

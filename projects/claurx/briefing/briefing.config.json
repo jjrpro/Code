@@ -1,0 +1,15 @@
+{
+  "owner": "Jaurx (JR)",
+  "timezone": "America/New_York",
+  "briefing_time": "11:00",
+  "evening_recap_time": "21:30",
+  "sections": {
+    "trading": true,
+    "store": false,
+    "weather": false,
+    "market_news": false,
+    "calendar": false,
+    "open_loops": true
+  },
+  "_notes": "Toggle a section true once its source is wired (keys present on the host). Sections left false render as 'not connected' — CLAURX never fabricates a number it can't pull. 'trading' and 'open_loops' run fully offline today. 'store' wires to ../shopify/claurx-shopify.mjs once the app is approved; weather/news/calendar need host-side API keys (see env.example)."
+}
