@@ -191,38 +191,46 @@ function viewTrend(all, days) {
 }
 
 // --- render ---------------------------------------------------------------
-function render(orders30, variants) {
-  const o = viewOrders(orders30);
-  const low = viewLowStock(variants);
-  const tiers = viewTiers(variants);
-  const trend = viewTrend(orders30, 7);
-
+function render(orders30, variants, errs = {}) {
   const L = [];
   L.push(`CLAURX · jaurxflips · ${new Date().toLocaleString("en-US", { timeZone: TZ })} EST\n`);
 
-  L.push("── TODAY ──");
-  L.push(`  Orders ${o.today.count}   Revenue ${money(o.today.revenue)}   AOV ${money(o.today.aov)}`);
-  L.push(`  Rolling 7d: ${o.rolling7.count} orders · ${money(o.rolling7.revenue)} · AOV ${money(o.rolling7.aov)}\n`);
+  if (orders30) {
+    const o = viewOrders(orders30);
+    const trend = viewTrend(orders30, 7);
+    L.push("── TODAY ──");
+    L.push(`  Orders ${o.today.count}   Revenue ${money(o.today.revenue)}   AOV ${money(o.today.aov)}`);
+    L.push(`  Rolling 7d: ${o.rolling7.count} orders · ${money(o.rolling7.revenue)} · AOV ${money(o.rolling7.aov)}\n`);
+    L.push("── REVENUE TREND (last 7d, EST) ──");
+    const days = Object.keys(trend).sort();
+    const max = Math.max(1, ...days.map((d) => trend[d].rev));
+    for (const d of days) {
+      const bar = "█".repeat(Math.round((trend[d].rev / max) * 24));
+      L.push(`  ${d}  ${money(trend[d].rev).padStart(9)}  ${trend[d].count}o  ${bar}`);
+    }
+    L.push("");
+  } else {
+    L.push("── ORDERS / REVENUE ──");
+    L.push(`  ⚠ unavailable — ${errs.orders || "no data"}`);
+    L.push("");
+  }
 
-  L.push(`── LOW STOCK (≤ ${THRESHOLD}, active, tracked) ──`);
-  if (!low.length) L.push("  None. Shelves are fine.");
-  else for (const v of low) L.push(`  ⚠ ${v.qty.toString().padStart(3)}  ${v.product} / ${v.title}  ${v.sku ? "(" + v.sku + ")" : ""}`);
-  L.push("");
-
-  L.push("── PRICE TIERS ($16.99 / $19.99 / $24.99) ──");
-  L.push(`  Counts:  16.99→${tiers.byTier[16.99]}   19.99→${tiers.byTier[19.99]}   24.99→${tiers.byTier[24.99]}`);
-  if (tiers.offTier.length) {
-    L.push(`  Off-tier (${tiers.offTier.length}):`);
-    for (const v of tiers.offTier) L.push(`    ✗ ${money(v.price)}  ${v.product} / ${v.title}`);
-  } else L.push("  All active variants map to the three tiers.");
-  L.push("");
-
-  L.push("── REVENUE TREND (last 7d, EST) ──");
-  const days = Object.keys(trend).sort();
-  const max = Math.max(1, ...days.map((d) => trend[d].rev));
-  for (const d of days) {
-    const bar = "█".repeat(Math.round((trend[d].rev / max) * 24));
-    L.push(`  ${d}  ${money(trend[d].rev).padStart(9)}  ${trend[d].count}o  ${bar}`);
+  if (variants) {
+    const low = viewLowStock(variants);
+    const tiers = viewTiers(variants);
+    L.push(`── LOW STOCK (≤ ${THRESHOLD}, active, tracked) ──`);
+    if (!low.length) L.push("  None. Shelves are fine.");
+    else for (const v of low) L.push(`  ⚠ ${v.qty.toString().padStart(3)}  ${v.product} / ${v.title}  ${v.sku ? "(" + v.sku + ")" : ""}`);
+    L.push("");
+    L.push("── PRICE TIERS ($16.99 / $19.99 / $24.99) ──");
+    L.push(`  Counts:  16.99→${tiers.byTier[16.99]}   19.99→${tiers.byTier[19.99]}   24.99→${tiers.byTier[24.99]}`);
+    if (tiers.offTier.length) {
+      L.push(`  Off-tier (${tiers.offTier.length}):`);
+      for (const v of tiers.offTier) L.push(`    ✗ ${money(v.price)}  ${v.product} / ${v.title}`);
+    } else L.push("  All active variants map to the three tiers.");
+  } else {
+    L.push("── PRODUCTS / INVENTORY ──");
+    L.push(`  ⚠ unavailable — ${errs.variants || "no data"}`);
   }
 
   return L.join("\n");
@@ -232,23 +240,38 @@ function render(orders30, variants) {
 (async () => {
   try {
     await authenticate();
-    const since = startOfDayISO(29); // 30-day window covers today+7d+trend
-    const [orders30, variants] = await Promise.all([getOrdersSince(since), getVariants()]);
-    if (JSON_OUT) {
-      console.log(JSON.stringify({
-        generatedAt: new Date().toISOString(),
-        store: STORE,
-        orders: viewOrders(orders30),
-        lowStock: viewLowStock(variants),
-        tiers: viewTiers(variants),
-        trend7: viewTrend(orders30, 7),
-        trend30: viewTrend(orders30, 30),
-      }, null, 2));
-    } else {
-      console.log(render(orders30, variants));
-    }
   } catch (e) {
-    console.error(`CLAURX: Shopify pull failed — ${e.message}`);
+    console.error(`CLAURX: authentication failed — ${e.message}`);
     process.exit(1);
   }
+
+  // Pull each domain independently so one missing scope doesn't sink the rest.
+  const since = startOfDayISO(29); // 30-day window covers today+7d+trend
+  const [oRes, vRes] = await Promise.allSettled([getOrdersSince(since), getVariants()]);
+  const orders30 = oRes.status === "fulfilled" ? oRes.value : null;
+  const variants = vRes.status === "fulfilled" ? vRes.value : null;
+  const errs = {};
+  if (oRes.status === "rejected") errs.orders = oRes.reason.message;
+  if (vRes.status === "rejected") errs.variants = vRes.reason.message;
+
+  if (JSON_OUT) {
+    console.log(JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      store: STORE,
+      errors: errs,
+      orders: orders30 ? viewOrders(orders30) : null,
+      lowStock: variants ? viewLowStock(variants) : null,
+      tiers: variants ? viewTiers(variants) : null,
+      trend7: orders30 ? viewTrend(orders30, 7) : null,
+      trend30: orders30 ? viewTrend(orders30, 30) : null,
+    }, null, 2));
+  } else {
+    console.log(render(orders30, variants, errs));
+    if (errs.orders && /protected customer data|merchant approval|read_orders/i.test(errs.orders)) {
+      console.log("\nNote: revenue/orders need 'Protected customer data access' approved");
+      console.log("in the dev dashboard (App → API access). Catalog data works without it.");
+    }
+  }
+
+  if (!orders30 && !variants) process.exit(1); // total failure only
 })();
