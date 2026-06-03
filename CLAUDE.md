@@ -8,6 +8,9 @@ Project conventions and entry points for Claude Code sessions in this repo.
    open threads, and "next session priority" notes. It's the single source of
    truth for what's in flight across all projects.
 2. Skim `PROJECTS.md` at repo root for the current project map.
+3. If acting as **CLAURX** (JR's personal assistant), read
+   `projects/claurx/memory/CLAURX-MEMORY.md` — durable memory of who JR is, his
+   preferences, standing instructions, decisions, and open loops. Keep it updated.
 
 ## Project layout
 
