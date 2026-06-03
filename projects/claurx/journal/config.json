@@ -1,0 +1,5 @@
+{
+  "daily_target": 500,
+  "starting_balance": null,
+  "_notes": "daily_target = your $/day goal. starting_balance = live account $ if you want absolute equity (e.g. 1500); leave null to track cumulative P&L only. No broker login — these are your numbers. Override per-run with --target and --start."
+}

@@ -480,7 +480,27 @@ $19.99/$24.99 tier check, 7-day trend. EST boundaries, no writes.
   it once more and update `shopify.env`. `read_orders` also needs "Protected
   customer data access" approval (PII gate) before revenue pulls work.
 
+**Phase 2 — Trade journal + equity (`projects/claurx/journal/`):** talk-to-log
+journal (`trades.csv`) with two no-deps/no-network Node tools:
+- `review.mjs` — discipline/P&L coaching (win rate, profit factor, expectancy,
+  followed-rules vs broke-rules P&L).
+- `equity.mjs` — NEW scoreboard (built + tested 2026-06-03, operational tonight):
+  today's net P&L vs **$500/day target** (progress bar) + daily equity curve
+  (per-day, cumulative, sparkline) + totals (avg/day, green days). Config in
+  `config.json` (`daily_target`, `starting_balance`); flags `--target`, `--start`,
+  `--since`, instrument filter.
+- This is the UNBLOCKED stand-in for the Tradovate "trading status feed" — JR
+  deferred Tradovate API Access (paid add-on + live acct >$1k, see auto-trading
+  section). When he gets it, the live feed just replaces the manual `--start`
+  number; scoreboard stays identical. JR logs trades as he goes.
+- **Open thread:** first real trade pending — MGC, 1 contract, ~+$16 unrealized
+  @ 4467.7 (11:25, 2026-06-03), on a HERMES-zone setup with +50pt/+$500 TP &
+  -15pt/-$150 SL (~3.3:1). Awaiting JR's confirm of direction + exit/final P&L
+  before logging (no fabricated rows in the journal).
+
 ---
 
-**Last updated**: 2026-05-30 by Claude (Opus 4.7) via web session
+**Last updated**: 2026-06-03 by CLAURX (Opus 4.8) via web session
+(built journal `equity.mjs` scoreboard — $500/day target + equity curve)
+**Prior**: 2026-05-30 by Claude (Opus 4.7) via web session
 (restructure into projects/ + ops/, bi-directional sync for Mac + Windows, CLAUDE.md added)

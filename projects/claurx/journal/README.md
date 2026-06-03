@@ -34,6 +34,21 @@ Shows win rate, net P&L, avg win/loss, **profit factor**, expectancy, and the on
 that matters most: **followed-rules P&L vs. broke-rules P&L.** If breaking your
 plan is bleeding money, CLAURX will say so in numbers, not vibes.
 
+## Trading status / equity (the scoreboard)
+Same `trades.csv`, no broker login — your numbers, honest math.
+```bash
+node equity.mjs              # today vs $500 target + running equity curve
+node equity.mjs MGC          # just gold
+node equity.mjs --since 2026-06-01
+node equity.mjs --target 500 # override daily $/day goal
+node equity.mjs --start 1500 # absolute account equity off a live balance
+```
+Shows **today's net P&L vs your $500/day target** (progress bar), a **daily equity
+curve** (per-day + cumulative + sparkline), and totals (avg/day, green days).
+Defaults live in `config.json` (`daily_target`, `starting_balance`). When you get
+Tradovate API Access later, the live feed just replaces the manual `--start`
+number — the scoreboard stays the same.
+
 ## Cadence
 - **Daily:** log every trade same day (memory fades, so do the lessons).
 - **Weekly:** CLAURX runs a review, flags patterns, names one thing to fix.
