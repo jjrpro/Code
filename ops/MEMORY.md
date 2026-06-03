@@ -457,5 +457,30 @@ the conflicted file directly in the Obsidian vault dir, then `git add` +
 
 ---
 
+## CLAURX personal-assistant build — 2026-06-03
+
+New project `projects/claurx/`. JR's JARVIS-style assistant persona, finalized.
+- `2026-06-03-claurx-system-prompt-and-build-checklist.md` — the copy-paste
+  CLAURX system prompt (butler voice, SPEED default, act-with-confirm, $50
+  auto-purchase, 11AM briefing) + hybrid build plan (cloud brain, private
+  memory). Both open decisions resolved: butler sign-offs kept, hybrid approved.
+
+**Phase 1 — Shopify (`projects/claurx/shopify/`):** read-only Node CLI built and
+PROVEN live against `jaurxflips` — today's orders+revenue, low-stock, $16.99/
+$19.99/$24.99 tier check, 7-day trend. EST boundaries, no writes.
+- Shopify killed permanent `shpat_` tokens (Jan 2026); the app is a dev-dashboard
+  custom app, so the script mints a 24h token via OAuth **client-credentials**
+  (`SHOPIFY_CLIENT_ID` + `SHOPIFY_CLIENT_SECRET` in git-ignored `shopify.env`).
+- **BLOCKED on one Shopify-side step:** scopes (`read_inventory/orders/products`)
+  are configured + released on version `claurx-read-only-2` but **not granted** —
+  all calls 403 "requires merchant approval." JR must **install/approve the app
+  on JaurxShops from the store admin**. Full details + exact next step:
+  `projects/claurx/shopify/2026-06-03-shopify-status-and-next-step.md`.
+- **Security debt:** the client secret was exposed in setup screenshots — rotate
+  it once more and update `shopify.env`. `read_orders` also needs "Protected
+  customer data access" approval (PII gate) before revenue pulls work.
+
+---
+
 **Last updated**: 2026-05-30 by Claude (Opus 4.7) via web session
 (restructure into projects/ + ops/, bi-directional sync for Mac + Windows, CLAUDE.md added)
