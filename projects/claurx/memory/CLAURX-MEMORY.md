@@ -75,10 +75,12 @@ Wake ~9 AM → Claude Code → gym → day job 1 PM–10 PM → Claude Code at n
   memory. Morning briefing deferred. Shopify parked at the install-approval step.
 
 ## 10. Open loops
-- **Shopify (parked):** integration built + proven; only the merchant install/approval
-  remains. Flip on later via `projects/claurx/shopify/WAKE-UP-CHECKLIST.md`.
-- **Tradovate:** account-status integration — skeleton + setup pending JR's API creds.
-- **Trade journal:** capture + review system — in progress.
+- **Shopify (parked, JR's call 2026-06-03):** built + proven; only merchant
+  install/approval remains. Resume via `projects/claurx/shopify/WAKE-UP-CHECKLIST.md`.
+- **Tradovate:** skeleton + README built; needs JR's API creds (LIVE acct >$1000 +
+  API Access subscription + API key cid/sec). Connect via `tradovate/README.md`.
+- **Trade journal:** DONE — `journal/` talk-to-log + `review.mjs`. JR logs trades by
+  telling CLAURX; CLAURX appends to `trades.csv` and runs weekly reviews.
 - **Security debt:** rotate the Shopify client secret (exposed in setup screenshots).
 
 ---

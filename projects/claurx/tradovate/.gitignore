@@ -1,0 +1,5 @@
+# NEVER commit credentials. This file holds your real Tradovate login + secret.
+*.env
+.env
+tradovate.env
+logs/

@@ -45,10 +45,12 @@ Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.
 
 ### `projects/claurx/` — CLAURX personal-assistant build
-JR's JARVIS-style personal AI assistant. Finished system prompt + phased
-build checklist (hybrid: cloud brain, private memory, all-device sync).
-- `2026-06-03-claurx-system-prompt-and-build-checklist.md` — copy-paste prompt
-  + build plan; two open decisions flagged (sign-off phrase, private-vs-budget).
+JR's JARVIS-style personal AI assistant. Finished system prompt + phased build.
+- `2026-06-03-claurx-system-prompt-and-build-checklist.md` — copy-paste prompt + plan
+- `memory/CLAURX-MEMORY.md` — durable long-term memory (loads every session)
+- `journal/` — trade journal: talk-to-log + `review.mjs` discipline/P&L coaching
+- `tradovate/` — account-status pull (read-only); skeleton ready, needs API creds
+- `shopify/` — read-only store dashboard; built + proven, parked at install-approval
 
 ---
 
