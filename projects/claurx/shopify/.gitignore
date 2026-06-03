@@ -1,0 +1,5 @@
+# NEVER commit secrets. The Shopify Admin token lives here and stays here.
+*.env
+.env
+shopify.env
+.env.local
