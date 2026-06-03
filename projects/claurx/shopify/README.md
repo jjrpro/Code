@@ -34,6 +34,20 @@ node claurx-shopify.mjs            # human-readable dashboard
 node claurx-shopify.mjs --json     # machine-readable (for the 11AM briefing)
 ```
 
+## Granting scopes (the part that 403s if skipped)
+Configuring scopes does **not** grant them — the merchant must install/approve
+the app on the store. The reliable, server-free way is the **install link**:
+dev dashboard → app → **Distribution** → **Custom distribution** → enter
+`jaurxflips.myshopify.com` → **Generate link** → open it → **Install** →
+approve the scopes. (The embedded/`app_url` OAuth flow needs a real app server;
+skip it.) `read_orders` additionally needs **Protected customer data access**.
+
+## Automation (daily briefing)
+- `run-shopify-briefing.sh` — runs the pull, writes `briefings/<date>-shopify.md`
+  + `briefings/latest-shopify.md`.
+- `install-launchagent.sh` — installs a macOS LaunchAgent that runs it daily at
+  **8:45 AM**. Enable once: `bash install-launchagent.sh`.
+
 ## Notes
 - **Timezone:** all day boundaries are America/New_York (your EST rhythm).
 - **Low stock:** flags active, inventory-tracked variants at/under

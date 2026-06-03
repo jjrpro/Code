@@ -3,3 +3,6 @@
 .env
 shopify.env
 .env.local
+
+# Runtime logs (local only)
+logs/

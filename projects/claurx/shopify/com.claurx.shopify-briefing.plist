@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.claurx.shopify-briefing</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/johnreilly/code/projects/claurx/shopify/run-shopify-briefing.sh</string>
+    </array>
+
+    <!-- Runs every day at 8:45 AM so fresh numbers are ready by 9. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>8</integer>
+        <key>Minute</key>
+        <integer>45</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/johnreilly/code/projects/claurx/shopify/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/johnreilly/code/projects/claurx/shopify/logs/launchd.err.log</string>
+</dict>
+</plist>
