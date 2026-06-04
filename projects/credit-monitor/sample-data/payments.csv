@@ -1,0 +1,6 @@
+date,card,amount,type,status
+2026-05-13,Sapphire Preferred,600.00,custom,on-time
+2026-05-02,Amex Gold,1520.00,statement,on-time
+2026-05-20,Double Cash,250.00,statement,on-time
+2026-05-23,Discover it,70.00,minimum,on-time
+2026-03-26,Discover it,70.00,minimum,late

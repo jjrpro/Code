@@ -1,0 +1,6 @@
+nickname,issuer,last4,limit,balance,statement,closing_day,due_day,min,apr,opened,autopay
+Sapphire Preferred,Chase,4821,12000,4920,4920,18,13,98,24.99,2017-03-10,yes
+Amex Gold,American Express,1007,8000,1520,1520,7,2,40,27.24,2020-08-01,no
+Double Cash,Citi,9930,6000,120,120,25,20,25,22.99,2014-06-15,yes
+Quicksilver,Capital One,3345,3000,0,0,12,8,0,26.99,2022-11-20,no
+Discover it,Discover,7782,5000,2600,2600,28,23,70,25.99,2021-02-10,yes

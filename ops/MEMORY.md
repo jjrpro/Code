@@ -79,6 +79,36 @@ client, 11 skills, 5 workflows.
 
 ---
 
+## Credit Monitor — local-first credit health app (2026-06-04)
+
+New project `projects/credit-monitor/` on branch `claude/credit-monitoring-mvp-QC8hj`.
+Working MVP, not just a doc. Local-first/privacy-first: Node + Express +
+better-sqlite3 + a zero-build vanilla-JS dashboard (inline-SVG charts, no CDN,
+fully offline). Single command: `npm install && npm start` → http://127.0.0.1:4600
+(seeds realistic sample data on first run).
+
+- **Why this stack:** fastest path to a solid single-command MVP for a
+  non-developer — no build toolchain, no DB server, no internet dependency.
+  better-sqlite3 ships a prebuilt binary so install "just works" (verified here).
+- **Built & verified working:** per-card + aggregate utilization w/ color bands
+  (🟢<10/🟡10–30/🔴>30, current AND reported), statement-close timing engine
+  ("pay $X before the closing date to drop util 41%→9%"), FICO factor breakdown
+  (35/30/15/10/10), score-trend chart, due/statement calendar w/ countdowns,
+  recommendation engine encoding the full playbook (autopay, AZEO, don't-close-old,
+  keep-unused-active, inquiry clustering, CLI requests, dispute checklist, dual
+  debt-paydown = score-first + avalanche), CSV import w/ column mapping, email
+  (SMTP/nodemailer) + desktop digest + node-cron scheduler. AES-256-GCM encryption
+  at rest for card last-4; secrets via `.env` only.
+- **Stubs w/ clean hooks (TODO):** Plaid read-only sync (`src/plaid/plaid.js`),
+  mobile push (`src/notify/push.js`). App works fully without either.
+- **Deliverables saved:** `2026-06-04-credit-monitor-architecture.md`,
+  `2026-06-04-sample-recommendation-output.md` (real engine output), `README.md`,
+  `.env.example`, sample CSVs in `sample-data/`.
+- **Note for JR (non-dev):** data stays on his Mac; server binds to localhost.
+  Email digest is off until he fills SMTP in `.env` (Gmail = App Password).
+
+---
+
 ## Faceless AI video channel — Cinematic Curiosities (2026-05-31)
 
 Second Claude-run revenue stream. Faceless YouTube Shorts + TikTok channel,

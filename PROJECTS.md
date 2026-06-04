@@ -40,6 +40,17 @@ platform: data engine (TradingView screeners + backtesting), chart controller
 (TradingView Desktop via CDP), and decision brain (multi-agent LLM debate).
 Configured for MGC + MNQ futures on Tradovate with JR's methodology.
 
+### `projects/credit-monitor/` — Personal credit monitoring & improvement
+Local-first app (Node + Express + SQLite, zero-build dashboard) that tracks JR's
+credit cards and credit health and outputs a prioritized, specific action list
+to improve his score. Per-card + aggregate utilization with color thresholds,
+statement-close timing ("pay $X before the 18th to drop util 41%→9%"), FICO
+factor breakdown, score-trend chart, recommendation engine (full playbook:
+autopay, AZEO, don't-close-old-cards, inquiry clustering, CLI requests, disputes,
+dual paydown strategies), email/desktop digest + scheduler. Manual entry + CSV
+import work fully; Plaid (read-only) and mobile push are stubbed hooks.
+Run: `cd projects/credit-monitor && npm install && npm start` → http://127.0.0.1:4600.
+
 ### `projects/trade-analysis/` — Research & setups
 Bearish/bullish thesis files with entry/SL/TP. Archive of trade ideas with
 the supporting macro + technical evidence.

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Credit Monitor</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div>
+      <h1>🛡️ Credit Monitor</h1>
+      <div class="tag">Local-first · your data stays on this machine</div>
+    </div>
+    <div class="controls">
+      <label class="switch" title="Target reported utilization the engine aims for">
+        Target util
+        <input id="targetUtil" type="number" min="1" max="30" value="9" style="width:58px" />%
+      </label>
+      <label class="switch" title="Prep for a credit application / score pull">
+        <input id="azeo" type="checkbox" /> AZEO mode
+      </label>
+      <button id="refresh" class="ghost">Refresh</button>
+      <button id="sendDigest" class="ghost" title="Build the digest and send via configured channels">Send digest</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <!-- Top summary row -->
+    <div class="grid cols-2" style="margin-bottom:16px">
+      <div class="panel">
+        <h2>Overall utilization</h2>
+        <div class="row" style="align-items:flex-end; gap:24px">
+          <div>
+            <div class="big-num" id="aggCurrent">—</div>
+            <div class="sub">current balance</div>
+          </div>
+          <div>
+            <div class="big-num" id="aggReported" style="font-size:28px">—</div>
+            <div class="sub">reported to bureaus</div>
+          </div>
+        </div>
+        <div class="util-bar"><span id="aggBar"></span></div>
+        <div class="sub" id="aggTotals">—</div>
+        <div class="sub" style="margin-top:6px">Green &lt;10% · Yellow 10–30% · Red &gt;30%</div>
+      </div>
+
+      <div class="panel">
+        <h2>Score &amp; health</h2>
+        <div class="row" style="align-items:flex-end; gap:24px">
+          <div>
+            <div class="big-num" id="scoreLatest">—</div>
+            <div class="sub" id="scoreSource">no score logged</div>
+          </div>
+          <div>
+            <div class="big-num" id="healthNum" style="font-size:28px">—</div>
+            <div class="sub">health indicator /100</div>
+          </div>
+        </div>
+        <div id="scoreChart" style="margin-top:10px"></div>
+        <div class="sub">Estimate for guidance — not a real FICO score.</div>
+      </div>
+    </div>
+
+    <!-- Recommendations + calendar -->
+    <div class="grid cols-3" style="margin-bottom:16px">
+      <div class="panel">
+        <h2>Prioritized actions</h2>
+        <div id="recs"></div>
+      </div>
+      <div class="panel">
+        <h2>Upcoming (countdowns)</h2>
+        <div id="calendar"></div>
+      </div>
+    </div>
+
+    <!-- Factors + paydown -->
+    <div class="grid cols-2" style="margin-bottom:16px">
+      <div class="panel">
+        <h2>FICO factor breakdown</h2>
+        <div id="factors"></div>
+      </div>
+      <div class="panel">
+        <h2>Debt-paydown priority</h2>
+        <div id="paydown"></div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="panel" style="margin-bottom:16px">
+      <h2>Cards</h2>
+      <table id="cardsTable">
+        <thead>
+          <tr>
+            <th>Card</th><th class="right">Balance</th><th class="right">Limit</th>
+            <th class="right">Util</th><th>Closes</th><th>Due</th><th>APR</th><th>Autopay</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="cardsBody"></tbody>
+      </table>
+      <details>
+        <summary>+ Add a card</summary>
+        <div id="addCard" class="formgrid" style="margin-top:12px"></div>
+        <button id="saveCard" style="margin-top:10px">Add card</button>
+      </details>
+    </div>
+
+    <!-- Logging row -->
+    <div class="grid cols-2" style="margin-bottom:16px">
+      <div class="panel">
+        <h2>Log a credit score</h2>
+        <div class="formgrid">
+          <div class="field"><label>Date</label><input id="sc_date" type="date" /></div>
+          <div class="field"><label>Score</label><input id="sc_score" type="number" min="300" max="850" /></div>
+          <div class="field"><label>Source</label><input id="sc_source" placeholder="Credit Karma / Experian" /></div>
+          <div class="field"><label>Bureau / model</label><input id="sc_bureau" placeholder="Experian (FICO 8)" /></div>
+        </div>
+        <button id="saveScore" style="margin-top:10px">Log score</button>
+      </div>
+      <div class="panel">
+        <h2>Log an inquiry / payment</h2>
+        <div class="row" style="margin-bottom:8px">
+          <strong>Hard inquiry</strong>
+        </div>
+        <div class="formgrid">
+          <div class="field"><label>Date</label><input id="iq_date" type="date" /></div>
+          <div class="field"><label>Reason</label><input id="iq_reason" placeholder="Auto loan" /></div>
+          <div class="field"><label>Bureau</label><input id="iq_bureau" placeholder="Experian" /></div>
+        </div>
+        <button id="saveInquiry" style="margin-top:8px">Log inquiry</button>
+        <hr style="border-color:var(--line); margin:14px 0" />
+        <div class="formgrid">
+          <div class="field"><label>Card</label><select id="pm_card"></select></div>
+          <div class="field"><label>Date</label><input id="pm_date" type="date" /></div>
+          <div class="field"><label>Amount</label><input id="pm_amount" type="number" step="0.01" /></div>
+          <div class="field"><label>On time?</label><select id="pm_ontime"><option value="1">Yes</option><option value="0">No (late)</option></select></div>
+        </div>
+        <button id="savePayment" style="margin-top:8px">Log payment</button>
+      </div>
+    </div>
+
+    <!-- CSV import -->
+    <div class="panel">
+      <h2>CSV import (with column mapping)</h2>
+      <p class="sub">Paste a CSV exported from a spreadsheet or your issuer. Choose what each column means, then import. Cards are matched by nickname (or last-4) so re-imports update balances.</p>
+      <div class="row" style="margin-bottom:8px">
+        <label class="switch">Import as
+          <select id="imp_type"><option value="cards">Card balances</option><option value="payments">Payments / transactions</option></select>
+        </label>
+        <button id="imp_preview" class="ghost">Preview columns</button>
+      </div>
+      <textarea id="imp_csv" placeholder="nickname,balance,limit,closing_day&#10;Sapphire Preferred,4920,12000,18"></textarea>
+      <div id="imp_mapping"></div>
+      <button id="imp_run" style="margin-top:10px; display:none">Import</button>
+      <div id="imp_result" class="sub" style="margin-top:8px"></div>
+    </div>
+
+    <p class="muted" style="margin-top:24px; font-size:12px">
+      Plaid integration is stubbed (manual + CSV work fully). Mobile push is a clean hook for later.
+      Nothing here is financial advice.
+    </p>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

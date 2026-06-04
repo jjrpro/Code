@@ -1,0 +1,10 @@
+# Local secrets & data — NEVER commit
+.env
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+data/.keyfile
+
+# deps
+node_modules/
