@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#16273f"/><stop offset="100%" stop-color="#070b12"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#bff0ff"/><stop offset="30%" stop-color="#36d3ff"/>
+      <stop offset="64%" stop-color="#1b6f95"/><stop offset="100%" stop-color="#0a2740"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="248" r="150" fill="none" stroke="#36d3ff" stroke-opacity="0.22" stroke-width="3"/>
+  <circle cx="256" cy="248" r="120" fill="url(#orb)"/>
+  <text x="256" y="430" font-family="-apple-system,Segoe UI,Roboto,sans-serif" font-size="68"
+        font-weight="700" letter-spacing="6" text-anchor="middle" fill="#e8eefb">CLAURX</text>
+</svg>

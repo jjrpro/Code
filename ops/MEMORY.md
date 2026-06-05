@@ -498,6 +498,22 @@ journal (`trades.csv`) with two no-deps/no-network Node tools:
   logged). Just-say-it logging → CLAURX appends to trades.csv → `equity.mjs`/
   `review.mjs` render.
 
+**Phase 4 — CLAURX Console: see/hear/talk (`projects/claurx/console/`):**
+- `claurx.html` — single self-contained PWA. Butler-styled voice orb (SEE),
+  British-female TTS via Web Speech (HEAR), push-to-talk STT (TALK, Chrome/Edge),
+  live conversation to Claude via browser-direct Anthropic call. Full CLAURX
+  persona as system prompt. Default model Sonnet 4.6 (Opus 4.8 / Haiku 4.5
+  selectable). API key in localStorage ONLY — never in repo/server. Built +
+  syntax-checked 2026-06-03.
+- **All-devices (JR requirement):** made installable PWA (`manifest.webmanifest`,
+  `icon.svg`, `sw.js`). Ship path = Netlify Drop the `console/` folder → one HTTPS
+  URL on Mac/Win/iPhone/iPad, Add-to-Home-Screen as "CLAURX" app. Honest limit:
+  iOS exposes no speech-recognition, so phone = hear + type (mic talk is Mac/Win
+  Chrome only). Later the always-on box can serve this page + run briefing = unified.
+- Honesty held: told JR I cannot make my cloud self speak through his Mac's
+  speakers (ephemeral container, no audio line); the console is the real
+  see/hear/talk layer that runs on HIS device with HIS key.
+
 **Phase 3 — Daily briefing + always-on plan (`projects/claurx/briefing/` + plan doc):**
 - `briefing.mjs` — built + tested 2026-06-03. Generates the 11AM morning
   briefing + evening recap in butler voice. HONEST BY DESIGN: composes the real
