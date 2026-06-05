@@ -56,9 +56,12 @@ also makes the mic work remotely (a local file can't on phones).
 site settings to something memorable like `claurx-jr`.)
 
 **Honest device notes:**
-- **iPhone/iPad:** voice-out (hear her) + typing + home-screen app all work. The
-  **push-to-talk mic does not** — Apple doesn't expose speech recognition in the
-  iOS browser. Talk-to-her-by-voice is a Mac/Windows-Chrome feature for now.
+- **iPhone/iPad:** voice-out (hear her) + **typing** + home-screen app all work.
+  The text box at the bottom is your input on phone — type, Send, she replies
+  aloud + on screen. The **push-to-talk mic does not** work on iOS (Apple exposes
+  no speech recognition), so the mic button is hidden there automatically. The
+  layout collapses to a phone-friendly view (compact orb on top, chat + typing
+  fill the screen).
 - When the always-on box is up, it can **serve this same page** *and* run the
   self-driving briefing — one box, everything unified. Until then, Netlify gives
   you all-devices access today for free.

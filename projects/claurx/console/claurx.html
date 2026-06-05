@@ -85,6 +85,22 @@
   .row{display:flex;gap:10px;align-items:center}
   .row input[type=checkbox]{width:auto}
   a{color:var(--cyan)}
+  /* phone: stack the face into a compact top bar so chat + typing fill the screen */
+  @media (max-width:720px){
+    header{padding:11px 14px}
+    header .sub{display:none}
+    main{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+    .stage{flex-direction:row;align-items:center;gap:12px;justify-content:flex-start;
+      border-right:none;border-bottom:1px solid var(--line);padding:10px 16px}
+    .orb{width:56px;height:56px}
+    .orb .ring{inset:-5px}.orb .ring.r2{inset:-10px}
+    .stage .hint{display:none}
+    .stage .status{min-height:auto;font-size:11px}
+    #speakToggle{margin-left:auto;padding:8px 10px}
+    .log{padding:16px}
+    .msg{max-width:90%}
+    .composer{padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  }
 </style>
 </head>
 <body data-state="idle">
@@ -208,6 +224,10 @@ if(SR){
   rec.onresult=(e)=>{ const t=e.results[0][0].transcript; $("#input").value=t; send(); };
   rec.onerror=()=>{ listening=false; $("#micBtn").classList.remove("on"); state("idle"); };
   rec.onend=()=>{ listening=false; $("#micBtn").classList.remove("on"); if(body.dataset.state==="listening") state("idle"); };
+} else {
+  // No speech recognition (e.g. iPhone/iPad) — hide the dead mic button; typing works fine.
+  const mb=$("#micBtn"); if(mb) mb.style.display="none";
+  $("#input").placeholder="Type to CLAURX…";
 }
 function toggleMic(){
   if(!rec){ bubble("system","Mic needs Chrome or Edge — your browser doesn't expose speech recognition. Typing still works."); return; }
