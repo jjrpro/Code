@@ -1,6 +1,6 @@
 // CLAURX console — minimal service worker for installability + offline shell.
 const CACHE = "claurx-v1";
-const ASSETS = ["./", "./claurx.html", "./manifest.webmanifest", "./icon.svg"];
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

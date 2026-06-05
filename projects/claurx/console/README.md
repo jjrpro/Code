@@ -7,7 +7,7 @@ key, stored only in your browser** (sent only to Anthropic, never to this repo).
 
 ## Start (2 minutes)
 1. Get the file onto your Mac — it syncs to your Obsidian vault, or pull the repo:
-   `projects/claurx/console/claurx.html`
+   `projects/claurx/console/index.html`
 2. **Double-click it** (opens in your default browser; use **Chrome** for the mic).
 3. Click **⚙︎** → paste your **Anthropic API key** (`sk-ant-…`) → pick a voice →
    **Save**. (Get a key at console.anthropic.com → API Keys.)
@@ -46,7 +46,7 @@ also makes the mic work remotely (a local file can't on phones).
 
 **Fastest, no account-fuss — Netlify Drop:**
 1. On your Mac, open **app.netlify.com/drop** in Chrome.
-2. Drag the **whole `console/` folder** (claurx.html, manifest, icon, sw.js)
+2. Drag the **whole `console/` folder** (index.html, manifest, icon, sw.js)
    onto the page. It returns an HTTPS URL like `https://claurx-xyz.netlify.app`.
 3. Open that URL on **every device**. Paste your API key once per device (⚙︎).
 4. **Install it:** iPhone Safari → Share → *Add to Home Screen*. Desktop Chrome →
