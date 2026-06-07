@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  SCENTSNOBS — 3D remaster (preview). Luxury fragrance decants / candles / beard oils.
+  Real store: scentsnobs.com (Shopify) — CTAs link there so checkout works.
+  Products & prices pulled from JR's screenshots (subset for preview; 123 total).
+  ⚠️ Product PHOTOS can't be hotlinked from Shopify — using luxe placeholders;
+     add real images (files/hosted) before publishing. All names/prices/sold-out real.
+  Centerpiece: 3D perfume bottles that rotate as you scroll. Failsafe: content
+  visible by default; 3D isolated in try/catch (no blank-page risk).
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scentsnobs — Luxury Fragrance Decants</title>
+  <meta name="description" content="Scentsnobs — hand-decanted luxury & niche fragrance samples, artisan candles & premium beard oils. Discover your signature scent without the full-bottle commitment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root{
+      --bg:#0a0a0d; --bg2:#101015; --panel:#15151c; --ink:#f4f1ea; --muted:#9a93a6;
+      --gold:#cBA45a; --gold:#c9a85a; --gold2:#f0d99a; --wine:#7a2b3a; --line:rgba(255,255,255,.09); --maxw:1200px;
+      --serif:"Cormorant Garamond",Georgia,serif; --sans:"Jost",-apple-system,sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;font-weight:300}
+    a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+    h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.05;letter-spacing:.01em}
+    .gold{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:500;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+      padding:15px 32px;border-radius:2px;border:none;cursor:pointer;transition:transform .16s,background .2s,color .2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-gold{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a140a}
+    .btn-ghost{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.4)}
+    .btn-ghost:hover{background:var(--ink);color:#15151c}
+    section{padding:100px 0;position:relative}
+    .eyebrow{font-size:.74rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+
+    /* 3D canvas */
+    #scent3d{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .vign{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 35%,rgba(122,43,58,.16),transparent 55%),radial-gradient(circle at 50% 40%,transparent,rgba(8,8,11,.92) 80%)}
+    header,section,footer{position:relative;z-index:2}
+
+    /* reveal failsafe */
+    .js .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+    .js .reveal.in{opacity:1;transform:none}
+
+    /* header */
+    header{position:sticky;top:0;z-index:50;background:rgba(10,10,13,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+    .logo{font-family:var(--serif);font-size:1.7rem;font-weight:700;letter-spacing:.04em}
+    .logo span{color:var(--gold)}
+    .nav-links{display:flex;gap:30px;align-items:center}
+    .nav-links a{font-size:.76rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+    .nav-links a:hover{color:var(--ink)}
+    .nav-cta{border:1px solid var(--gold);color:var(--gold)!important;padding:9px 18px;border-radius:2px}
+    .nav-cta:hover{background:var(--gold);color:#1a140a!important}
+
+    /* hero */
+    .hero{min-height:94vh;display:flex;align-items:center;text-align:center}
+    .hero .eyebrow{display:block}
+    .hero h1{font-size:clamp(3.4rem,9vw,7rem);font-style:italic}
+    .hero h1 .blk{font-style:normal;display:block}
+    .hero p{font-size:1.16rem;color:var(--muted);max-width:560px;margin:20px auto 36px}
+    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .scrollcue{margin-top:42px;color:var(--muted);font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;animation:bob 2.2s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+    /* trio (what we do) */
+    .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .tcard{background:rgba(21,21,28,.7);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:6px;padding:38px 30px;text-align:center;transition:transform .25s,border-color .25s}
+    .tcard:hover{transform:translateY(-6px);border-color:rgba(201,168,90,.5)}
+    .tcard .ic{font-size:2.2rem;margin-bottom:14px}.tcard h3{font-size:1.7rem;margin-bottom:8px}.tcard p{color:var(--muted);font-size:.96rem}
+
+    /* shop heading + filter bar (visual, matches Shopify layout) */
+    .shop-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:10px}
+    .shop-head h2{font-size:clamp(2.6rem,6vw,4rem)}
+    .filterbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:24px 0 44px;font-size:.82rem;color:var(--muted);letter-spacing:.06em}
+    .filterbar .chip{display:inline-flex;gap:7px;align-items:center;margin-right:18px}
+    .count{color:var(--gold)}
+
+    /* product grid */
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .prod{background:rgba(21,21,28,.55);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:transform .28s,border-color .28s,box-shadow .28s}
+    .prod:hover{transform:translateY(-8px);border-color:rgba(201,168,90,.5);box-shadow:0 28px 64px rgba(201,168,90,.12)}
+    .prod .ph{aspect-ratio:1/1;position:relative;display:grid;place-items:center;overflow:hidden}
+    .prod .ph .bottle{font-size:3.4rem;filter:drop-shadow(0 8px 24px rgba(0,0,0,.5));transition:transform .5s}
+    .prod:hover .ph .bottle{transform:scale(1.12) rotate(-4deg)}
+    .prod .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 40%,rgba(255,255,255,.06))}
+    .prod .meta{padding:18px 18px 22px}
+    .prod h3{font-family:var(--sans);font-weight:500;font-size:.98rem;letter-spacing:.01em;margin-bottom:6px;color:var(--ink)}
+    .prod .price{color:var(--gold);font-size:.92rem;letter-spacing:.04em}
+    .prod .sold{position:absolute;top:12px;left:12px;background:rgba(10,10,13,.82);border:1px solid var(--line);color:var(--muted);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:2px}
+    /* varied luxe placeholder backgrounds per card */
+    .b1{background:radial-gradient(circle at 50% 40%,#3a2630,#14101a)}
+    .b2{background:radial-gradient(circle at 50% 40%,#2a3340,#101620)}
+    .b3{background:radial-gradient(circle at 50% 40%,#3d2f1a,#161109)}
+    .b4{background:radial-gradient(circle at 50% 40%,#5a1f2a,#1a0c10)}
+    .b5{background:radial-gradient(circle at 50% 40%,#1f3a34,#0c1714)}
+    .b6{background:radial-gradient(circle at 50% 40%,#2d2540,#120f1c)}
+
+    .ph-note{text-align:center;color:var(--muted);font-size:.8rem;margin-top:24px;opacity:.7}
+    .more{text-align:center;margin-top:46px}
+
+    /* story */
+    .story{background:var(--bg2)}
+    .story .inner{max-width:760px;margin:0 auto;text-align:center}
+    .story h2{font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:18px}
+    .story p{color:#cfc8d4;font-size:1.12rem;margin-bottom:16px}
+
+    /* cta */
+    .cta{text-align:center}
+    .cta .box{border:1px solid var(--line);border-radius:18px;padding:74px 28px;max-width:820px;margin:0 auto;background:linear-gradient(135deg,rgba(201,168,90,.1),rgba(122,43,58,.08))}
+    .cta h2{font-size:clamp(2.6rem,6vw,4rem)}.cta p{color:var(--muted);max-width:480px;margin:12px auto 28px}
+
+    footer{border-top:1px solid var(--line);padding:44px 0 34px;color:var(--muted);font-size:.85rem;text-align:center}
+    footer a{color:var(--gold)}
+    .foot-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+
+    @media(max-width:980px){.grid{grid-template-columns:1fr 1fr}.trio{grid-template-columns:1fr}}
+    @media(max-width:560px){.grid{grid-template-columns:1fr 1fr}.nav-links a:not(.nav-cta){display:none}}
+  </style>
+</head>
+<body>
+  <canvas id="scent3d"></canvas><div class="vign"></div>
+
+  <header><div class="wrap nav">
+    <a href="#" class="logo">SCENT<span>SNOBS</span></a>
+    <nav class="nav-links">
+      <a href="#shop">Shop</a><a href="#story">Our Story</a><a href="#cta">Contact</a>
+      <a href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener" class="nav-cta">Shop All</a>
+    </nav>
+  </div></header>
+
+  <!-- HERO -->
+  <section class="hero"><div class="wrap">
+    <span class="eyebrow">Luxury · Niche · Hand-Decanted</span>
+    <h1 class="gold">Scent is<span class="blk" style="color:var(--ink)">Identity.</span></h1>
+    <p>Discover your signature scent without the full-bottle commitment. Hand-decanted luxury &amp; niche fragrances, artisan candles, and premium beard oils.</p>
+    <div class="hero-actions">
+      <a href="#shop" class="btn btn-gold">Explore the Collection</a>
+      <a href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener" class="btn btn-ghost">Shop Now</a>
+    </div>
+    <div class="scrollcue">Scroll ↓</div>
+  </div></section>
+
+  <!-- TRIO -->
+  <section><div class="wrap">
+    <div class="trio">
+      <div class="tcard reveal"><div class="ic">🧴</div><h3>Decants</h3><p>Authentic samples from niche &amp; designer houses — luxury without the full-bottle price.</p></div>
+      <div class="tcard reveal"><div class="ic">🕯️</div><h3>Candles</h3><p>Artisan, hand-poured candles with distinctive, refined scent profiles.</p></div>
+      <div class="tcard reveal"><div class="ic">🧔</div><h3>Beard Oils</h3><p>Blended with skin-loving ingredients and unforgettable signature scents.</p></div>
+    </div>
+  </div></section>
+
+  <!-- SHOP -->
+  <section id="shop"><div class="wrap">
+    <div class="shop-head reveal"><div><div class="eyebrow">The Collection</div><h2>Products</h2></div>
+      <div style="color:var(--muted);font-size:.82rem">Showing a preview · <span class="count">123 products</span> in store</div></div>
+    <div class="filterbar reveal">
+      <div><span class="chip">Filter: Availability ▾</span><span class="chip">Price ▾</span></div>
+      <div>Sort by: Alphabetically, A–Z ▾ &nbsp;·&nbsp; <span class="count">123 products</span></div>
+    </div>
+    <div class="grid">
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="bottle">🧴</span></div><div class="meta"><h3>Argos Adonis Awakens decants</h3><div class="price">From $6.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="bottle">🧴</span></div><div class="meta"><h3>Azzaro The Most Wanted EDP decant</h3><div class="price">From $3.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="bottle">🧴</span></div><div class="meta"><h3>Azzaro Wanted by Night decant</h3><div class="price">From $3.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b4"><span class="bottle">🧴</span></div><div class="meta"><h3>Baccarat Rouge 540 Ext. decant</h3><div class="price">From $12.99 USD</div></div></a>
+
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b4"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Boadicea The Victorious 1907 Decant</h3><div class="price">From $27.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b2"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Boadicea The Victorious Blue Sapphire decants</h3><div class="price">From $25.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Boadicea The Victorious Hanuman Decants</h3><div class="price">From $29.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b6"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Bleecker Street Decants</h3><div class="price">From $6.00 USD</div></div></a>
+
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b2"><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 "Scent of Peace for Him" Decants</h3><div class="price">From $5.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b5"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Beekman Place Decants</h3><div class="price">From $5.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b1"><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Chelsea Nights Decants</h3><div class="price">From $5.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Dubai Amber Decants</h3><div class="price">From $5.99 USD</div></div></a>
+
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b6"><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Lafayette St decants</h3><div class="price">From $7.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b2"><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 New York Nights Decants</h3><div class="price">From $5.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b2"><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Nomad Decants</h3><div class="price">From $5.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="bottle">🧴</span></div><div class="meta"><h3>Bond No 9 Sutton Place Decants</h3><div class="price">From $5.99 USD</div></div></a>
+
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b6"><span class="bottle">🧴</span></div><div class="meta"><h3>Dior Sauvage Elixir decant</h3><div class="price">From $2.50 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b2"><span class="bottle">🧴</span></div><div class="meta"><h3>Ex Nihilo – Blue Talisman Decants</h3><div class="price">From $7.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="bottle">🧴</span></div><div class="meta"><h3>Ex Nihilo – Speed Legends Decants</h3><div class="price">From $7.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b3"><span class="bottle">🧴</span></div><div class="meta"><h3>Floraïku – "I Am Coming Home" decant</h3><div class="price">From $5.99 USD</div></div></a>
+
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b1"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Floraïku – One Umbrella for Two decants</h3><div class="price">From $5.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b5"><span class="bottle">🧴</span></div><div class="meta"><h3>Gucci Guilty Black decant</h3><div class="price">From $4.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b4"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Guerlain – Angélique Noire EDP decant</h3><div class="price">From $12.99 USD</div></div></a>
+      <a class="prod reveal" href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener"><div class="ph b2"><span class="sold">Sold out</span><span class="bottle">🧴</span></div><div class="meta"><h3>Guerlain – Frenchy Lavande decant</h3><div class="price">From $3.99 USD</div></div></a>
+    </div>
+    <p class="ph-note">Preview shows 24 of 123 fragrances · bottle photos to be added · prices &amp; availability are live from the store</p>
+    <div class="more"><a href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener" class="btn btn-gold">View All 123 Fragrances →</a></div>
+  </div></section>
+
+  <!-- STORY -->
+  <section id="story" class="story"><div class="wrap"><div class="inner reveal">
+    <div class="eyebrow">Our Story</div>
+    <h2>Fragrance as <span class="gold">Experience</span></h2>
+    <p>Scentsnobs was born from a deep appreciation for fragrance — evolving from a personal obsession with rare colognes into a curated offering of scent experiences.</p>
+    <p>We hand-decant luxury and niche fragrances so you can explore, discover, and build a refined collection on your terms. Taste over trends, always.</p>
+  </div></div></section>
+
+  <!-- CTA -->
+  <section id="cta" class="cta"><div class="wrap"><div class="box reveal">
+    <div class="eyebrow" style="display:block">Stay Scented</div>
+    <h2>Find Your <span class="gold">Signature.</span></h2>
+    <p>Browse the full collection and discover your next scent — shipped right to your door.</p>
+    <a href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener" class="btn btn-gold">Shop the Collection</a>
+  </div></div></section>
+
+  <footer><div class="wrap">
+    <div class="foot-links">
+      <a href="#shop">Shop</a><a href="#story">Our Story</a>
+      <a href="https://scentsnobs.com/collections/all" target="_blank" rel="noopener">Shop All</a>
+    </div>
+    <p>© <span id="yr"></span> Scentsnobs — Luxury fragrance decants, candles &amp; beard oils · <a href="https://scentsnobs.com" target="_blank" rel="noopener">scentsnobs.com</a></p>
+    <p style="margin-top:8px;opacity:.6;font-size:.8rem">Remastered concept by Jaurx Web Design</p>
+  </div></footer>
+
+  <script>
+    try{ document.documentElement.classList.add('js'); }catch(e){}
+    try{
+      document.getElementById('yr').textContent=new Date().getFullYear();
+      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+      document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*55)+'ms';io.observe(el)});
+    }catch(e){}
+
+    // ===== 3D floating perfume bottles that rotate as you scroll =====
+    try{ if(!window.THREE) throw 0;
+    (function(){
+      const cv=document.getElementById('scent3d');
+      const renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+      renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+      const scene=new THREE.Scene();
+      const cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);cam.position.z=10;
+
+      scene.add(new THREE.AmbientLight(0x4a3a28,1.0));
+      const key=new THREE.PointLight(0xffe6b0,2.4,60);key.position.set(6,8,10);scene.add(key);
+      const wine=new THREE.PointLight(0xb24a5e,1.7,60);wine.position.set(-8,-3,5);scene.add(wine);
+
+      const glassGold=new THREE.MeshStandardMaterial({color:0xc9a85a,metalness:1,roughness:.25,emissive:0x2a1e0a,transparent:true,opacity:.92});
+      const glassRose=new THREE.MeshStandardMaterial({color:0x8a2f43,metalness:.85,roughness:.3,emissive:0x250a12,transparent:true,opacity:.9});
+      const cap=new THREE.MeshStandardMaterial({color:0xe8d49a,metalness:1,roughness:.2});
+
+      function bottle(mat){
+        const g=new THREE.Group();
+        const body=new THREE.Mesh(new THREE.CylinderGeometry(.62,.62,1.5,40),mat);g.add(body);
+        const shoulder=new THREE.Mesh(new THREE.CylinderGeometry(.28,.62,.35,40),mat);shoulder.position.y=.92;g.add(shoulder);
+        const neck=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.3,24),mat);neck.position.y=1.22;g.add(neck);
+        const c=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,.34,24),cap);c.position.y=1.5;g.add(c);
+        return g;
+      }
+      const objs=[];
+      function place(mat,x,y,z,s){const b=bottle(mat);b.position.set(x,y,z);b.scale.setScalar(s);
+        b.userData={ry:(Math.random()-.5)*.005,fy:Math.random()*6.28,base:y};scene.add(b);objs.push(b);return b}
+      place(glassGold,-4.6,1.2,-1,1.05);
+      place(glassRose,4.7,-1.2,-2,1.15);
+      place(glassGold,3.4,2.4,-3,.7);
+      place(glassRose,-3.8,-2.2,-2,.8);
+      place(glassGold,0,0,-4,.95);
+
+      let target=0,cur=0,tmx=0,mx=0;
+      function onScroll(){const max=(document.body.scrollHeight-innerHeight)||1;target=(window.scrollY/max)*Math.PI*3}
+      addEventListener('scroll',onScroll,{passive:true});onScroll();
+      addEventListener('pointermove',e=>{tmx=e.clientX/innerWidth-.5},{passive:true});
+      function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
+      addEventListener('resize',resize);resize();
+
+      const clock=new THREE.Clock();
+      (function render(){
+        const t=clock.getElapsedTime();cur+=(target-cur)*.07;mx+=(tmx-mx)*.05;
+        objs.forEach(o=>{o.rotation.y=cur+t*.15+o.userData.fy;o.position.y=o.userData.base+Math.sin(t*.7+o.userData.fy)*.35});
+        cam.position.x=mx*2.2;cam.lookAt(0,0,0);
+        renderer.render(scene,cam);requestAnimationFrame(render);
+      })();
+    })();
+    }catch(e){ var c=document.getElementById('scent3d'); if(c) c.style.display='none'; }
+  </script>
+</body>
+</html>
