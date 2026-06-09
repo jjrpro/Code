@@ -66,6 +66,22 @@ CREATE TABLE IF NOT EXISTS settings (
   key TEXT PRIMARY KEY,
   value TEXT
 );
+
+-- One row per day you complete the daily credit check-in. Stores a snapshot
+-- (so we can trend utilization/score from YOUR daily inputs) plus the raw
+-- answers for reference.
+CREATE TABLE IF NOT EXISTS checkins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  date TEXT NOT NULL UNIQUE,            -- YYYY-MM-DD (one per day)
+  agg_utilization REAL,                 -- aggregate current utilization at check-in
+  reported_utilization REAL,
+  composite INTEGER,                    -- health indicator at check-in
+  score INTEGER,                        -- latest logged score at check-in (if any)
+  focus TEXT,                           -- today's #1 action title
+  answers TEXT,                         -- raw survey answers (JSON)
+  note TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 `);
 
 module.exports = db;

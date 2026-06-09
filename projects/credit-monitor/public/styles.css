@@ -126,3 +126,18 @@ details > summary { cursor: pointer; color: var(--accent); font-size: 13px; marg
 .muted { color: var(--muted); }
 svg text { fill: var(--muted); font-size: 10px; }
 .mapgrid { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin: 10px 0; }
+
+/* Daily check-in */
+.checkin { border-color: #2f4a63; background: linear-gradient(180deg, #182433, #1a212b); }
+.streak { font-weight: 700; font-size: 13px; color: var(--yellow); }
+.checkin-cards { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 10px; margin: 12px 0; }
+.ci-card { background: var(--panel-2); border:1px solid var(--line); border-radius:9px; padding:10px 12px; }
+.ci-card .ci-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.ci-card label { margin:0; }
+.ci-card input[type=number] { width: 100%; }
+.ci-extra { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:10px; margin: 8px 0; }
+.focus-box { background: rgba(231,76,60,.10); border:1px solid rgba(231,76,60,.35); border-radius:9px; padding:12px 14px; margin-top:12px; }
+.focus-box .flabel { font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--red); font-weight:700; }
+.done-box { background: rgba(46,204,113,.10); border:1px solid rgba(46,204,113,.35); border-radius:9px; padding:12px 14px; }
+.chk { display:flex; align-items:center; gap:8px; margin:6px 0; font-size:13px; }
+.edit-btn { background:transparent; color:var(--accent); border:1px solid var(--line); padding:3px 8px; }

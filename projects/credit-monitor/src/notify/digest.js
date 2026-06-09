@@ -4,6 +4,7 @@
 // Produces both plain text (console / email fallback) and HTML (email).
 
 const dashboard = require('../logic/dashboard');
+const survey = require('../logic/daily-survey');
 
 function money(n) {
   return `$${Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -14,6 +15,9 @@ function build(options = {}) {
   const agg = data.aggregate;
   const topRecs = data.recommendations.slice(0, 8);
   const upcoming = data.calendar.filter((e) => e.daysAway >= 0 && e.daysAway <= 14);
+  const today = new Date().toISOString().slice(0, 10);
+  const checkedInToday = !!survey.getCheckin(today);
+  const streak = survey.streak();
 
   const subject = `Credit Monitor — ${todayStr()} — util ${agg.currentPct}% (${agg.currentColor})${
     data.scoreLatest ? `, score ${data.scoreLatest.score}` : ''
@@ -31,6 +35,12 @@ function build(options = {}) {
     lines.push(`Latest logged score: ${data.scoreLatest.score} (${data.scoreLatest.source || 'n/a'}, ${data.scoreLatest.date})`);
   }
   lines.push(`Health indicator: ${data.factors.composite}/100 (estimate, not a FICO score)`);
+  lines.push('');
+  lines.push(
+    checkedInToday
+      ? `✓ Daily check-in done — ${streak}-day streak. Nice.`
+      : `👉 You haven't done today's credit check-in yet (streak: ${streak}). Open the app and update your balances.`
+  );
   lines.push('');
 
   if (upcoming.length) {
@@ -57,13 +67,16 @@ function build(options = {}) {
   const text = lines.join('\n');
 
   // ---- html ----
-  const html = renderHtml({ data, agg, topRecs, upcoming });
+  const html = renderHtml({ data, agg, topRecs, upcoming, checkedInToday, streak });
 
   return { subject, text, html, data };
 }
 
-function renderHtml({ data, agg, topRecs, upcoming }) {
+function renderHtml({ data, agg, topRecs, upcoming, checkedInToday, streak }) {
   const colorHex = { green: '#1a9850', yellow: '#f0a202', red: '#d7301f' };
+  const checkinBanner = checkedInToday
+    ? `<div style="background:#e8f6ee;border:1px solid #bfe6cd;border-radius:8px;padding:10px 14px;margin:12px 0;color:#1a7d44">✓ Daily check-in done — <strong>${streak}-day streak</strong>.</div>`
+    : `<div style="background:#fdecea;border:1px solid #f6c9c2;border-radius:8px;padding:10px 14px;margin:12px 0;color:#b3402f">👉 You haven't done today's credit check-in yet (streak: ${streak}). Open the app and update your balances.</div>`;
   const recHtml = topRecs.length
     ? topRecs
         .map(
@@ -85,6 +98,7 @@ function renderHtml({ data, agg, topRecs, upcoming }) {
   return `<!doctype html><html><body style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#1a1a1a;max-width:680px;margin:auto">
   <h2 style="margin-bottom:4px">Credit Monitor — ${todayStr()}</h2>
   <p style="margin-top:0;color:#666">Local-first credit health digest</p>
+  ${checkinBanner}
   <div style="background:#f6f7f9;border-radius:10px;padding:16px;margin:12px 0">
     <div style="font-size:15px">Overall utilization (current):
       <strong style="color:${colorHex[agg.currentColor]}">${agg.currentPct}%</strong></div>

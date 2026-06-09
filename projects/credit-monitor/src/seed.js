@@ -53,7 +53,9 @@ function isEmpty() {
 }
 
 function wipe() {
-  db.exec('DELETE FROM payments; DELETE FROM cards; DELETE FROM scores; DELETE FROM inquiries;');
+  db.exec('DELETE FROM payments; DELETE FROM cards; DELETE FROM scores; DELETE FROM inquiries; DELETE FROM checkins;');
+  // Reset auto-increment counters so a fresh start begins at id 1.
+  db.exec("DELETE FROM sqlite_sequence WHERE name IN ('cards','scores','inquiries','payments','checkins');");
 }
 
 function load() {

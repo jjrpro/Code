@@ -8,9 +8,11 @@ const scores = require('../models/scores');
 const inquiries = require('../models/inquiries');
 const payments = require('../models/payments');
 const dashboard = require('../logic/dashboard');
+const survey = require('../logic/daily-survey');
 const csv = require('../logic/csv');
 const plaid = require('../plaid/plaid');
 const notify = require('../notify');
+const seed = require('../seed');
 
 function asBool(v) {
   return v === true || /^(1|true|yes|on)$/i.test(String(v));
@@ -87,6 +89,28 @@ router.post('/import/preview', wrap((req, res) => {
 router.post('/notify/digest', wrap(async (req, res) => {
   const dryRun = asBool(req.query.dryRun || (req.body && req.body.dryRun));
   res.json(await notify.sendDigest({ dryRun }));
+}));
+
+// ── Daily check-in / survey ──
+router.get('/survey/today', wrap((req, res) => {
+  const options = {};
+  if (req.query.target) options.targetPct = Number(req.query.target);
+  res.json(survey.today(options));
+}));
+router.post('/survey', wrap((req, res) => res.json(survey.submit(req.body || {}))));
+router.get('/survey/progress', wrap((req, res) => res.json(survey.progress())));
+
+// ── Admin (local, destructive) ──
+// Clear ALL data so you can enter your own cards (replaces the sample data).
+router.post('/admin/reset', wrap((req, res) => {
+  seed.wipe();
+  res.json({ ok: true, cleared: true });
+}));
+// Reload the bundled sample data.
+router.post('/admin/load-sample', wrap((req, res) => {
+  seed.wipe();
+  seed.load();
+  res.json({ ok: true, sample: true });
 }));
 
 // ── Plaid (stub) ──

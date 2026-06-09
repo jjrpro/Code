@@ -26,6 +26,15 @@
   </header>
 
   <div class="wrap">
+    <!-- Daily check-in -->
+    <div class="panel checkin" id="checkinPanel" style="margin-bottom:16px">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">📋 Daily credit check-in</h2>
+        <div id="streakBadge" class="streak"></div>
+      </div>
+      <div id="checkinBody"></div>
+    </div>
+
     <!-- Top summary row -->
     <div class="grid cols-2" style="margin-bottom:16px">
       <div class="panel">
@@ -88,7 +97,13 @@
 
     <!-- Cards -->
     <div class="panel" style="margin-bottom:16px">
-      <h2>Cards</h2>
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0 0 14px">Cards</h2>
+        <div class="row" style="gap:8px">
+          <button id="loadSample" class="ghost" title="Reload the demo data">Load sample data</button>
+          <button id="clearData" class="ghost" title="Delete everything so you can enter your own cards" style="color:var(--red)">Start fresh (clear all)</button>
+        </div>
+      </div>
       <table id="cardsTable">
         <thead>
           <tr>
@@ -98,10 +113,13 @@
         </thead>
         <tbody id="cardsBody"></tbody>
       </table>
-      <details>
-        <summary>+ Add a card</summary>
+      <details id="cardFormDetails">
+        <summary id="cardFormSummary">+ Add a card</summary>
         <div id="addCard" class="formgrid" style="margin-top:12px"></div>
-        <button id="saveCard" style="margin-top:10px">Add card</button>
+        <div class="row" style="margin-top:10px">
+          <button id="saveCard">Add card</button>
+          <button id="cancelEdit" class="ghost" style="display:none">Cancel edit</button>
+        </div>
       </details>
     </div>
 

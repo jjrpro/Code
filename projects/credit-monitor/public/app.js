@@ -46,6 +46,128 @@ async function load() {
   renderPaydown(DASH.paydownPriority);
   renderCards(DASH.cards);
   fillCardSelect(DASH.cards);
+  await loadSurvey();
+}
+
+// ── Daily check-in ──────────────────────────────────────────────────────
+async function loadSurvey() {
+  const target = Number($('#targetUtil').value) || 9;
+  const s = await api('GET', `/survey/today?target=${target}`);
+  $('#streakBadge').textContent = s.streak > 0 ? `🔥 ${s.streak}-day streak` : 'Start your streak today';
+  if (s.alreadyDone) renderCheckinDone(s);
+  else renderCheckinForm(s);
+}
+
+function focusHtml(focus, highCount) {
+  if (!focus) return '<div class="done-box">✓ No urgent actions right now — nicely done.</div>';
+  return `<div class="focus-box">
+    <div class="flabel">Today's #1 move${highCount ? ` · ${highCount} high-impact item(s)` : ''}</div>
+    <div style="font-weight:600;margin:3px 0">${esc(focus.title)}</div>
+    <div class="detail" style="font-size:13px;color:#c4d0dd">${esc(focus.detail)}</div>
+  </div>`;
+}
+
+function renderCheckinDone(s) {
+  $('#checkinBody').innerHTML = `
+    <div class="done-box" style="margin:12px 0">✓ <strong>Checked in today.</strong> Snapshot saved — utilization ${s.summary.aggUtilization}%${s.summary.score ? `, score ${s.summary.score}` : ''}, health ${s.summary.composite}/100.</div>
+    ${focusHtml(s.focus, s.highCount)}
+    <div style="margin-top:14px"><div class="sub" style="margin-bottom:4px">Your utilization trend (from daily check-ins — lower is better)</div>${progressChart(s.progress)}</div>
+    <button id="redoCheckin" class="ghost" style="margin-top:12px">Update today's check-in</button>`;
+  $('#redoCheckin').addEventListener('click', () => renderCheckinForm(s));
+}
+
+function renderCheckinForm(s) {
+  const cardInputs = s.cards
+    .map(
+      (c) => `<div class="ci-card">
+        <div class="ci-top"><strong>${esc(c.nickname)}</strong>
+          <span class="pill ${c.utilization ? c.utilization.currentColor : ''}">${c.utilization ? c.utilization.currentPct + '%' : ''}</span></div>
+        <label>Today's balance ($)</label>
+        <input type="number" step="0.01" id="ci_bal_${c.id}" value="${c.current_balance}" />
+        <label class="chk" style="margin-top:6px"><input type="checkbox" id="ci_ap_${c.id}" ${c.autopay ? 'checked' : ''}/> autopay on</label>
+      </div>`
+    )
+    .join('');
+
+  $('#checkinBody').innerHTML = `
+    <p class="sub" style="margin-top:6px">Confirm each balance (pre-filled with what's on file), note anything new, and submit. Takes ~30 seconds.</p>
+    <div class="checkin-cards">${cardInputs || '<div class="sub">No cards yet — add your cards below first.</div>'}</div>
+
+    <div class="ci-extra">
+      <div class="field"><label>Log a payment you made (optional)</label>
+        <select id="ci_pay_card"></select></div>
+      <div class="field"><label>Payment amount ($)</label><input type="number" step="0.01" id="ci_pay_amt" placeholder="0.00" /></div>
+      <div class="field"><label>On time?</label><select id="ci_pay_ontime"><option value="1">Yes</option><option value="0">No (late)</option></select></div>
+    </div>
+
+    <label class="chk"><input type="checkbox" id="ci_inq_on" /> New hard inquiry today?</label>
+    <div id="ci_inq_fields" class="ci-extra" style="display:none">
+      <div class="field"><label>Reason</label><input id="ci_inq_reason" placeholder="Auto loan" /></div>
+      <div class="field"><label>Bureau</label><input id="ci_inq_bureau" placeholder="Experian" /></div>
+    </div>
+
+    <label class="chk"><input type="checkbox" id="ci_score_on" /> New credit score to log?</label>
+    <div id="ci_score_fields" class="ci-extra" style="display:none">
+      <div class="field"><label>Score</label><input type="number" id="ci_score_val" min="300" max="850" /></div>
+      <div class="field"><label>Source</label><input id="ci_score_src" placeholder="Credit Karma / Experian" /></div>
+    </div>
+
+    <label class="chk"><input type="checkbox" id="ci_azeo" /> Planning a credit application or score pull soon? (turns on AZEO guidance)</label>
+    <div class="field" style="margin-top:8px"><label>Notes (optional)</label><input id="ci_note" placeholder="Anything you want to remember about today" /></div>
+
+    <button id="ci_submit" style="margin-top:12px">✓ Complete today's check-in</button>`;
+
+  $('#ci_pay_card').innerHTML = '<option value="">(which card?)</option>' + s.cards.map((c) => `<option value="${c.id}">${esc(c.nickname)}</option>`).join('');
+  $('#ci_inq_on').addEventListener('change', (e) => ($('#ci_inq_fields').style.display = e.target.checked ? 'grid' : 'none'));
+  $('#ci_score_on').addEventListener('change', (e) => ($('#ci_score_fields').style.display = e.target.checked ? 'grid' : 'none'));
+  $('#ci_submit').addEventListener('click', () => submitSurvey(s).catch((e) => toast(e.message)));
+}
+
+async function submitSurvey(s) {
+  const balances = {};
+  const autopay = {};
+  s.cards.forEach((c) => {
+    const v = $('#ci_bal_' + c.id).value;
+    if (v !== '') balances[c.id] = Number(v);
+    autopay[c.id] = $('#ci_ap_' + c.id).checked ? 1 : 0;
+  });
+  const payments = [];
+  if ($('#ci_pay_amt').value) {
+    payments.push({ card_id: $('#ci_pay_card').value || null, amount: Number($('#ci_pay_amt').value), on_time: Number($('#ci_pay_ontime').value) });
+  }
+  const answers = {
+    balances,
+    autopay,
+    payments,
+    inquiry: $('#ci_inq_on').checked ? { reason: $('#ci_inq_reason').value, bureau: $('#ci_inq_bureau').value } : null,
+    score: $('#ci_score_on').checked && $('#ci_score_val').value ? { score: Number($('#ci_score_val').value), source: $('#ci_score_src').value } : null,
+    upcomingApplication: $('#ci_azeo').checked,
+    note: $('#ci_note').value,
+  };
+  const res = await api('POST', '/survey', answers);
+  toast(`Check-in saved — ${res.streak}-day streak. Today's move: ${res.focus ? res.focus.title : 'all clear'}`);
+  if (answers.upcomingApplication) $('#azeo').checked = true;
+  await load();
+}
+
+// Utilization trend from check-ins (lower is better).
+function progressChart(points) {
+  if (!points || points.length < 1) return '<div class="sub">Check in daily to build your trend.</div>';
+  const pts = points.map((p) => ({ x: p.date, y: p.agg_utilization }));
+  if (pts.length === 1) return `<div class="sub">First snapshot saved: ${pts[0].y}% on ${pts[0].x}. Come back tomorrow.</div>`;
+  const W = 320, H = 80, pad = 22;
+  const ys = pts.map((p) => p.y);
+  const min = Math.min(...ys, 0), max = Math.max(...ys, 30) + 5;
+  const sx = (i) => pad + (i / Math.max(1, pts.length - 1)) * (W - pad * 2);
+  const sy = (y) => H - pad - ((y - min) / Math.max(1, max - min)) * (H - pad * 2);
+  const path = pts.map((p, i) => `${i ? 'L' : 'M'}${sx(i).toFixed(1)},${sy(p.y).toFixed(1)}`).join(' ');
+  const dots = pts.map((p, i) => `<circle cx="${sx(i).toFixed(1)}" cy="${sy(p.y).toFixed(1)}" r="2.5" fill="#2ecc71"/>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none">
+    <line x1="${pad}" y1="${sy(30).toFixed(1)}" x2="${W - pad}" y2="${sy(30).toFixed(1)}" stroke="#e74c3c" stroke-dasharray="3,3" opacity="0.5"/>
+    <path d="${path}" fill="none" stroke="#2ecc71" stroke-width="2"/>${dots}
+    <text x="${pad}" y="12">${esc(pts[0].x)}</text>
+    <text x="${W - pad}" y="12" text-anchor="end">${pts[pts.length - 1].y}%</text>
+  </svg>`;
 }
 
 function renderAggregate(a) {
@@ -159,9 +281,14 @@ function renderCards(cards) {
       <td>${c.timing.dueDate ? `${c.timing.dueDate}<br><span class="sub">${c.timing.daysToDue}d</span>` : '—'}</td>
       <td>${c.apr}%</td>
       <td><span class="pill ${c.autopay ? 'on' : 'off'}">${c.autopay ? 'on' : 'off'}</span></td>
-      <td class="right"><button class="danger" data-del="${c.id}">✕</button></td>`;
+      <td class="right" style="white-space:nowrap">
+        <button class="edit-btn" data-edit="${c.id}">✎</button>
+        <button class="danger" data-del="${c.id}">✕</button></td>`;
     body.appendChild(tr);
   });
+  body.querySelectorAll('[data-edit]').forEach((b) =>
+    b.addEventListener('click', () => editCard(cards.find((c) => c.id == b.dataset.edit)))
+  );
   body.querySelectorAll('[data-del]').forEach((b) =>
     b.addEventListener('click', async () => {
       if (!confirm('Delete this card and its payment history?')) return;
@@ -170,6 +297,27 @@ function renderCards(cards) {
       load();
     })
   );
+}
+
+let EDIT_ID = null;
+function editCard(c) {
+  if (!c) return;
+  EDIT_ID = c.id;
+  CARD_FIELDS.forEach(([k]) => { const e = $('#nc_' + k); if (e) e.value = c[k] != null ? c[k] : ''; });
+  $('#nc_autopay').value = String(c.autopay ? 1 : 0);
+  $('#cardFormSummary').textContent = `Editing: ${c.nickname}`;
+  $('#cardFormDetails').open = true;
+  $('#saveCard').textContent = 'Save changes';
+  $('#cancelEdit').style.display = 'inline-block';
+  $('#cardFormDetails').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function resetCardForm() {
+  EDIT_ID = null;
+  CARD_FIELDS.forEach(([k]) => { const e = $('#nc_' + k); if (e) e.value = ''; });
+  $('#nc_autopay').value = '1';
+  $('#cardFormSummary').textContent = '+ Add a card';
+  $('#saveCard').textContent = 'Add card';
+  $('#cancelEdit').style.display = 'none';
 }
 
 function fillCardSelect(cards) {
@@ -206,10 +354,16 @@ async function saveCard() {
     if (v !== '') body[k] = type === 'number' ? Number(v) : v;
   });
   body.autopay = Number($('#nc_autopay').value);
+  if (EDIT_ID) {
+    await api('PUT', '/cards/' + EDIT_ID, body);
+    toast('Card updated');
+    resetCardForm();
+    return load();
+  }
   if (!body.nickname) return toast('Nickname is required');
   await api('POST', '/cards', body);
   toast('Card added');
-  buildAddCard();
+  resetCardForm();
   load();
 }
 
@@ -266,6 +420,20 @@ function wire() {
   $('#targetUtil').addEventListener('change', load);
   $('#azeo').addEventListener('change', load);
   $('#saveCard').addEventListener('click', () => saveCard().catch((e) => toast(e.message)));
+  $('#cancelEdit').addEventListener('click', resetCardForm);
+  $('#clearData').addEventListener('click', async () => {
+    if (!confirm('Delete ALL cards, scores, inquiries, payments and check-ins? This clears the sample data so you can enter your own. This cannot be undone.')) return;
+    await api('POST', '/admin/reset');
+    toast('Cleared. Add your real cards below.');
+    resetCardForm();
+    load();
+  });
+  $('#loadSample').addEventListener('click', async () => {
+    if (!confirm('Replace current data with the demo sample data?')) return;
+    await api('POST', '/admin/load-sample');
+    toast('Sample data loaded');
+    load();
+  });
   $('#sendDigest').addEventListener('click', async () => {
     try { const r = await api('POST', '/notify/digest'); toast('Digest sent. ' + (r.channels.email?.sent ? 'Email OK.' : 'Email off — printed to server console.')); }
     catch (e) { toast(e.message); }

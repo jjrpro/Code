@@ -106,6 +106,15 @@ fully offline). Single command: `npm install && npm start` → http://127.0.0.1:
   `.env.example`, sample CSVs in `sample-data/`.
 - **Note for JR (non-dev):** data stays on his Mac; server binds to localhost.
   Email digest is off until he fills SMTP in `.env` (Gmail = App Password).
+- **2026-06-09 update — daily check-in + personalization:** JR asked to customize
+  it to him (enter his cards, daily survey on his credit). Added a **Daily
+  Check-In** panel (confirm balances, log payments/inquiries/score, AZEO flag →
+  today's #1 move + streak + utilization trend from his own inputs), full card
+  **editing**, a **Start fresh (clear all)** button to drop the sample data, and a
+  check-in-aware daily reminder. JR chose to enter cards **in-app** (most private
+  — nothing committed/synced). New `checkins` table + `src/logic/daily-survey.js`
+  + `/api/survey/*` + `/api/admin/*`. Verified end-to-end. Deliverable:
+  `projects/credit-monitor/2026-06-09-daily-checkin-and-personalization.md`.
 
 ---
 

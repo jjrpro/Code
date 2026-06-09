@@ -116,6 +116,26 @@ data/                  SQLite DB + .keyfile (gitignored)
 - **FICO factor breakdown** using real FICO weighting, showing where you're
   strong/weak based on your data.
 
+### Daily check-in (the "daily survey")
+A prominent **Daily Check-In** panel at the top of the dashboard. Once a day you:
+- confirm/adjust each card's balance (pre-filled with what's on file) and autopay,
+- log any payment you made, a new hard inquiry, or a new credit score,
+- flag if you're about to apply for credit (turns on AZEO guidance).
+
+On submit it applies the updates, snapshots your utilization/score, shows
+**today's #1 move**, tracks a **streak**, and builds a **utilization trend from
+your own daily inputs**. The daily reminder (email/desktop, via the scheduler)
+nudges you if you haven't checked in and carries today's top action.
+
+### Make it yours (enter your real cards)
+The app ships with sample data so it looks real immediately. To switch to your
+own cards, privately and locally:
+1. Click **Start fresh (clear all)** in the Cards panel to wipe the sample data.
+2. Add each of your cards with **+ Add a card** (issuer, nickname, limit,
+   balance, statement closing day, due day, APR, autopay…). Edit any card later
+   with the **✎** button.
+3. Do your first **Daily Check-In**. That's it — nothing ever leaves your Mac.
+
 ### Statement-close timing logic
 The most actionable lever in the app: it warns you when a card's balance is
 high and its statement closes soon, and tells you **exactly how much to pay
