@@ -141,3 +141,12 @@ svg text { fill: var(--muted); font-size: 10px; }
 .done-box { background: rgba(46,204,113,.10); border:1px solid rgba(46,204,113,.35); border-radius:9px; padding:12px 14px; }
 .chk { display:flex; align-items:center; gap:8px; margin:6px 0; font-size:13px; }
 .edit-btn { background:transparent; color:var(--accent); border:1px solid var(--line); padding:3px 8px; }
+
+/* AI screenshot import review */
+.scan-review { background: rgba(74,163,255,.07); border:1px solid rgba(74,163,255,.30); border-radius:9px; padding:12px 14px; margin:12px 0 6px; }
+.scan-scroll { overflow-x:auto; }
+.scan-table { width:100%; border-collapse:collapse; font-size:12px; }
+.scan-table th { text-align:left; color:var(--muted); font-weight:600; padding:4px 6px; white-space:nowrap; }
+.scan-table td { padding:3px 6px; }
+.scan-table input[type="text"], .scan-table input:not([type]) { width:96px; padding:5px 6px; font-size:12px; }
+.scan-table input[id$="_issuer"], .scan-table input[id$="_nickname"] { width:130px; }

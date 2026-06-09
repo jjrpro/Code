@@ -115,6 +115,20 @@ fully offline). Single command: `npm install && npm start` → http://127.0.0.1:
   — nothing committed/synced). New `checkins` table + `src/logic/daily-survey.js`
   + `/api/survey/*` + `/api/admin/*`. Verified end-to-end. Deliverable:
   `projects/credit-monitor/2026-06-09-daily-checkin-and-personalization.md`.
+- **2026-06-09 update — cloud hosting + AI screenshot import:** JR chose (1)
+  cloud-host it always-on and (2) screenshot import in the app. Added: **password
+  gate** (`src/auth.js`, signed cookie; server refuses to bind non-localhost
+  without `CM_PASSWORD`), **PWA** (manifest + service worker + generated icons →
+  installable, "Add to Home Screen", stays signed in), **AI screenshot import**
+  (`src/logic/screenshot-import.js`, `@anthropic-ai/sdk` vision + strict JSON
+  schema + prompt caching; **📷 Scan screenshot** button → review table → save;
+  matches last-4/nickname to update vs. add), and **deploy kit** (`Dockerfile`,
+  `render.yaml`, `DEPLOY.md` — Render Starter ~$7/mo + 1 GB disk at `/var/data`).
+  New env: `CM_PASSWORD`, `CM_SESSION_SECRET`, `CM_ANTHROPIC_API_KEY`,
+  `CM_VISION_MODEL` (default `claude-opus-4-8`), `CM_DATA_DIR`. All paths verified
+  offline; live vision call needs JR's API key on the host. **JR next step:**
+  follow `DEPLOY.md`. Deliverable:
+  `projects/credit-monitor/2026-06-09-cloud-hosting-and-ai-screenshot-import.md`.
 
 ---
 

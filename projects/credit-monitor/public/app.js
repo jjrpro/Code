@@ -413,6 +413,122 @@ async function runImport() {
   load();
 }
 
+// ── Screenshot import (AI) ──────────────────────────────────────────────
+const SCAN_FIELDS = [
+  ['issuer', 'Issuer'], ['nickname', 'Nickname'], ['last4', 'Last 4'],
+  ['credit_limit', 'Limit'], ['current_balance', 'Balance'], ['statement_balance', 'Stmt bal'],
+  ['closing_day', 'Closes'], ['due_day', 'Due'], ['minimum_payment', 'Min pmt'], ['apr', 'APR %'],
+];
+let SCAN = [];
+
+function fileToDataURL(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+async function handleScanFile(e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  const review = $('#scanReview');
+  review.style.display = 'block';
+  review.innerHTML = '<div class="sub">📷 Reading your screenshot with AI… this takes a few seconds.</div>';
+  try {
+    const dataURL = await fileToDataURL(file);
+    const r = await api('POST', '/import/screenshot', { image: dataURL });
+    SCAN = r.accounts || [];
+    renderScanReview();
+  } catch (err) {
+    review.innerHTML = '<div class="sub" style="color:var(--red)">' + esc(err.message) + '</div>'
+      + '<div style="margin-top:8px"><button class="ghost" onclick="document.getElementById(\'scanReview\').style.display=\'none\'">Close</button></div>';
+  }
+}
+
+function renderScanReview() {
+  const review = $('#scanReview');
+  if (!SCAN.length) {
+    review.innerHTML = '<div class="sub">No accounts detected. Try a clearer, tighter screenshot of just the account list.</div>'
+      + '<div style="margin-top:8px"><button class="ghost" id="scanClose">Close</button></div>';
+    $('#scanClose').addEventListener('click', () => (review.style.display = 'none'));
+    return;
+  }
+  let html = '<div class="row" style="justify-content:space-between; margin-bottom:8px">'
+    + '<strong>Found ' + SCAN.length + ' account(s) — review &amp; edit, then save</strong>'
+    + '<button class="ghost" id="scanClose">Cancel</button></div>'
+    + '<div class="scan-scroll"><table class="scan-table"><thead><tr><th></th>'
+    + SCAN_FIELDS.map(([, label]) => '<th>' + label + '</th>').join('') + '</tr></thead><tbody>';
+  SCAN.forEach((acc, i) => {
+    html += '<tr><td><input type="checkbox" id="scan_use_' + i + '" checked /></td>'
+      + SCAN_FIELDS.map(([k]) => {
+        const v = acc[k] != null ? acc[k] : '';
+        return '<td><input id="scan_' + i + '_' + k + '" value="' + esc(v) + '" /></td>';
+      }).join('') + '</tr>';
+  });
+  html += '</tbody></table></div>'
+    + '<div class="sub" style="margin:8px 0">Matches by last-4 or nickname update an existing card; the rest are added new.</div>'
+    + '<button id="scanSave">Save selected cards</button>';
+  review.innerHTML = html;
+  $('#scanClose').addEventListener('click', () => (review.style.display = 'none'));
+  $('#scanSave').addEventListener('click', () => saveScanned().catch((err) => toast(err.message)));
+}
+
+async function saveScanned() {
+  const existing = (DASH && DASH.cards) || [];
+  let created = 0, updated = 0;
+  for (let i = 0; i < SCAN.length; i++) {
+    if (!$('#scan_use_' + i).checked) continue;
+    const body = {};
+    SCAN_FIELDS.forEach(([k]) => {
+      const raw = $('#scan_' + i + '_' + k).value.trim();
+      if (raw === '') return;
+      if (['credit_limit', 'current_balance', 'statement_balance', 'minimum_payment', 'apr', 'closing_day', 'due_day'].includes(k)) {
+        const n = Number(raw.replace(/[$,%\s]/g, ''));
+        if (Number.isFinite(n)) body[k] = n;
+      } else {
+        body[k] = raw;
+      }
+    });
+    if (!body.nickname && !body.issuer) continue;
+    if (SCAN[i].autopay != null) body.autopay = SCAN[i].autopay;
+    // Match an existing card to update rather than duplicate.
+    const last4 = (body.last4 || '').replace(/\D/g, '').slice(-4);
+    const nick = (body.nickname || '').toLowerCase();
+    const match = existing.find((c) =>
+      (last4 && String(c.last4 || '').replace(/\D/g, '').slice(-4) === last4) ||
+      (nick && String(c.nickname || '').toLowerCase() === nick));
+    if (match) { await api('PUT', '/cards/' + match.id, body); updated++; }
+    else { await api('POST', '/cards', body); created++; }
+  }
+  $('#scanReview').style.display = 'none';
+  toast(`Saved ${created} new, ${updated} updated`);
+  load();
+}
+
+// ── Auth + PWA ──────────────────────────────────────────────────────────
+async function setupAuth() {
+  try {
+    const s = await api('GET', '/auth/status');
+    if (s.enabled) $('#logout').style.display = '';
+  } catch (_) { /* ignore */ }
+}
+
+async function setupScreenshot() {
+  try {
+    const s = await api('GET', '/import/screenshot/status');
+    if (!s.enabled) $('#scanShot').title = 'Set CM_ANTHROPIC_API_KEY on the server to enable AI screenshot import';
+  } catch (_) { /* ignore */ }
+}
+
+function registerSW() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+}
+
 // ── Wire everything up ──
 function wire() {
   buildAddCard();
@@ -459,6 +575,13 @@ function wire() {
   $('#imp_preview').addEventListener('click', () => previewCSV().catch((e) => toast(e.message)));
   $('#imp_run').addEventListener('click', () => runImport().catch((e) => toast(e.message)));
 
+  $('#scanShot').addEventListener('click', () => $('#scanFile').click());
+  $('#scanFile').addEventListener('change', (e) => handleScanFile(e));
+  $('#logout').addEventListener('click', async () => { await api('POST', '/logout'); window.location.href = '/login'; });
+
+  setupAuth();
+  setupScreenshot();
+  registerSW();
   load().catch((e) => toast('Load failed: ' + e.message));
 }
 

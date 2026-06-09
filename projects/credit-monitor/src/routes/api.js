@@ -10,9 +10,11 @@ const payments = require('../models/payments');
 const dashboard = require('../logic/dashboard');
 const survey = require('../logic/daily-survey');
 const csv = require('../logic/csv');
+const screenshot = require('../logic/screenshot-import');
 const plaid = require('../plaid/plaid');
 const notify = require('../notify');
 const seed = require('../seed');
+const auth = require('../auth');
 
 function asBool(v) {
   return v === true || /^(1|true|yes|on)$/i.test(String(v));
@@ -111,6 +113,36 @@ router.post('/admin/load-sample', wrap((req, res) => {
   seed.wipe();
   seed.load();
   res.json({ ok: true, sample: true });
+}));
+
+// ── Screenshot import (Claude vision) ──
+// body: { image: '<base64, optionally a data: URL>', mediaType?: 'image/png' }
+// Returns extracted accounts for the user to confirm before saving.
+router.post('/import/screenshot', wrap(async (req, res) => {
+  let { image, mediaType } = req.body || {};
+  if (!image) return res.status(400).json({ error: 'no image provided' });
+  // Accept a data: URL and split out the media type + base64 payload.
+  const m = /^data:(image\/[a-zA-Z+]+);base64,(.*)$/s.exec(image);
+  if (m) {
+    mediaType = mediaType || m[1];
+    image = m[2];
+  }
+  const result = await screenshot.extract(image, mediaType || 'image/png');
+  res.json(result);
+}));
+router.get('/import/screenshot/status', wrap((req, res) => res.json({ enabled: screenshot.isEnabled() })));
+
+// ── Auth ──
+router.get('/auth/status', wrap((req, res) => res.json({ enabled: auth.enabled(), authed: auth.isAuthed(req) })));
+router.post('/login', wrap((req, res) => {
+  if (!auth.enabled()) return res.json({ ok: true, authDisabled: true });
+  if (!auth.checkPassword((req.body || {}).password)) return res.status(401).json({ error: 'wrong password' });
+  auth.setSession(req, res);
+  res.json({ ok: true });
+}));
+router.post('/logout', wrap((req, res) => {
+  auth.clearSession(res);
+  res.json({ ok: true });
 }));
 
 // ── Plaid (stub) ──

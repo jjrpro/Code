@@ -1,0 +1,31 @@
+# Render Blueprint for Credit Monitor.
+# To use: copy this file to your repo root (Render auto-detects render.yaml there),
+# OR create the service manually and set Root Directory = projects/credit-monitor.
+# See DEPLOY.md for the click-by-click version.
+
+services:
+  - type: web
+    name: credit-monitor
+    runtime: docker
+    rootDir: projects/credit-monitor
+    dockerfilePath: ./Dockerfile
+    plan: starter            # $7/mo — required for a persistent disk
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: credit-data
+      mountPath: /var/data   # CM_DATA_DIR points here — your DB lives on the disk
+      sizeGB: 1
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: CM_DATA_DIR
+        value: /var/data
+      - key: NODE_ENV
+        value: production
+      - key: CM_PASSWORD          # set in the Render dashboard (Secret)
+        sync: false
+      - key: CM_ENCRYPTION_KEY    # set in the Render dashboard (Secret) — keep it stable!
+        sync: false
+      - key: CM_ANTHROPIC_API_KEY # set in the Render dashboard (Secret)
+        sync: false

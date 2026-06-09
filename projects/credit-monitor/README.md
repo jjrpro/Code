@@ -53,6 +53,38 @@ realistic sample data immediately. To start fresh with your own data, run
 
 ---
 
+## 📷 Screenshot import (AI)
+
+Instead of typing cards in, upload a screenshot of your accounts (your bank
+dashboard, Credit Karma, an issuer app, or a spreadsheet) and Claude reads off
+the issuer, balance, limit, due/closing dates, APR, and minimum payment into a
+review table you confirm before saving. Matches by last-4 or nickname update an
+existing card instead of duplicating it.
+
+- Set `CM_ANTHROPIC_API_KEY` (get one at <https://console.anthropic.com>). Costs
+  a few cents per scan. Without a key, the **📷 Scan screenshot** button is
+  disabled and manual + CSV entry still work.
+- The reader model defaults to `claude-opus-4-8` (most accurate). Set
+  `CM_VISION_MODEL=claude-haiku-4-5` to spend less per scan.
+- Screenshots are sent to Anthropic's API to be read, then discarded. Only scan
+  images you're comfortable sending off-device.
+
+## ☁️ Cloud hosting + phone app (optional)
+
+Want it always-on and on your phone's home screen instead of local-only? The app
+ships as a **PWA** (installable) with a **password gate** and a **Dockerfile +
+Render blueprint**. See **[DEPLOY.md](./DEPLOY.md)** for the click-by-click
+(~$7/mo). Key points:
+
+- Set `CM_PASSWORD` to lock it. The server **refuses to start** on a non-localhost
+  interface without a password, so you can't accidentally expose your data.
+- Set `CM_DATA_DIR` to a persistent disk path (e.g. `/var/data`) so your DB and
+  encryption key survive restarts. Keep `CM_ENCRYPTION_KEY` stable.
+- On your phone: open the URL → **Add to Home Screen** (iOS) / **Install app**
+  (Android). It runs full-screen and stays signed in.
+
+---
+
 ## Architecture & stack
 
 **Stack:** Node + Express + `better-sqlite3` + a zero-build vanilla-JS

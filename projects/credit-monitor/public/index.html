@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Credit Monitor</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#0f1419" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Credit" />
+  <link rel="apple-touch-icon" href="/icons/icon-180.png" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -22,6 +29,7 @@
       </label>
       <button id="refresh" class="ghost">Refresh</button>
       <button id="sendDigest" class="ghost" title="Build the digest and send via configured channels">Send digest</button>
+      <button id="logout" class="ghost" title="Sign out" style="display:none">Sign out</button>
     </div>
   </header>
 
@@ -100,10 +108,13 @@
       <div class="row" style="justify-content:space-between">
         <h2 style="margin:0 0 14px">Cards</h2>
         <div class="row" style="gap:8px">
+          <button id="scanShot" title="Upload a screenshot of your accounts and let AI fill in the cards">📷 Scan screenshot</button>
           <button id="loadSample" class="ghost" title="Reload the demo data">Load sample data</button>
           <button id="clearData" class="ghost" title="Delete everything so you can enter your own cards" style="color:var(--red)">Start fresh (clear all)</button>
         </div>
       </div>
+      <input id="scanFile" type="file" accept="image/*" capture="environment" style="display:none" />
+      <div id="scanReview" class="scan-review" style="display:none"></div>
       <table id="cardsTable">
         <thead>
           <tr>

@@ -17,15 +17,33 @@ function num(v, dflt) {
 
 const ROOT = path.join(__dirname, '..');
 
+// Data dir is overridable so a cloud host can point it at a persistent disk
+// (e.g. Render disk mounted at /var/data → CM_DATA_DIR=/var/data).
+const DATA_DIR = process.env.CM_DATA_DIR || path.join(ROOT, 'data');
+
 const config = {
   root: ROOT,
-  dataDir: path.join(ROOT, 'data'),
-  dbPath: path.join(ROOT, 'data', 'credit-monitor.db'),
+  dataDir: DATA_DIR,
+  dbPath: path.join(DATA_DIR, 'credit-monitor.db'),
 
   port: num(process.env.PORT, 4600),
   host: process.env.HOST || '127.0.0.1',
 
   encryptionKey: (process.env.CM_ENCRYPTION_KEY || '').trim(),
+
+  // Password gate (required once the app is exposed beyond localhost).
+  auth: {
+    password: process.env.CM_PASSWORD || '',
+    sessionSecret: process.env.CM_SESSION_SECRET || '',
+  },
+
+  // Claude vision — reads screenshots of accounts into structured data.
+  anthropic: {
+    apiKey: process.env.CM_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY || '',
+    // Per the API skill default; override with CM_VISION_MODEL (e.g. a cheaper
+    // model) if you want to trade a little accuracy for cost.
+    model: process.env.CM_VISION_MODEL || 'claude-opus-4-8',
+  },
 
   // Recommendation / timing tunables
   targetUtilization: num(process.env.CM_TARGET_UTILIZATION, 9), // percent

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Credit Monitor — Sign in</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#0f1419" />
+  <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div style="max-width:380px;margin:14vh auto;padding:24px">
+    <div class="panel">
+      <h1 style="margin:0 0 4px">🛡️ Credit Monitor</h1>
+      <div class="sub" style="margin-bottom:18px">Enter your password to continue.</div>
+      <form id="loginForm">
+        <label>Password</label>
+        <input id="pw" type="password" autocomplete="current-password" style="width:100%" autofocus />
+        <button type="submit" style="margin-top:14px; width:100%">Sign in</button>
+      </form>
+      <div id="err" class="sub" style="color:var(--red); margin-top:10px; display:none">Wrong password.</div>
+    </div>
+    <p class="sub" style="text-align:center; margin-top:14px">Your financial data stays on your own server.</p>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const err = document.getElementById('err');
+      err.style.display = 'none';
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: document.getElementById('pw').value }),
+        });
+        if (res.ok) { window.location.href = '/'; return; }
+        err.style.display = 'block';
+      } catch (_) { err.style.display = 'block'; }
+    });
+  </script>
+</body>
+</html>
