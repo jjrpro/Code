@@ -77,6 +77,14 @@ const config = {
     weeklyCron: process.env.CM_WEEKLY_CRON || '5 8 * * 1',
   },
 
+  // Automatic backups: rotated JSON snapshots on disk, emailed off-server if
+  // SMTP is set (protects against losing the host's disk).
+  backup: {
+    enabled: bool(process.env.CM_BACKUP_ENABLED, true),
+    cron: process.env.CM_BACKUP_CRON || '10 8 * * *',
+    keep: num(process.env.CM_BACKUP_KEEP, 14),
+  },
+
   desktopNotifications: bool(process.env.CM_DESKTOP_NOTIFICATIONS, true),
 
   plaid: {

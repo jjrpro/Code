@@ -11,6 +11,7 @@ const dashboard = require('../logic/dashboard');
 const survey = require('../logic/daily-survey');
 const csv = require('../logic/csv');
 const screenshot = require('../logic/screenshot-import');
+const backup = require('../logic/backup');
 const plaid = require('../plaid/plaid');
 const notify = require('../notify');
 const seed = require('../seed');
@@ -131,6 +132,25 @@ router.post('/import/screenshot', wrap(async (req, res) => {
   res.json(result);
 }));
 router.get('/import/screenshot/status', wrap((req, res) => res.json({ enabled: screenshot.isEnabled() })));
+
+// ── Backup & restore ──
+router.get('/backup/status', wrap((req, res) => res.json(backup.status())));
+router.get('/backup/export.json', wrap((req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', `attachment; filename="credit-monitor-${backup.stamp()}.json"`);
+  res.send(backup.exportJSON());
+}));
+router.get('/backup/export.db', wrap((req, res) => {
+  const file = backup.checkpointDbFile();
+  res.download(file, `credit-monitor-${backup.stamp()}.db`);
+}));
+router.post('/backup/run', wrap(async (req, res) => res.json(await backup.runScheduledBackup())));
+router.post('/admin/restore', wrap((req, res) => {
+  const data = (req.body && req.body.data) || null;
+  const replace = !(req.body && req.body.replace === false);
+  const result = backup.importData(data, { replace });
+  res.json({ ok: true, imported: result });
+}));
 
 // ── Auth ──
 router.get('/auth/status', wrap((req, res) => res.json({ enabled: auth.enabled(), authed: auth.isAuthed(req) })));

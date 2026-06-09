@@ -25,7 +25,7 @@ function getTransporter() {
   return transporter;
 }
 
-async function send({ subject, text, html }) {
+async function send({ subject, text, html, attachments }) {
   if (!isConfigured()) {
     return { sent: false, reason: 'SMTP not configured (SMTP_HOST blank)' };
   }
@@ -39,6 +39,7 @@ async function send({ subject, text, html }) {
     subject,
     text,
     html,
+    attachments,
   });
   return { sent: true, messageId: info.messageId };
 }

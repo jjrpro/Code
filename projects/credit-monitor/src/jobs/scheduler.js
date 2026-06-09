@@ -7,6 +7,7 @@
 const cron = require('node-cron');
 const config = require('../config');
 const notify = require('../notify');
+const backup = require('../logic/backup');
 
 function start() {
   if (!config.scheduler.enabled) {
@@ -40,6 +41,19 @@ function start() {
       }
     });
     console.log(`[scheduler] weekly summary scheduled: "${config.scheduler.weeklyCron}"`);
+  }
+
+  if (config.backup.enabled && cron.validate(config.backup.cron)) {
+    cron.schedule(config.backup.cron, async () => {
+      console.log('[scheduler] running backup');
+      try {
+        const r = await backup.runScheduledBackup();
+        console.log(`[scheduler] backup written: ${r.file}${r.emailed ? ' (emailed off-server)' : ` (not emailed: ${r.emailReason})`}`);
+      } catch (e) {
+        console.error('[scheduler] backup failed:', e.message);
+      }
+    });
+    console.log(`[scheduler] backup scheduled: "${config.backup.cron}" (keep ${config.backup.keep})`);
   }
 }
 

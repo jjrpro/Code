@@ -184,6 +184,20 @@
       <div id="imp_result" class="sub" style="margin-top:8px"></div>
     </div>
 
+    <!-- Backup & restore -->
+    <div class="panel" style="margin-top:16px">
+      <h2>Backup &amp; restore</h2>
+      <p class="sub" id="backupStatus">Checking backups…</p>
+      <div class="row" style="gap:8px; flex-wrap:wrap">
+        <a class="btn-link" href="/api/backup/export.json" download>⬇️ Download backup (JSON)</a>
+        <a class="btn-link ghost" href="/api/backup/export.db" download>Download database file</a>
+        <button id="emailBackup" class="ghost">✉️ Email a backup now</button>
+        <button id="restoreBtn" class="ghost">♻️ Restore from backup…</button>
+        <input id="restoreFile" type="file" accept=".json,application/json" style="display:none" />
+      </div>
+      <p class="sub" style="margin-top:8px">Auto-backup runs daily and keeps the most recent copies on the server. Set up email (SMTP) to also send copies <strong>off-server</strong>, so losing the host's disk never loses your data.</p>
+    </div>
+
     <p class="muted" style="margin-top:24px; font-size:12px">
       Plaid integration is stubbed (manual + CSV work fully). Mobile push is a clean hook for later.
       Nothing here is financial advice.

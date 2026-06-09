@@ -529,6 +529,46 @@ function registerSW() {
   }
 }
 
+// ── Backup & restore ────────────────────────────────────────────────────
+async function setupBackup() {
+  try {
+    const s = await api('GET', '/backup/status');
+    const last = s.lastTime ? new Date(s.lastTime).toLocaleString() : 'none yet';
+    $('#backupStatus').textContent =
+      `Last backup: ${last} · ${s.count} kept on server · Off-server email: ${s.emailConfigured ? 'on' : 'off (set SMTP)'}`;
+    if (!s.emailConfigured) {
+      const b = $('#emailBackup');
+      b.disabled = true;
+      b.title = 'Configure SMTP (email) to send backups off-server';
+    }
+  } catch (_) { /* ignore */ }
+}
+
+async function emailBackupNow() {
+  const r = await api('POST', '/backup/run');
+  toast(r.emailed ? 'Backup saved + emailed to you' : `Backup saved on server (${r.emailReason})`);
+  setupBackup();
+}
+
+async function handleRestoreFile(e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  let data;
+  try {
+    data = JSON.parse(await file.text());
+  } catch (_) {
+    toast('That file is not valid JSON.');
+    return;
+  }
+  if (!confirm('Restore will REPLACE all current data with this backup. Continue?')) return;
+  const r = await api('POST', '/admin/restore', { data, replace: true });
+  const c = r.imported || {};
+  toast(`Restored ${c.cards || 0} cards, ${c.scores || 0} scores, ${c.payments || 0} payments`);
+  load();
+  setupBackup();
+}
+
 // ── Wire everything up ──
 function wire() {
   buildAddCard();
@@ -579,8 +619,13 @@ function wire() {
   $('#scanFile').addEventListener('change', (e) => handleScanFile(e));
   $('#logout').addEventListener('click', async () => { await api('POST', '/logout'); window.location.href = '/login'; });
 
+  $('#emailBackup').addEventListener('click', () => emailBackupNow().catch((e) => toast(e.message)));
+  $('#restoreBtn').addEventListener('click', () => $('#restoreFile').click());
+  $('#restoreFile').addEventListener('change', (e) => handleRestoreFile(e).catch((err) => toast(err.message)));
+
   setupAuth();
   setupScreenshot();
+  setupBackup();
   registerSW();
   load().catch((e) => toast('Load failed: ' + e.message));
 }

@@ -129,6 +129,17 @@ fully offline). Single command: `npm install && npm start` → http://127.0.0.1:
   offline; live vision call needs JR's API key on the host. **JR next step:**
   follow `DEPLOY.md`. Deliverable:
   `projects/credit-monitor/2026-06-09-cloud-hosting-and-ai-screenshot-import.md`.
+- **2026-06-09 update — automatic backups + restore:** JR picked "auto-backup
+  your data" as the next build. Added `src/logic/backup.js`: daily rotated JSON
+  snapshots (`CM_DATA_DIR/backups`, keep `CM_BACKUP_KEEP`=14), **off-server email**
+  of the snapshot when SMTP is set (the real disk-loss protection;
+  `notify/email.js` now passes attachments), in-app **Backup & restore** panel
+  (download JSON / download .db / email now / restore-from-file), and restore that
+  remaps card IDs + re-encrypts last4. New env: `CM_BACKUP_ENABLED`,
+  `CM_BACKUP_CRON` (`10 8 * * *`), `CM_BACKUP_KEEP`. Verified full
+  export→wipe→restore round-trip (5 cards back, last4 intact). Deliverable:
+  `projects/credit-monitor/2026-06-09-auto-backups.md`. **For real off-server
+  backups JR must fill SMTP in `.env`** (Gmail App Password).
 
 ---
 

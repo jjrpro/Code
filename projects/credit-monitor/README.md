@@ -83,6 +83,22 @@ Render blueprint**. See **[DEPLOY.md](./DEPLOY.md)** for the click-by-click
 - On your phone: open the URL → **Add to Home Screen** (iOS) / **Install app**
   (Android). It runs full-screen and stays signed in.
 
+## 💾 Backups
+
+Your whole history lives in one SQLite file. So a backup runs **automatically
+every day**: a JSON snapshot is written under `CM_DATA_DIR/backups` (the last
+`CM_BACKUP_KEEP` are kept), and — if SMTP is configured — a copy is **emailed to
+you off-server**, which is what actually protects you if the host's disk is lost.
+
+In the app, the **Backup & restore** panel lets you:
+- **Download backup (JSON)** or the raw **database file** anytime.
+- **Email a backup now** (when SMTP is set).
+- **Restore from backup** — pick a JSON export to replace current data (card IDs
+  are remapped so payment history stays linked; `last4` is re-encrypted on the
+  way in).
+
+Tune with `CM_BACKUP_ENABLED`, `CM_BACKUP_CRON`, `CM_BACKUP_KEEP`.
+
 ---
 
 ## Architecture & stack
