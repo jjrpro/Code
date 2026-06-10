@@ -15,7 +15,7 @@ training/nutrition plan, and lab checklist in `ops/sessions/`.
 |---|---|---|---|---|---|---|
 | **Retatrutide** | 40u | **4 mg** | weekly | **Feb 10** (30u/3mg → 40u/4mg ~mid-May) | ~16 wks | Just titrated up; consider dropping back to 30u/3mg if losing >2 lb/wk |
 | **Semax** | 6.5u | **650 mcg** | daily AM | **May 21** | ~11 days | Trimmed from 1000 mcg |
-| **Tesamorelin** | 10u | **1 mg** | nightly, fasted | **May 13** | ~2.7 wks | Holding until IGF-1 check; effects still building |
+| **Tesamorelin** | 15u | **1.5 mg** | nightly, fasted | **May 13** | ~2.7 wks | Stepped 10u→15u; get IGF-1 before going to 20u/2mg |
 
 All vials mixed to **10 mg/mL → 0.1 mg per unit.**
 
@@ -34,6 +34,8 @@ final 15 lb to protect muscle + reduce gallstone risk.
 | May 21 | **Semax started** | originally 10u (1000 mcg) |
 | 2026-06-01 | **Protocol revision — Day 1** | Reta 40u (4 mg) · Semax **10u → 6.5u** (650 mcg) · Tesa 10u (1 mg, holding) |
 | 2026-06-01 | Note | Bad diarrhea after heavy beer — attributed to alcohol (Reta well-adapted at 16 wks); no pain, hydrating |
+| 2026-06-01 | Tesa injection-site bruise | Healing hematoma (green/yellow), benign; rotate sites |
+| 2026-06-01 | **Tesa stepped up** | 10u → **15u (1.5 mg)**. Next: IGF-1 draw, then 20u/2mg. Watch puffiness/joint/wrist tingling |
 | | | |
 
 *(Add rows below as you go.)*
@@ -41,7 +43,7 @@ final 15 lb to protect muscle + reduce gallstone risk.
 ---
 
 ## Open to-dos
-- [ ] **Baseline labs** (IGF-1 + metabolic panel) — gatekeeps Tesa → 2 mg. See lab checklist.
+- [ ] Baseline IGF-1 + metabolic panel — **required before Tesa 20u/2mg.** See lab checklist.
 - [ ] Log weekly bodyweight + waist
 - [ ] **Watch loss rate at 4 mg for 1–2 wks** — if >2 lb/wk, drop back to 30u (3 mg) to protect muscle near goal. Don't exceed 40u.
 
