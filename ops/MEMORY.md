@@ -140,6 +140,16 @@ fully offline). Single command: `npm install && npm start` → http://127.0.0.1:
   export→wipe→restore round-trip (5 cards back, last4 intact). Deliverable:
   `projects/credit-monitor/2026-06-09-auto-backups.md`. **For real off-server
   backups JR must fill SMTP in `.env`** (Gmail App Password).
+- **2026-06-09 update — what-if payment simulator:** JR chose "keep building"
+  over deploying. Added `src/logic/simulate.js` + `POST /api/simulate` + a "🧮
+  What-if" UI panel: type a planned payment per card → live projection of
+  reported utilization (drives score), current utilization, and health, vs now,
+  with a target check. Reuses dashboard utilization/factors math so numbers match.
+  Verified ($4k on Sapphire → reported 26.9%→15.2%, health 73→77). Deliverable:
+  `projects/credit-monitor/2026-06-09-what-if-simulator.md`. **Status: MVP feature
+  set code-complete (cloud hosting+auth+PWA, screenshot import, auto-backup,
+  simulator); only remaining gate is JR deploying (deferred). Next candidates:
+  phone push (needs deploy) or score-from-screenshot.**
 
 ---
 

@@ -8,6 +8,7 @@ const scores = require('../models/scores');
 const inquiries = require('../models/inquiries');
 const payments = require('../models/payments');
 const dashboard = require('../logic/dashboard');
+const simulate = require('../logic/simulate');
 const survey = require('../logic/daily-survey');
 const csv = require('../logic/csv');
 const screenshot = require('../logic/screenshot-import');
@@ -39,6 +40,13 @@ router.get('/dashboard', wrap((req, res) => {
   if (req.query.target) options.targetPct = Number(req.query.target);
   if (req.query.azeo !== undefined) options.azeoMode = asBool(req.query.azeo);
   res.json(dashboard.build(options));
+}));
+
+// ── What-if simulator ──
+// body: { adjustments: [{ id, payment }], target }
+router.post('/simulate', wrap((req, res) => {
+  const { adjustments, target } = req.body || {};
+  res.json(simulate.simulate(Array.isArray(adjustments) ? adjustments : [], { target }));
 }));
 
 // ── Cards ──

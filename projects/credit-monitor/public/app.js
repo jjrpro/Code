@@ -45,6 +45,7 @@ async function load() {
   renderFactors(DASH.factors);
   renderPaydown(DASH.paydownPriority);
   renderCards(DASH.cards);
+  renderSimulator(DASH.cards);
   fillCardSelect(DASH.cards);
   await loadSurvey();
 }
@@ -569,6 +570,68 @@ async function handleRestoreFile(e) {
   setupBackup();
 }
 
+// ── What-if simulator ───────────────────────────────────────────────────
+const SIM_PAY = {}; // cardId -> planned payment string (survives reloads)
+
+function utilClass(color) {
+  return color === 'green' ? 'sim-good' : color === 'yellow' ? 'sim-warn' : 'sim-bad';
+}
+
+function renderSimulator(cards) {
+  const host = $('#simCards');
+  if (!host) return;
+  const active = (cards || []).filter((c) => c.active);
+  host.innerHTML = active.map((c) => {
+    const u = c.utilization ? c.utilization.reportedPct : 0;
+    const val = SIM_PAY[c.id] != null ? SIM_PAY[c.id] : '';
+    return `<div class="sim-card-row">
+      <span class="nm">${esc(c.nickname)}</span>
+      <span class="now">${money(c.statement_balance)} · ${u}%</span>
+      <input id="sim_pay_${c.id}" type="number" min="0" step="50" placeholder="pay $" value="${esc(val)}" />
+    </div>`;
+  }).join('') || '<div class="sub">Add a card to use the simulator.</div>';
+  active.forEach((c) => {
+    const inp = $('#sim_pay_' + c.id);
+    if (inp) inp.addEventListener('input', () => { SIM_PAY[c.id] = inp.value; debouncedSim(); });
+  });
+  runSim();
+}
+
+let _simTimer = null;
+function debouncedSim() {
+  clearTimeout(_simTimer);
+  _simTimer = setTimeout(() => runSim().catch(() => {}), 300);
+}
+
+async function runSim() {
+  const target = Number($('#targetUtil').value) || 9;
+  const adjustments = Object.entries(SIM_PAY)
+    .map(([id, payment]) => ({ id: Number(id), payment: Number(payment) || 0 }))
+    .filter((a) => a.payment > 0);
+  const sim = await api('POST', '/simulate', { adjustments, target });
+  renderSimOut(sim);
+}
+
+function renderSimOut(sim) {
+  const out = $('#simOut');
+  if (!out) return;
+  const repArrow = sim.delta.reportedPct === 0 ? '' :
+    `<span class="sim-arrow">${sim.before.reportedPct}% →</span> `;
+  const healthArrow = sim.delta.health === 0 ? `${sim.before.health}` :
+    `${sim.before.health} → <strong>${sim.after.health}</strong> <span class="${sim.delta.health >= 0 ? 'sim-good' : 'sim-bad'}">(${sim.delta.health >= 0 ? '+' : ''}${sim.delta.health})</span>`;
+  const targetLine = sim.totalPaid <= 0 ? '' :
+    (sim.meetsTarget
+      ? `<div class="sim-good" style="margin-top:8px">✓ Reported utilization is under your ${sim.target}% target.</div>`
+      : `<div class="sim-warn" style="margin-top:8px">Still above your ${sim.target}% target — pay more on your highest-% cards to get there.</div>`);
+  out.innerHTML = `
+    <div class="sub">Projected reported utilization (what the bureaus see)</div>
+    <div class="sim-big ${utilClass(sim.after.reportedColor)}">${repArrow}${sim.after.reportedPct}%</div>
+    <div class="sim-line"><span>Current utilization</span><span class="${utilClass(sim.after.currentColor)}">${sim.before.currentPct}% → ${sim.after.currentPct}%</span></div>
+    <div class="sim-line"><span>Health indicator /100</span><span>${healthArrow}</span></div>
+    <div class="sim-line"><span>Total planned payment</span><span><strong>${money(sim.totalPaid)}</strong></span></div>
+    ${targetLine}`;
+}
+
 // ── Wire everything up ──
 function wire() {
   buildAddCard();
@@ -622,6 +685,13 @@ function wire() {
   $('#emailBackup').addEventListener('click', () => emailBackupNow().catch((e) => toast(e.message)));
   $('#restoreBtn').addEventListener('click', () => $('#restoreFile').click());
   $('#restoreFile').addEventListener('change', (e) => handleRestoreFile(e).catch((err) => toast(err.message)));
+
+  $('#simReset').addEventListener('click', () => {
+    Object.keys(SIM_PAY).forEach((k) => delete SIM_PAY[k]);
+    document.querySelectorAll('[id^="sim_pay_"]').forEach((i) => (i.value = ''));
+    runSim().catch(() => {});
+  });
+  $('#targetUtil').addEventListener('change', () => runSim().catch(() => {}));
 
   setupAuth();
   setupScreenshot();

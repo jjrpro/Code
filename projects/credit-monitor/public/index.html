@@ -134,6 +134,17 @@
       </details>
     </div>
 
+    <!-- What-if simulator -->
+    <div class="panel" id="simPanel" style="margin-bottom:16px">
+      <h2>🧮 What-if: plan a payment</h2>
+      <p class="sub">Type a planned payment for any card (assumes you pay it before the statement closes) and see exactly what your credit looks like afterward — reported utilization is what drives your score.</p>
+      <div class="grid cols-2">
+        <div id="simCards"></div>
+        <div id="simOut" class="sim-out"></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button id="simReset" class="ghost">Reset</button></div>
+    </div>
+
     <!-- Logging row -->
     <div class="grid cols-2" style="margin-bottom:16px">
       <div class="panel">

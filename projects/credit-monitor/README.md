@@ -83,6 +83,14 @@ Render blueprint**. See **[DEPLOY.md](./DEPLOY.md)** for the click-by-click
 - On your phone: open the URL → **Add to Home Screen** (iOS) / **Install app**
   (Android). It runs full-screen and stays signed in.
 
+## 🧮 What-if payment simulator
+
+The **What-if** panel lets you type a planned payment for any card (assumed paid
+before the statement closes) and instantly see the result, using the same math
+as the dashboard: projected **reported utilization** (what the bureaus see and
+what drives your score), current utilization, the health indicator, and whether
+you land under your target %. Endpoint: `POST /api/simulate`.
+
 ## 💾 Backups
 
 Your whole history lives in one SQLite file. So a backup runs **automatically
