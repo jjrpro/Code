@@ -1,0 +1,2 @@
+address,city,zip,county,block_lot,owner_name,owner_mailing_address,absentee_YN,pre_foreclosure_YN,tax_delinquent_YN,vacant_abandoned_YN,code_violation_YN,probate_estate_YN,high_equity_YN,years_owned,est_value,est_repairs,est_ARV,MAO_calc,stack_score,skip_traced_YN,owner_phone,mail_sent_date,contact_status,offer_made,notes
+123 Example St,Newark,07103,Essex,1234-56,,,N,N,N,N,N,N,N,,,,,,0,N,,,not_contacted,,EXAMPLE ROW - delete. MAO_calc = (est_ARV*0.70)-est_repairs-your_fee. stack_score = count of all _YN columns set to Y.
