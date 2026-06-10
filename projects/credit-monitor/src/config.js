@@ -37,6 +37,14 @@ const config = {
     sessionSecret: process.env.CM_SESSION_SECRET || '',
   },
 
+  // Web-push (phone alerts). Generate keys with `npm run vapid`. If unset, push
+  // is disabled and the app falls back to email/desktop.
+  vapid: {
+    publicKey: process.env.CM_VAPID_PUBLIC || '',
+    privateKey: process.env.CM_VAPID_PRIVATE || '',
+    subject: process.env.CM_VAPID_SUBJECT || 'mailto:admin@jjrproconsultants.com',
+  },
+
   // Claude vision — reads screenshots of accounts into structured data.
   anthropic: {
     apiKey: process.env.CM_ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY || '',

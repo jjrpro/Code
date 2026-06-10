@@ -570,6 +570,70 @@ async function handleRestoreFile(e) {
   setupBackup();
 }
 
+// ── Score from screenshot ───────────────────────────────────────────────
+async function handleScoreFile(e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  toast('📷 Reading your score…');
+  try {
+    const dataURL = await fileToDataURL(file);
+    const r = await api('POST', '/import/score-screenshot', { image: dataURL });
+    if (!r.score) { toast('No score found. Try a tighter screenshot of just the score.'); return; }
+    $('#sc_score').value = r.score;
+    if (r.source) $('#sc_source').value = r.source;
+    if (r.bureau) $('#sc_bureau').value = r.bureau;
+    $('#sc_date').value = r.date || new Date().toISOString().slice(0, 10);
+    toast('Score read — review it, then click Log score.');
+    $('#sc_score').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (err) {
+    toast(err.message);
+  }
+}
+
+// ── Phone alerts (web push) ─────────────────────────────────────────────
+let PUSH_KEY = null;
+
+function urlBase64ToUint8Array(base64) {
+  const padding = '='.repeat((4 - (base64.length % 4)) % 4);
+  const b64 = (base64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const raw = atob(b64);
+  const arr = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+  return arr;
+}
+
+async function setupAlerts() {
+  try {
+    const k = await api('GET', '/push/key');
+    if (!k.enabled || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+    PUSH_KEY = k.publicKey;
+    const btn = $('#enableAlerts');
+    btn.style.display = '';
+    const reg = await navigator.serviceWorker.ready.catch(() => null);
+    const sub = reg && (await reg.pushManager.getSubscription());
+    if (sub) btn.textContent = '🔔 Alerts on';
+  } catch (_) { /* ignore */ }
+}
+
+async function enableAlerts() {
+  if (!PUSH_KEY) { toast('Alerts are not configured on the server.'); return; }
+  const perm = await Notification.requestPermission();
+  if (perm !== 'granted') { toast('Allow notifications to get alerts on this device.'); return; }
+  const reg = await navigator.serviceWorker.ready;
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) {
+    sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(PUSH_KEY),
+    });
+  }
+  await api('POST', '/push/subscribe', { subscription: sub });
+  await api('POST', '/push/test').catch(() => {});
+  $('#enableAlerts').textContent = '🔔 Alerts on';
+  toast('Alerts enabled — sent a test notification.');
+}
+
 // ── What-if simulator ───────────────────────────────────────────────────
 const SIM_PAY = {}; // cardId -> planned payment string (survives reloads)
 
@@ -680,6 +744,9 @@ function wire() {
 
   $('#scanShot').addEventListener('click', () => $('#scanFile').click());
   $('#scanFile').addEventListener('change', (e) => handleScanFile(e));
+  $('#scanScore').addEventListener('click', () => $('#scoreFile').click());
+  $('#scoreFile').addEventListener('change', (e) => handleScoreFile(e));
+  $('#enableAlerts').addEventListener('click', () => enableAlerts().catch((e) => toast(e.message)));
   $('#logout').addEventListener('click', async () => { await api('POST', '/logout'); window.location.href = '/login'; });
 
   $('#emailBackup').addEventListener('click', () => emailBackupNow().catch((e) => toast(e.message)));
@@ -696,6 +763,7 @@ function wire() {
   setupAuth();
   setupScreenshot();
   setupBackup();
+  setupAlerts();
   registerSW();
   load().catch((e) => toast('Load failed: ' + e.message));
 }

@@ -10,7 +10,8 @@
     "seed": "node src/seed.js",
     "seed:reset": "node src/seed.js --reset",
     "digest": "node scripts/send-digest.js",
-    "digest:dry": "node scripts/send-digest.js --dry-run"
+    "digest:dry": "node scripts/send-digest.js --dry-run",
+    "vapid": "node scripts/gen-vapid.js"
   },
   "engines": {
     "node": ">=18"
@@ -21,7 +22,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "node-cron": "^3.0.3",
-    "nodemailer": "^6.10.0"
+    "nodemailer": "^6.10.0",
+    "web-push": "^3.6.7"
   },
   "optionalDependencies": {
     "node-notifier": "^10.0.1"

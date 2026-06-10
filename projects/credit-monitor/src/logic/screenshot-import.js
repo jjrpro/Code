@@ -126,7 +126,7 @@ function toCard(rec) {
 }
 
 // imageBase64: raw base64 (no data: prefix). mediaType: image/png|jpeg|webp|gif
-async function extract(imageBase64, mediaType = 'image/png') {
+async function callVision(schema, system, userText, imageBase64, mediaType) {
   const c = getClient();
   const resp = await c.messages.create({
     model: config.anthropic.model,
@@ -135,19 +135,19 @@ async function extract(imageBase64, mediaType = 'image/png') {
     thinking: { type: 'adaptive' },
     output_config: {
       effort: 'low',
-      format: { type: 'json_schema', schema: ACCOUNT_SCHEMA },
+      format: { type: 'json_schema', schema },
     },
     system: [
       // Stable prefix → cache it (cheap on repeat scans). The volatile image
       // goes after, in the user turn.
-      { type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } },
+      { type: 'text', text: system, cache_control: { type: 'ephemeral' } },
     ],
     messages: [
       {
         role: 'user',
         content: [
-          { type: 'image', source: { type: 'base64', media_type: mediaType, data: imageBase64 } },
-          { type: 'text', text: 'Extract every account visible in this screenshot.' },
+          { type: 'image', source: { type: 'base64', media_type: mediaType || 'image/png', data: imageBase64 } },
+          { type: 'text', text: userText },
         ],
       },
     ],
@@ -155,15 +155,54 @@ async function extract(imageBase64, mediaType = 'image/png') {
 
   const textBlock = resp.content.find((b) => b.type === 'text');
   if (!textBlock) throw new Error('The AI did not return readable data. Try a clearer screenshot.');
-
-  let parsed;
   try {
-    parsed = JSON.parse(textBlock.text);
+    return JSON.parse(textBlock.text);
   } catch (_) {
-    throw new Error('Could not parse the extracted data. Try a clearer, tighter screenshot of just the accounts.');
+    throw new Error('Could not read the screenshot. Try a clearer, tighter crop.');
   }
+}
+
+async function extract(imageBase64, mediaType = 'image/png') {
+  const parsed = await callVision(ACCOUNT_SCHEMA, SYSTEM, 'Extract every account visible in this screenshot.', imageBase64, mediaType);
   const accounts = Array.isArray(parsed.accounts) ? parsed.accounts.map(toCard) : [];
   return { accounts, model: config.anthropic.model };
 }
 
-module.exports = { extract, isEnabled, toCard, ACCOUNT_SCHEMA };
+// ── Credit score from a screenshot (e.g. Credit Karma / issuer app) ──
+const SCORE_SCHEMA = {
+  type: 'object',
+  properties: {
+    score: { type: 'string', description: 'The credit score number (300-850). "" if none visible.' },
+    source: { type: 'string', description: 'Where it is from, e.g. Credit Karma, Experian, Amex. "" if unclear.' },
+    bureau: { type: 'string', description: 'Bureau and/or model, e.g. TransUnion, Experian, VantageScore 3.0, FICO 8. "" if not shown.' },
+    date: { type: 'string', description: 'Date the score is as-of, ISO YYYY-MM-DD. "" if not shown.' },
+  },
+  required: ['score', 'source', 'bureau', 'date'],
+  additionalProperties: false,
+};
+
+const SCORE_SYSTEM = `You read a credit SCORE from a screenshot (a credit app like Credit Karma, a bureau site, or a card issuer's free-FICO widget).
+
+Rules:
+- Return the single primary credit score shown (the big 300-850 number). If two bureaus are shown, pick the one most prominently displayed; if truly equal, the first.
+- "source" is the app/brand (Credit Karma, Experian, Amex, etc.). "bureau" is the bureau and/or scoring model if shown (TransUnion, Equifax, Experian, VantageScore 3.0, FICO 8).
+- "date" only if an as-of date is visible; otherwise "".
+- If no credit score is visible, return "" for score.`;
+
+function toScore(rec) {
+  const n = num(rec.score);
+  const score = n !== null ? Math.round(n) : null;
+  return {
+    score: score && score >= 300 && score <= 900 ? score : null,
+    source: (rec.source || '').trim() || null,
+    bureau: (rec.bureau || '').trim() || null,
+    date: /^\d{4}-\d{2}-\d{2}$/.test((rec.date || '').trim()) ? rec.date.trim() : null,
+  };
+}
+
+async function extractScore(imageBase64, mediaType = 'image/png') {
+  const parsed = await callVision(SCORE_SCHEMA, SCORE_SYSTEM, 'Read the credit score from this screenshot.', imageBase64, mediaType);
+  return { ...toScore(parsed), model: config.anthropic.model };
+}
+
+module.exports = { extract, extractScore, isEnabled, toCard, toScore, ACCOUNT_SCHEMA };

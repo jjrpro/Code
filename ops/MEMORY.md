@@ -150,6 +150,18 @@ fully offline). Single command: `npm install && npm start` → http://127.0.0.1:
   set code-complete (cloud hosting+auth+PWA, screenshot import, auto-backup,
   simulator); only remaining gate is JR deploying (deferred). Next candidates:
   phone push (needs deploy) or score-from-screenshot.**
+- **2026-06-09 update — score-from-screenshot + phone push (JR said "do it all"):**
+  (1) `extractScore()` in screenshot-import + `POST /api/import/score-screenshot`
+  + a **📷 Scan score** button that pre-fills the score form from a Credit Karma/
+  issuer screenshot. (2) Real **web-push** alerts: `web-push` dep,
+  `push_subscriptions` table, rewritten `notify/push.js` (subscribe/send/prune),
+  `/api/push/{key,subscribe,unsubscribe,test}`, SW `push`/`notificationclick`
+  handlers, **🔔 Enable alerts** button; daily digest now auto-pushes. Keys via
+  `npm run vapid` → `CM_VAPID_PUBLIC/PRIVATE/SUBJECT`. Verified offline (push
+  subscribe/test/unsubscribe, score graceful-no-key). **Push needs HTTPS (deploy);
+  iOS needs Add-to-Home-Screen first.** Deliverable:
+  `projects/credit-monitor/2026-06-09-score-scan-and-phone-alerts.md`. **All MVP
+  features now built; only remaining gate is JR deploying (DEPLOY.md).**
 
 ---
 

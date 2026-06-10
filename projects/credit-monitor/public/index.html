@@ -29,6 +29,7 @@
       </label>
       <button id="refresh" class="ghost">Refresh</button>
       <button id="sendDigest" class="ghost" title="Build the digest and send via configured channels">Send digest</button>
+      <button id="enableAlerts" class="ghost" title="Get the daily reminder + alerts on this device" style="display:none">🔔 Enable alerts</button>
       <button id="logout" class="ghost" title="Sign out" style="display:none">Sign out</button>
     </div>
   </header>
@@ -155,7 +156,11 @@
           <div class="field"><label>Source</label><input id="sc_source" placeholder="Credit Karma / Experian" /></div>
           <div class="field"><label>Bureau / model</label><input id="sc_bureau" placeholder="Experian (FICO 8)" /></div>
         </div>
-        <button id="saveScore" style="margin-top:10px">Log score</button>
+        <div class="row" style="margin-top:10px; gap:8px">
+          <button id="saveScore">Log score</button>
+          <button id="scanScore" class="ghost" title="Read your score from a Credit Karma / issuer screenshot">📷 Scan score</button>
+          <input id="scoreFile" type="file" accept="image/*" capture="environment" style="display:none" />
+        </div>
       </div>
       <div class="panel">
         <h2>Log an inquiry / payment</h2>

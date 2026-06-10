@@ -15,6 +15,7 @@ const screenshot = require('../logic/screenshot-import');
 const backup = require('../logic/backup');
 const plaid = require('../plaid/plaid');
 const notify = require('../notify');
+const push = require('../notify/push');
 const seed = require('../seed');
 const auth = require('../auth');
 
@@ -140,6 +141,32 @@ router.post('/import/screenshot', wrap(async (req, res) => {
   res.json(result);
 }));
 router.get('/import/screenshot/status', wrap((req, res) => res.json({ enabled: screenshot.isEnabled() })));
+
+// Read a credit SCORE from a screenshot → prefilled for the user to confirm.
+router.post('/import/score-screenshot', wrap(async (req, res) => {
+  let { image, mediaType } = req.body || {};
+  if (!image) return res.status(400).json({ error: 'no image provided' });
+  const m = /^data:(image\/[a-zA-Z+]+);base64,(.*)$/s.exec(image);
+  if (m) { mediaType = mediaType || m[1]; image = m[2]; }
+  const result = await screenshot.extractScore(image, mediaType || 'image/png');
+  res.json(result);
+}));
+
+// ── Phone alerts (web push) ──
+router.get('/push/key', wrap((req, res) => res.json({
+  enabled: push.isConfigured(),
+  publicKey: push.publicKey(),
+  devices: push.count(),
+})));
+router.post('/push/subscribe', wrap((req, res) => {
+  res.json(push.subscribe((req.body && req.body.subscription) || req.body));
+}));
+router.post('/push/unsubscribe', wrap((req, res) => {
+  res.json(push.unsubscribe((req.body && req.body.endpoint) || null));
+}));
+router.post('/push/test', wrap(async (req, res) => {
+  res.json(await push.send({ title: 'Credit Monitor', message: 'Phone alerts are working ✅' }));
+}));
 
 // ── Backup & restore ──
 router.get('/backup/status', wrap((req, res) => res.json(backup.status())));

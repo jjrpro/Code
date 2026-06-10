@@ -68,6 +68,9 @@ existing card instead of duplicating it.
   `CM_VISION_MODEL=claude-haiku-4-5` to spend less per scan.
 - Screenshots are sent to Anthropic's API to be read, then discarded. Only scan
   images you're comfortable sending off-device.
+- **Scan a score too:** in the "Log a credit score" panel, **📷 Scan score**
+  reads your number from a Credit Karma / issuer screenshot and pre-fills the
+  form (source, bureau, date) for you to confirm and log.
 
 ## ☁️ Cloud hosting + phone app (optional)
 
@@ -82,6 +85,18 @@ Render blueprint**. See **[DEPLOY.md](./DEPLOY.md)** for the click-by-click
   encryption key survive restarts. Keep `CM_ENCRYPTION_KEY` stable.
 - On your phone: open the URL → **Add to Home Screen** (iOS) / **Install app**
   (Android). It runs full-screen and stays signed in.
+
+## 🔔 Phone alerts (push)
+
+Get the daily check-in reminder and alerts on your phone's lock screen:
+1. Generate keys once: `npm run vapid`, paste `CM_VAPID_PUBLIC` /
+   `CM_VAPID_PRIVATE` into your env.
+2. Open the app, tap **🔔 Enable alerts**, allow notifications. It sends a test.
+
+The daily digest then also pushes to every enabled device. **Requires HTTPS** —
+i.e. a deployed host or the installed home-screen app (iOS needs the PWA added to
+the home screen first). If keys aren't set, the button is hidden and email/desktop
+still work.
 
 ## 🧮 What-if payment simulator
 

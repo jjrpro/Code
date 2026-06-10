@@ -67,6 +67,15 @@ CREATE TABLE IF NOT EXISTS settings (
   value TEXT
 );
 
+-- Web-push subscriptions (one per browser/device that opted in to phone alerts).
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  endpoint TEXT NOT NULL UNIQUE,
+  p256dh TEXT NOT NULL,
+  auth TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 -- One row per day you complete the daily credit check-in. Stores a snapshot
 -- (so we can trend utilization/score from YOUR daily inputs) plus the raw
 -- answers for reference.
