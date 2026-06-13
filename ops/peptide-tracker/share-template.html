@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0e1116">
+<title>Peptide Tracker</title>
+<style>
+  :root{ --bg:#0e1116; --card:#171b22; --card2:#1f242d; --line:#2a313c; --txt:#e8edf4; --mut:#9aa6b6;
+    --accent:#37d39b; --warn:#f5a524; --danger:#f56565; --blue:#4f9df7; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  #app{padding-bottom:92px}
+  header{padding:18px 16px 10px;position:sticky;top:0;background:linear-gradient(#0e1116,#0e1116ee);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--line)}
+  h1{font-size:19px;margin:0;display:flex;align-items:center;gap:8px}
+  .sub{color:var(--mut);font-size:12px;margin-top:2px}
+  main{padding:14px 16px;max-width:680px;margin:0 auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .med{font-weight:600}
+  .pill{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--card2);color:var(--mut);border:1px solid var(--line)}
+  .due{border-left:4px solid var(--warn)} .done{border-left:4px solid var(--accent);opacity:.78}
+  .muted{color:var(--mut);font-size:13px}
+  .big{font-size:30px;font-weight:700;letter-spacing:.5px}
+  button{font:inherit;cursor:pointer;border:none;border-radius:10px;padding:11px 14px;font-weight:600}
+  .btn{background:var(--accent);color:#06231a} .btn.alt{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+  .btn.blue{background:var(--blue);color:#04203f} .btn.sm{padding:8px 12px;font-size:13px;border-radius:9px}
+  .btn.red{background:#f5656522;color:#f56565;border:1px solid #f5656555}
+  .btn:active{transform:scale(.97)} .btn:disabled{opacity:.4}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px} .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
+  .stat{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 6px}
+  .stat .n{font-size:20px;font-weight:700}.stat .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+  label{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
+  input,select{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:10px;font:inherit}
+  .tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 4px env(safe-area-inset-bottom);z-index:6}
+  .tab{flex:1;text-align:center;background:none;color:var(--mut);font-size:10.5px;padding:8px 1px;border-radius:10px}
+  .tab.on{color:var(--accent);background:var(--card2)} .tab .ic{font-size:18px;display:block}
+  .hide{display:none}
+  .logrow{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:8px}
+  .logrow:last-child{border:none} .site{font-size:11px;color:var(--blue)}
+  .hint{background:var(--card2);border:1px dashed var(--line);border-radius:10px;padding:10px;font-size:12px;color:var(--mut);margin-top:8px}
+  .days{font-size:12px;color:var(--accent)}
+  h2{font-size:14px;margin:2px 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+  canvas{width:100%;height:200px;display:block} .warnnote{font-size:11px;color:var(--warn);margin-top:5px}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2px 13px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:600;padding:11px 0;list-style:none;font-size:14px}
+  summary::-webkit-details-marker{display:none} summary::before{content:"▸";color:var(--accent);margin-right:8px}
+  details[open]>summary::before{content:"▾"} .body{font-size:13px;padding:0 0 12px}
+  .body ul{margin:6px 0;padding-left:18px}.body li{margin:4px 0} .body .k{color:var(--mut)}
+  .tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle}
+  .tag.r{background:#f5656522;color:#f56565;border:1px solid #f5656544} .tag.y{background:#f5a52422;color:#f5a524;border:1px solid #f5a52444}
+  .tag.g{background:#37d39b22;color:#37d39b;border:1px solid #37d39b44}
+  .targ{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .targ:last-child{border:none}.targ b{color:var(--accent)}
+  .sechead{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin:16px 0 8px}
+  /* onboarding */
+  #onboard{max-width:560px;margin:0 auto;padding:26px 18px 60px}
+  #onboard h1{font-size:22px;display:block} #onboard p.lead{color:var(--mut);font-size:14px;margin:6px 0 18px}
+  .pedchip{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+  .calc{font-size:12px;color:var(--accent);margin-top:6px;min-height:16px}
+  .step{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin:18px 0 6px}
+</style>
+</head>
+<body>
+
+<!-- ============ ONBOARDING ============ -->
+<div id="onboard">
+  <h1>💉 Peptide Tracker</h1>
+  <p class="lead">Let's set up your tracker. Enter your info below — it all saves on your own device, nothing is shared.</p>
+
+  <div class="step">About you</div>
+  <div class="card">
+    <label>Name (optional)</label><input id="ob_name" placeholder="e.g. Alex">
+    <div class="grid">
+      <div><label>Goal weight (lb)</label><input id="ob_goal" type="number" inputmode="decimal" placeholder="185"></div>
+      <div><label>Current weight (lb)</label><input id="ob_cur" type="number" inputmode="decimal" placeholder="200"></div>
+    </div>
+  </div>
+
+  <div class="step">Your peptides</div>
+  <div id="ob_pedlist"></div>
+
+  <div class="card">
+    <label>Peptide</label>
+    <select id="pf_type" onchange="pfTypeChange()">
+      <option value="reta">Retatrutide</option>
+      <option value="tesa">Tesamorelin</option>
+      <option value="semax">Semax</option>
+      <option value="other">Other / custom…</option>
+    </select>
+    <div id="pf_custom_wrap" class="hide"><label>Custom name</label><input id="pf_custom" placeholder="Peptide name"></div>
+    <div class="step" style="margin-top:14px">Reconstitution &amp; dose</div>
+    <div class="grid">
+      <div><label>Vial amount (mg)</label><input id="pf_vial" type="number" inputmode="decimal" placeholder="30" oninput="pfCalc()"></div>
+      <div><label>BAC water added (units)</label><input id="pf_water" type="number" inputmode="decimal" placeholder="300" oninput="pfCalc()"></div>
+    </div>
+    <label>Your dose (units on the syringe)</label><input id="pf_dose" type="number" inputmode="decimal" placeholder="40" oninput="pfCalc()">
+    <div class="calc" id="pf_calc"></div>
+    <div class="step" style="margin-top:10px">Schedule</div>
+    <div class="grid">
+      <div><label>How often</label><select id="pf_freq" onchange="pfFreqChange()">
+        <option value="daily-am">Daily — morning</option>
+        <option value="daily-pm">Daily — night (bedtime)</option>
+        <option value="weekly">Weekly</option></select></div>
+      <div id="pf_day_wrap" class="hide"><label>Day</label><select id="pf_day">
+        <option value="MO">Monday</option><option value="TU">Tuesday</option><option value="WE">Wednesday</option><option value="TH">Thursday</option><option value="FR">Friday</option><option value="SA">Saturday</option><option value="SU">Sunday</option></select></div>
+    </div>
+    <label>Start date</label><input id="pf_start" type="date">
+    <button class="btn alt" style="width:100%;margin-top:12px" onclick="pfAdd()">+ Add this peptide</button>
+  </div>
+
+  <button class="btn" id="ob_start" style="width:100%;margin-top:6px" disabled onclick="finishOnboard()">Start tracking</button>
+  <div class="hint">Add each peptide you're taking, then Start tracking. You can edit or add more later in Setup.</div>
+</div>
+
+<!-- ============ MAIN APP ============ -->
+<div id="app" class="hide">
+<header><h1>💉 Peptide Tracker</h1><div class="sub" id="hdrSub">—</div></header>
+<main>
+  <section id="view-today">
+    <h2>Doses due today</h2><div id="todayList"></div>
+    <div class="card"><div class="row"><span class="med">⚖️ Today's weight</span><span class="pill" id="wTodayPill">—</span></div>
+      <div class="grid" style="margin-top:8px"><input type="number" inputmode="decimal" id="wQuick" placeholder="lb" step="0.1"><button class="btn sm" onclick="quickWeight()">Save weight</button></div></div>
+    <div class="hint">Tap <b>✓ Done</b> the moment you inject — it timestamps it and rotates your injection site.</div>
+  </section>
+
+  <section id="view-weight" class="hide">
+    <h2 id="wHead">Weight</h2>
+    <div class="card"><div class="g3">
+      <div class="stat"><div class="n" id="wNow">—</div><div class="l">Current</div></div>
+      <div class="stat"><div class="n" id="wLost">—</div><div class="l">Change</div></div>
+      <div class="stat"><div class="n" id="wToGo">—</div><div class="l">To go</div></div></div>
+      <div id="wWeek" class="muted" style="text-align:center;margin:9px 0 2px"></div><canvas id="chart"></canvas></div>
+    <div class="card"><label>Log a weight (defaults to today)</label>
+      <div class="grid"><input type="date" id="wDate"><input type="number" inputmode="decimal" id="wVal" placeholder="lb" step="0.1"></div>
+      <button class="btn" style="width:100%;margin-top:10px" onclick="saveWeight()">Save</button><div id="wList" style="margin-top:10px"></div></div>
+  </section>
+
+  <section id="view-cycle" class="hide"><h2>Cycle status</h2><div id="cycleList"></div></section>
+
+  <section id="view-guide" class="hide">
+    <h2>Full breakdown</h2>
+    <div class="sechead">Your doses — what each one is doing</div><div id="guideDoses"></div>
+    <div class="sechead">Daily targets</div><div class="card" id="guideTargets"></div>
+    <div class="sechead">General safety reference</div>
+    <details><summary>🚨 Red flags — stop &amp; see a doctor</summary><div class="body"><ul>
+      <li>Severe belly pain radiating to the <b>back</b> (± vomiting) → pancreatitis</li>
+      <li>Right-upper belly pain after fatty food, fever, jaundice → gallbladder</li>
+      <li>Persistent vomiting / dehydration</li>
+      <li>Racing or pounding heart, palpitations</li>
+      <li>Vision changes · neck lump/hoarseness · rash/swelling/trouble breathing</li>
+      <li>GH peptides: bad swelling, joint pain, wrist tingling = dosing too high</li></ul></div></details>
+    <details><summary>🩸 Labs worth monitoring</summary><div class="body">
+      IGF-1 (for GH peptides — keep in age range) · fasting glucose + HbA1c · lipase · lipids ·
+      CMP (kidney/liver) · TSH/free T4 · CBC · resting HR + BP.<br><b>Schedule:</b> baseline → 3 months → 6–12 months.</div></details>
+    <details><summary>⚠️ Substance interactions (general)</summary><div class="body"><ul>
+      <li><b>Stimulants (cocaine, amphetamines):</b> GLP-1 drugs raise resting HR; stimulants spike HR/BP → additive cardiac strain. Cocaine + alcohol forms cocaethylene (more cardiotoxic).</li>
+      <li><b>Alcohol:</b> dehydration + GI upset + adds pancreatitis risk on GLP-1 drugs.</li>
+      <li><b>Cannabis:</b> munchies fight appetite suppression; eating before a bedtime GH-peptide dose blunts the GH pulse; chronic use degrades deep sleep.</li>
+      <li>Hydrate + electrolytes, keep stimulant use minimal, and don't eat in the 2h before a bedtime GH peptide.</li></ul></div></details>
+    <div class="hint">Educational / harm-reduction only — not medical advice.</div>
+  </section>
+
+  <section id="view-alerts" class="hide">
+    <h2>Phone &amp; desktop alerts</h2>
+    <div class="card"><p class="muted" style="margin-top:0">Set times, download the calendar file, open it → adds <b>repeating native reminders</b> for each dose (alert even when this app is closed).</p>
+      <label>Morning dose time</label><input type="time" id="t_am" value="08:00">
+      <label>Night dose time (bedtime)</label><input type="time" id="t_pm" value="21:30">
+      <label>Weekly dose time</label><input type="time" id="t_wk" value="09:00">
+      <label><input type="checkbox" id="lab_chk" style="width:auto;display:inline;margin-right:6px">Add a 12-week labs reminder</label>
+      <button class="btn blue" style="width:100%;margin-top:12px" onclick="downloadICS()">⬇️ Download reminders (.ics)</button>
+      <div class="hint">Mac: open the file → Calendar adds them. iPhone: tap file → "Add All". Repeats forever.</div></div>
+  </section>
+
+  <section id="view-set" class="hide">
+    <h2>Protocol &amp; data</h2><div id="setList"></div>
+    <div class="card"><h2 style="margin-top:0">History &amp; backup</h2>
+      <div id="logList" class="muted" style="max-height:180px;overflow:auto">No injections logged yet.</div>
+      <div class="grid" style="margin-top:10px"><button class="btn alt sm" onclick="exportData()">Export backup</button>
+        <button class="btn alt sm" onclick="document.getElementById('imp').click()">Import backup</button></div>
+      <input type="file" id="imp" accept="application/json" class="hide" onchange="importData(event)"></div>
+    <button class="btn red" style="width:100%" onclick="resetAll()">Reset &amp; start setup over</button>
+  </section>
+</main>
+<nav class="tabs">
+  <button class="tab on" data-v="today"><span class="ic">☑️</span>Today</button>
+  <button class="tab" data-v="weight"><span class="ic">⚖️</span>Weight</button>
+  <button class="tab" data-v="cycle"><span class="ic">📈</span>Cycles</button>
+  <button class="tab" data-v="guide"><span class="ic">📋</span>Guide</button>
+  <button class="tab" data-v="alerts"><span class="ic">🔔</span>Alerts</button>
+  <button class="tab" data-v="set"><span class="ic">⚙️</span>Setup</button>
+</nav>
+</div>
+
+<script>
+const SITES=["Abdomen L","Abdomen R","Love handle L","Love handle R","Thigh L","Thigh R"];
+const DAYNAME={MO:"Mon",TU:"Tue",WE:"Wed",TH:"Thu",FR:"Fri",SA:"Sat",SU:"Sun"};
+const INFO={
+  reta:{name:"Retatrutide",cls:"GLP-1 / GIP / glucagon triple agonist — strong appetite + fat-loss driver.",li:[
+    '<b>Job:</b> cuts appetite, raises energy burn + liver-fat oxidation.',
+    'Titrate slowly (e.g. 1→2→4→8→12 mg); hold the dose if GI is rough — no efficacy penalty.',
+    '<span class="tag y">watch</span> nausea/GI worst right after dosing, constipation, resting HR up ~5–8 bpm.',
+    '<span class="tag y">muscle</span> a big share of weight lost can be lean mass → high protein + lifting.',
+    '<span class="tag r">serious</span> pancreatitis (belly pain → back), gallbladder, gallstones with rapid loss.']},
+  tesa:{name:"Tesamorelin",cls:"GHRH analog — raises your own GH/IGF-1; targets visceral fat + recovery.",li:[
+    '<b>Timing:</b> bedtime, <b>no food 2h before</b> (insulin blunts the GH pulse). Sleep is where it works.',
+    '<b>Labs:</b> check IGF-1; keep it within age range, don\'t push above. Approved dose is 2 mg/day.',
+    '<span class="tag y">watch</span> joint aches, puffiness/water retention, wrist tingling (carpal tunnel) = ease down.',
+    '<span class="tag y">sugar</span> GH mildly raises blood glucose.']},
+  semax:{name:"Semax",cls:"Nootropic peptide (BDNF/focus). Lower-risk, lower-evidence.",li:[
+    '<b>Timing:</b> morning, last dose by ~3–4 PM or it can hurt sleep.',
+    'Commonly dosed ~200–600 mcg/day; intranasal is the most-studied route.',
+    '<span class="tag y">watch</span> mild overstimulation, headache, insomnia if late; additive with stimulants/caffeine.']}
+};
+let S=load();
+
+function load(){ try{ const r=JSON.parse(localStorage.getItem("peptrack")); if(r&&r.peds) return r; }catch(e){} return null; }
+function save(){ localStorage.setItem("peptrack", JSON.stringify(S)); }
+function today(){ return new Date().toLocaleDateString('en-CA'); }
+function daysSince(d){ return Math.floor((Date.now()-new Date(d+"T00:00:00"))/864e5); }
+function ped(id){ return S.peds.find(p=>p.id===id); }
+function loggedToday(id){ const t=today(); return S.log.some(e=>e.id===id&&e.date===t); }
+function loggedWeek(id){ return S.log.some(e=>e.id===id&&(Date.now()-new Date(e.ts))<7*864e5); }
+function dailyIds(){ return S.peds.filter(p=>p.freq!=='weekly').map(p=>p.id); }
+function sortedW(){ return S.weights.slice().sort((a,b)=>a.date<b.date?-1:1); }
+function doseStr(v,w,d){ if(!v||!w||!d) return (d?d+'u':''); const mg=d*v/w; return mg>=1? `${d}u (${+mg.toFixed(2)} mg)` : `${d}u (${Math.round(mg*1000)} mcg)`; }
+
+/* ---------- ONBOARDING ---------- */
+let obPeds=[];
+function pfTypeChange(){ document.getElementById("pf_custom_wrap").classList.toggle("hide", document.getElementById("pf_type").value!=='other'); }
+function pfFreqChange(){ document.getElementById("pf_day_wrap").classList.toggle("hide", document.getElementById("pf_freq").value!=='weekly'); }
+function pfCalc(){ const v=+document.getElementById("pf_vial").value,w=+document.getElementById("pf_water").value,d=+document.getElementById("pf_dose").value;
+  const el=document.getElementById("pf_calc"); if(v&&w&&d){ const mg=d*v/w; el.textContent=`→ ${d} units = ${mg>=1?(+mg.toFixed(2))+' mg':Math.round(mg*1000)+' mcg'} per dose  (${(v*100/w).toFixed(1)} mg/mL)`; } else el.textContent=""; }
+function pfAdd(){ const type=document.getElementById("pf_type").value;
+  const name=type==='other'?(document.getElementById("pf_custom").value||"Peptide"):INFO[type].name;
+  const v=+document.getElementById("pf_vial").value,w=+document.getElementById("pf_water").value,d=+document.getElementById("pf_dose").value;
+  const freq=document.getElementById("pf_freq").value, day=document.getElementById("pf_day").value, start=document.getElementById("pf_start").value||today();
+  if(!d){ alert("Enter your dose in units."); return; }
+  obPeds.push({id:"p"+Date.now(), type, name, vial:v,water:w,doseU:d, dose:doseStr(v,w,d), freq, day, start, siteIdx:0});
+  // reset minimal
+  document.getElementById("pf_vial").value="";document.getElementById("pf_water").value="";document.getElementById("pf_dose").value="";document.getElementById("pf_custom").value="";document.getElementById("pf_calc").textContent="";
+  renderObPeds();
+}
+function renderObPeds(){ document.getElementById("ob_pedlist").innerHTML = obPeds.map((p,i)=>
+  `<div class="pedchip"><div><b>${p.name}</b> <span class="muted">${p.dose} · ${p.freq==='weekly'?DAYNAME[p.day]+' weekly':p.freq==='daily-am'?'daily AM':'daily PM'}</span></div><span class="muted" style="cursor:pointer" onclick="obDel(${i})">✕</span></div>`).join("");
+  document.getElementById("ob_start").disabled = obPeds.length===0;
+}
+function obDel(i){ obPeds.splice(i,1); renderObPeds(); }
+function finishOnboard(){
+  const goal=+document.getElementById("ob_goal").value||null, cur=+document.getElementById("ob_cur").value||null;
+  S={ profile:{name:document.getElementById("ob_name").value||"", goal, cur},
+      peds:obPeds, log:[], weights: cur?[{date:today(),lb:cur}]:[], times:{am:"08:00",pm:"21:30",wk:"09:00",lab:false} };
+  save(); showApp(); render();
+}
+
+/* ---------- MAIN RENDER ---------- */
+function showApp(){ document.getElementById("onboard").classList.add("hide"); document.getElementById("app").classList.remove("hide"); }
+function render(){
+  const goal=S.profile.goal;
+  document.getElementById("hdrSub").textContent = (S.profile.name? S.profile.name+" • ":"") + S.peds.map(p=>p.name.split(/\s/)[0]+" "+p.dose.split(' ')[0]).join(" · ");
+  // TODAY
+  const st=streak();
+  let h=`<div class="card"><div class="row"><span class="med">🔥 Dose streak</span><span class="big" style="font-size:24px">${st} ${st===1?'day':'days'}</span></div><div class="muted" style="margin-top:2px">consecutive days with all daily doses done</div></div>`;
+  S.peds.forEach(p=>{ const done=p.freq==='weekly'?loggedWeek(p.id):loggedToday(p.id);
+    const when=p.freq==='daily-am'?'this morning':p.freq==='daily-pm'?'tonight':`this week (${DAYNAME[p.day]})`;
+    h+=`<div class="card ${done?'done':'due'}"><div class="row"><span class="med">${p.name}</span><span class="pill">${p.dose}</span></div>
+      <div class="muted" style="margin:6px 0">${done?'✅ Done':'⏳ Due '+when} • site: <span class="site">${SITES[p.siteIdx%SITES.length]}</span></div>
+      ${p.freq==='daily-pm'&&!done?'<div class="warnnote">⚠️ GH peptides: no food in the last 2h</div>':''}
+      ${done?'':`<button class="btn sm" onclick="logDose('${p.id}')">✓ Done</button>`}</div>`; });
+  document.getElementById("todayList").innerHTML=h;
+  const wt=S.weights.find(w=>w.date===today()); document.getElementById("wTodayPill").textContent= wt? wt.lb+" lb":"not logged";
+  // WEIGHT
+  const sw=sortedW(), cur=sw.length?sw[sw.length-1].lb:null, start=sw.length?sw[0].lb:null;
+  document.getElementById("wHead").textContent = goal? `Weight → goal ${goal} lb` : "Weight";
+  document.getElementById("wNow").textContent=cur!=null?cur:"—";
+  document.getElementById("wLost").textContent=(cur!=null&&start!=null)?(start-cur>=0?'-':'+')+Math.abs(start-cur).toFixed(1):"—";
+  document.getElementById("wToGo").textContent=(cur!=null&&goal)?Math.max(0,(cur-goal)).toFixed(1):"—";
+  const wc=weekChange(), we=document.getElementById("wWeek");
+  if(wc){ const dir=wc.delta<0?'▼':wc.delta>0?'▲':'■', col=wc.delta<0?'#37d39b':'#f5a524';
+    we.innerHTML=`This week: <b style="color:${col}">${dir} ${Math.abs(wc.perWk)} lb/wk</b>`; } else we.textContent="";
+  document.getElementById("wList").innerHTML=sw.slice().reverse().slice(0,30).map(w=>`<div class="logrow"><span>${w.date}</span><span><b>${w.lb} lb</b> <span class="muted" style="cursor:pointer" onclick="delWeight('${w.date}')">✕</span></span></div>`).join("");
+  if(!document.getElementById("view-weight").classList.contains("hide")) drawChart();
+  // CYCLES
+  document.getElementById("cycleList").innerHTML=S.peds.map(p=>`<div class="card"><div class="row"><span class="med">${p.name}</span><span class="days">Day ${daysSince(p.start)+1}</span></div><div class="muted" style="margin-top:5px">Started ${p.start} • ${p.dose} • ${(daysSince(p.start)/7).toFixed(1)} wks in</div></div>`).join("");
+  // GUIDE doses
+  const types=[...new Set(S.peds.map(p=>p.type))];
+  document.getElementById("guideDoses").innerHTML = S.peds.map(p=>{ const inf=INFO[p.type];
+    const lis = inf? inf.li.map(x=>`<li>${x}</li>`).join("") : '<li>Custom peptide — follow your source\'s guidance; see general safety below.</li>';
+    const cls = inf? inf.cls : "";
+    const sched = p.freq==='weekly'?DAYNAME[p.day]+' weekly':p.freq==='daily-am'?'daily AM':'daily PM (bedtime)';
+    return `<details><summary>${p.name} <span class="tag g">${p.dose}</span> · ${sched}</summary><div class="body"><span class="k">${cls}</span><ul>${lis}</ul></div></details>`; }).join("");
+  // GUIDE targets
+  const g=goal||cur||null, water=cur?Math.round(cur/2):(g?Math.round(g/2):null);
+  document.getElementById("guideTargets").innerHTML=
+    `<div class="targ"><span>🥩 Protein</span><b>${g?g+'–'+Math.round(g*1.1)+' g':'1g per lb of goal'}</b></div>
+     <div class="targ"><span>💧 Water</span><b>${water?'~'+water+' oz':'half bodyweight in oz'}</b></div>
+     <div class="targ"><span>🧂 Electrolytes</span><b>Na / K / Mg daily</b></div>
+     <div class="targ"><span>💊 Creatine</span><b>5 g</b></div>
+     <div class="targ"><span>🌾 Fiber</span><b>ramp slowly + water</b></div>
+     <div class="targ"><span>😴 Sleep</span><b>7–9 h</b></div>
+     <div class="targ"><span>🚶 Steps</span><b>8–10k</b></div>
+     <div class="targ"><span>🏋️ Lifting</span><b>3–4×/wk</b></div>
+     <div class="hint">Protein first, front-loaded in the morning. Eat on a schedule, not on hunger.</div>`;
+  // LOG + SETTINGS
+  document.getElementById("logList").innerHTML = S.log.length? S.log.slice().reverse().slice(0,40).map(e=>`<div class="logrow"><span><b>${(ped(e.id)||{}).name||'?'}</b> <span class="muted">${new Date(e.ts).toLocaleString()}</span></span><span class="site">${e.site||''}</span></div>`).join("") : '<span class="muted">No injections logged yet.</span>';
+  document.getElementById("setList").innerHTML=S.peds.map(p=>`<div class="card"><div class="med">${p.name}</div>
+    <label>Dose label</label><input value="${p.dose}" onchange="updPed('${p.id}','dose',this.value)">
+    <label>Start date</label><input type="date" value="${p.start}" onchange="updPed('${p.id}','start',this.value)"></div>`).join("");
+}
+
+function dayComplete(d){ const ids=dailyIds(); if(!ids.length)return false; return ids.every(id=>S.log.some(e=>e.id===id&&e.date===d)); }
+function streak(){ let n=0,dt=new Date(); if(!dayComplete(today())) dt.setDate(dt.getDate()-1);
+  while(dayComplete(dt.toLocaleDateString('en-CA'))){ n++; dt.setDate(dt.getDate()-1); } return n; }
+function weekChange(){ const sw=sortedW(); if(sw.length<2)return null; const last=sw[sw.length-1];
+  const target=new Date(last.date).getTime()-7*864e5; let ref=null,best=Infinity;
+  for(const w of sw){ if(w.date===last.date)continue; const diff=Math.abs(new Date(w.date).getTime()-target); if(diff<best){best=diff;ref=w;} }
+  if(!ref)return null; const days=(new Date(last.date)-new Date(ref.date))/864e5; if(days<=0)return null;
+  return {delta:+(last.lb-ref.lb).toFixed(1), perWk:+((last.lb-ref.lb)/days*7).toFixed(1)}; }
+
+function drawChart(){ const sw=sortedW(),cv=document.getElementById("chart"),goal=S.profile.goal;
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=200; cv.width=W*dpr;cv.height=H*dpr; const x=cv.getContext("2d");x.scale(dpr,dpr);x.clearRect(0,0,W,H); if(sw.length<1)return;
+  const pad=34,t0=new Date(sw[0].date).getTime(),t1=new Date(sw[sw.length-1].date).getTime();
+  const vals=sw.map(w=>w.lb).concat(goal?[goal]:[]); let lo=Math.min(...vals)-3,hi=Math.max(...vals)+3;
+  const px=t=>pad+((t-t0)/((t1-t0)||1))*(W-pad-10), py=v=>H-26-((v-lo)/((hi-lo)||1))*(H-44);
+  if(goal){ x.strokeStyle="#37d39b66";x.setLineDash([4,4]);x.beginPath();x.moveTo(pad,py(goal));x.lineTo(W-10,py(goal));x.stroke();x.setLineDash([]);x.fillStyle="#37d39b";x.font="10px sans-serif";x.fillText("goal "+goal,pad,py(goal)-4); }
+  x.fillStyle="#9aa6b6";x.fillText(hi.toFixed(0),4,py(hi)+4);x.fillText(lo.toFixed(0),4,py(lo)+4);
+  x.strokeStyle="#4f9df7";x.lineWidth=2;x.beginPath();sw.forEach((w,i)=>{const X=px(new Date(w.date).getTime()),Y=py(w.lb);i?x.lineTo(X,Y):x.moveTo(X,Y);});x.stroke();
+  x.fillStyle="#4f9df7";sw.forEach(w=>{x.beginPath();x.arc(px(new Date(w.date).getTime()),py(w.lb),2.5,0,7);x.fill();});
+  const last=sw[sw.length-1];x.fillStyle="#e8edf4";x.font="bold 12px sans-serif";x.fillText(last.lb+" lb",Math.min(px(new Date(last.date).getTime())-10,W-50),py(last.lb)-8); }
+
+function logDose(id){ const p=ped(id); S.log.push({id, ts:Date.now(), date:today(), site:SITES[p.siteIdx%SITES.length]}); p.siteIdx++; save(); render(); }
+function updPed(id,f,v){ ped(id)[f]=v; save(); render(); }
+function upsertWeight(date,lb){ if(isNaN(lb)||lb<=0)return; const e=S.weights.find(w=>w.date===date); if(e)e.lb=lb; else S.weights.push({date,lb}); save(); render(); }
+function saveWeight(){ upsertWeight(document.getElementById("wDate").value||today(), parseFloat(document.getElementById("wVal").value)); document.getElementById("wVal").value=""; }
+function quickWeight(){ upsertWeight(today(), parseFloat(document.getElementById("wQuick").value)); document.getElementById("wQuick").value=""; }
+function delWeight(d){ S.weights=S.weights.filter(w=>w.date!==d); save(); render(); }
+function exportData(){ dl("peptide-tracker-backup.json", JSON.stringify(S,null,2), "application/json"); }
+function importData(ev){ const f=ev.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ try{ S=JSON.parse(r.result); S.weights=S.weights||[]; save(); showApp(); render(); alert("Imported ✓"); }catch(e){ alert("Bad file"); } }; r.readAsText(f); }
+function resetAll(){ if(confirm("Erase everything and start setup over?")){ localStorage.removeItem("peptrack"); location.reload(); } }
+
+function icsTime(d,t){ return d.replace(/-/g,"")+"T"+t.replace(":","")+"00"; }
+function vevent(uid,sum,dt,rr){ return ["BEGIN:VEVENT",`UID:${uid}@peptracker`,`DTSTAMP:${icsTime(today(),"000000")}`,`DTSTART:${dt}`,`RRULE:${rr}`,`SUMMARY:${sum}`,"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Dose reminder","TRIGGER:PT0M","END:VALARM","END:VEVENT"].join("\r\n"); }
+function downloadICS(){ const am=val("t_am"),pm=val("t_pm"),wk=val("t_wk"),b=today(); let ev=[];
+  S.peds.forEach(p=>{ if(p.freq==='daily-am') ev.push(vevent(p.id,`💊 ${p.name} ${p.dose} (AM)`,icsTime(b,am),"FREQ=DAILY"));
+    else if(p.freq==='daily-pm') ev.push(vevent(p.id,`💉 ${p.name} ${p.dose} — bedtime`,icsTime(b,pm),"FREQ=DAILY"));
+    else ev.push(vevent(p.id,`💉 ${p.name} ${p.dose} (weekly)`,icsTime(b,wk),`FREQ=WEEKLY;BYDAY=${p.day}`)); });
+  if(document.getElementById("lab_chk").checked){ const d=new Date();d.setDate(d.getDate()+84); ev.push(vevent("labs","🩸 Labs due",icsTime(d.toLocaleDateString('en-CA'),"09:00"),"FREQ=YEARLY")); }
+  S.times={am,pm,wk,lab:document.getElementById("lab_chk").checked}; save();
+  dl("peptide-reminders.ics",["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PeptideTracker//EN","CALSCALE:GREGORIAN",...ev,"END:VCALENDAR"].join("\r\n"),"text/calendar"); }
+function val(id){ return document.getElementById(id).value; }
+function dl(n,c,t){ const b=new Blob([c],{type:t}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(u),1500); }
+
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
+  ["today","weight","cycle","guide","alerts","set"].forEach(v=>document.getElementById("view-"+v).classList.add("hide"));
+  document.getElementById("view-"+t.dataset.v).classList.remove("hide"); render(); });
+
+/* boot */
+document.getElementById("pf_start").value=today();
+if(S){ showApp(); if(S.times){document.getElementById("t_am").value=S.times.am;document.getElementById("t_pm").value=S.times.pm;document.getElementById("t_wk").value=S.times.wk;document.getElementById("lab_chk").checked=!!S.times.lab;} document.getElementById("wDate").value=today(); render(); }
+window.addEventListener("resize",()=>{ if(S&&!document.getElementById("view-weight").classList.contains("hide")) drawChart(); });
+</script>
+</body>
+</html>
