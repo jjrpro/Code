@@ -80,6 +80,7 @@
         <div class="stat"><div class="n" id="wLost">—</div><div class="l">Lost</div></div>
         <div class="stat"><div class="n" id="wToGo">—</div><div class="l">To go</div></div>
       </div>
+      <div id="wWeek" class="muted" style="text-align:center;margin:9px 0 2px"></div>
       <canvas id="chart"></canvas>
     </div>
     <div class="card">
@@ -160,12 +161,21 @@ function daysSince(d){ return Math.floor((Date.now()-new Date(d+"T00:00:00"))/86
 function loggedToday(k){ const t=today(); return S.log.some(e=>e.med===k && e.date===t); }
 function loggedThisWeek(k){ return S.log.some(e=>e.med===k && (Date.now()-new Date(e.ts))<7*864e5); }
 function sortedW(){ return S.weights.slice().sort((a,b)=>a.date<b.date?-1:1); }
+function dayComplete(d){ return S.log.some(e=>e.med==='semax'&&e.date===d) && S.log.some(e=>e.med==='tesa'&&e.date===d); }
+function streak(){ let n=0,d=new Date(); if(!dayComplete(today())) d.setDate(d.getDate()-1);
+  while(dayComplete(d.toLocaleDateString('en-CA'))){ n++; d.setDate(d.getDate()-1); } return n; }
+function weekChange(){ const sw=sortedW(); if(sw.length<2)return null; const last=sw[sw.length-1];
+  const target=new Date(last.date).getTime()-7*864e5; let ref=null,best=Infinity;
+  for(const w of sw){ if(w.date===last.date)continue; const diff=Math.abs(new Date(w.date).getTime()-target); if(diff<best){best=diff;ref=w;} }
+  if(!ref)return null; const days=(new Date(last.date)-new Date(ref.date))/864e5; if(days<=0)return null;
+  return {delta:+(last.lb-ref.lb).toFixed(1), perWk:+((last.lb-ref.lb)/days*7).toFixed(1)}; }
 
 function render(){
   document.getElementById("hdrSub").textContent =
     `Reta ${S.meds.reta.dose} • Tesa ${S.meds.tesa.dose} • Semax ${S.meds.semax.dose}`;
   // TODAY doses
-  let h="";
+  const st=streak();
+  let h=`<div class="card"><div class="row"><span class="med">🔥 Dose streak</span><span class="big" style="font-size:24px">${st} ${st===1?'day':'days'}</span></div><div class="muted" style="margin-top:2px">consecutive days with Semax + Tesa done</div></div>`;
   for(const k of ["semax","tesa","reta"]){
     const m=S.meds[k];
     const done = m.freq==="weekly" ? loggedThisWeek(k) : loggedToday(k);
@@ -185,6 +195,11 @@ function render(){
   document.getElementById("wNow").textContent = cur!=null?cur:"—";
   document.getElementById("wLost").textContent = (cur!=null&&start!=null)?(start-cur).toFixed(1):"—";
   document.getElementById("wToGo").textContent = cur!=null?Math.max(0,(cur-GOAL)).toFixed(1):"—";
+  const wc=weekChange(), we=document.getElementById("wWeek");
+  if(wc){ const dir=wc.delta<0?'▼':wc.delta>0?'▲':'■', col=wc.delta<0?'#37d39b':'#f5a524';
+    const flag = wc.perWk < -2 ? ' &nbsp;•&nbsp; <span style="color:#f5a524">faster than 2 lb/wk — consider easing Reta to 3 mg</span>' : '';
+    we.innerHTML=`This week: <b style="color:${col}">${dir} ${Math.abs(wc.perWk)} lb/wk</b>${flag}`; }
+  else we.textContent="";
   document.getElementById("wList").innerHTML = sw.slice().reverse().slice(0,30)
     .map(w=>`<div class="logrow"><span>${w.date}</span><span><b>${w.lb} lb</b> <span class="muted" onclick="delWeight('${w.date}')" style="cursor:pointer">✕</span></span></div>`).join("");
   if(!document.getElementById("view-weight").classList.contains("hide")) drawChart();
