@@ -48,6 +48,21 @@
   h2{font-size:14px;margin:2px 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
   canvas{width:100%;height:200px;display:block}
   .warnnote{font-size:11px;color:var(--warn);margin-top:5px}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2px 13px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:600;padding:11px 0;list-style:none;font-size:14px}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸";color:var(--accent);margin-right:8px}
+  details[open]>summary::before{content:"▾"}
+  .body{font-size:13px;padding:0 0 12px}
+  .body ul{margin:6px 0;padding-left:18px}.body li{margin:4px 0}
+  .body .k{color:var(--mut)}
+  .tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle}
+  .tag.r{background:#f5656522;color:#f56565;border:1px solid #f5656544}
+  .tag.y{background:#f5a52422;color:#f5a524;border:1px solid #f5a52444}
+  .tag.g{background:#37d39b22;color:#37d39b;border:1px solid #37d39b44}
+  .targ{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .targ:last-child{border:none}.targ b{color:var(--accent)}
+  .sechead{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin:16px 0 8px}
 </style>
 </head>
 <body>
@@ -97,6 +112,105 @@
     <div id="cycleList"></div>
   </section>
 
+  <!-- GUIDE -->
+  <section id="view-guide" class="hide">
+    <h2>Full breakdown</h2>
+
+    <div class="sechead">Your doses — what each one is doing</div>
+
+    <details open><summary>Retatrutide <span id="gd_reta" class="tag g"></span> weekly · Mon AM</summary>
+      <div class="body">
+        <span class="k">GLP-1 / GIP / glucagon triple agonist — your main fat-loss driver.</span>
+        <ul>
+          <li><b>Job:</b> cuts appetite, raises energy burn + liver-fat oxidation.</li>
+          <li><b>Dose note:</b> 4 mg (40u). If losing <b>&gt;2 lb/wk</b> near goal, ease to <b>3 mg (30u)</b> to protect muscle. Don't climb past 40u for this goal.</li>
+          <li><b>Timeline:</b> appetite drop in days; steady loss, no plateau yet.</li>
+          <li><span class="tag y">watch</span> nausea/GI (worst right after dose), constipation, <b>resting HR +5–8 bpm</b>.</li>
+          <li><span class="tag y">muscle</span> ~35% of weight lost can be lean mass → protein + lifting are non-negotiable.</li>
+          <li><span class="tag r">serious</span> pancreatitis (severe belly pain → back), gallbladder, rapid-loss gallstones.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details><summary>Tesamorelin <span id="gd_tesa" class="tag g"></span> nightly · bedtime fasted</summary>
+      <div class="body">
+        <span class="k">GHRH analog — raises your own GH/IGF-1; targets visceral fat + recovery.</span>
+        <ul>
+          <li><b>Timing:</b> bedtime, <b>no food 2h before</b> (insulin blunts the GH pulse). Sleep is where it works.</li>
+          <li><b>Dose note:</b> 1.5 mg now (stepping 1→2 mg). <b>Get an IGF-1 lab before going to 20u/2 mg.</b></li>
+          <li><span class="tag y">watch</span> joint aches, puffiness/water retention, wrist tingling (carpal tunnel) = signs to ease down.</li>
+          <li><span class="tag y">sugar</span> GH mildly raises blood glucose — relevant alongside Reta.</li>
+          <li><b>Rule:</b> never push IGF-1 above your age range.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details><summary>Semax <span id="gd_semax" class="tag g"></span> daily · AM only</summary>
+      <div class="body">
+        <span class="k">Nootropic peptide (BDNF/focus). Lowest-risk, lowest-evidence of the three.</span>
+        <ul>
+          <li><b>Timing:</b> morning, <b>last dose by ~3–4 PM</b> or it hurts sleep.</li>
+          <li><b>Dose note:</b> 650 mcg; 300–600 mcg is the studied range — could drop to ~3u and stretch the vial.</li>
+          <li><span class="tag y">watch</span> mild overstimulation, headache, insomnia if late. <b>Additive with caffeine/cocaine.</b></li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="sechead">Daily targets — hit these every day</div>
+    <div class="card">
+      <div class="targ"><span>🥩 Protein</span><b>185–200 g</b></div>
+      <div class="targ"><span>💧 Water</span><b>~100 oz</b></div>
+      <div class="targ"><span>🧂 Electrolytes</span><b>Na / K / Mg daily</b></div>
+      <div class="targ"><span>💊 Creatine</span><b>5 g</b></div>
+      <div class="targ"><span>🌾 Fiber</span><b>ramp slowly + water</b></div>
+      <div class="targ"><span>😴 Sleep</span><b>7–9 h</b></div>
+      <div class="targ"><span>🚶 Steps</span><b>8–10k</b></div>
+      <div class="targ"><span>🏋️ Lifting</span><b>3–4×/wk</b></div>
+      <div class="hint">Protein first, front-loaded in the morning. Eat on a schedule — not on hunger (it's gone on Reta).</div>
+    </div>
+
+    <div class="sechead">Risks — weed + cocaine on this stack</div>
+
+    <details><summary>🚬 Cocaine <span class="tag r">serious</span></summary>
+      <div class="body"><ul>
+        <li><b>The heart is the issue.</b> Reta keeps resting HR up <b>24/7</b> (6-day half-life — no "off week"). Coke spikes HR/BP + constricts arteries → real heart-attack/stroke risk, stacked.</li>
+        <li><b>Coke + alcohol = cocaethylene</b> — more cardiotoxic, lasts longer. Biggest party-night danger since you'll be drinking.</li>
+        <li><b>Dehydration</b> (Reta + alcohol + coke) strains kidneys → hydrate + electrolytes hard.</li>
+        <li><b>Pancreatitis</b> risk is additive with the GLP-1.</li>
+        <li><b>Appetite:</b> kills it on top of Reta → undereating + muscle loss.</li>
+        <li><b>Keep it genuinely occasional.</b> Chest pain/pressure or a heart that won't settle = <b>ER</b>, not sleep-it-off.</li>
+      </ul></div>
+    </details>
+
+    <details><summary>🌿 Weed <span class="tag y">blunts results</span></summary>
+      <div class="body"><ul>
+        <li><b>Munchies</b> fight the cut — aim them at protein, not junk.</li>
+        <li><b>Don't eat in the 2h before Tesa</b> — a late snack wastes the GH pulse. The #1 weed habit that costs you.</li>
+        <li>Chronic use degrades <b>deep sleep</b> = exactly where Tesa works.</li>
+        <li><span class="tag g">upside</span> anti-nausea (eases Reta GI); HR bump is small vs coke.</li>
+      </ul></div>
+    </details>
+
+    <details><summary>🚨 Red flags — stop &amp; see a doctor</summary>
+      <div class="body"><ul>
+        <li>Severe belly pain radiating to the <b>back</b> (± vomiting) → pancreatitis</li>
+        <li>Right-upper belly pain after fatty food, fever, jaundice → gallbladder</li>
+        <li>Persistent vomiting / dehydration</li>
+        <li>Racing or pounding heart, palpitations</li>
+        <li>Vision changes · neck lump/hoarseness · rash/swelling/trouble breathing</li>
+        <li>Tesa: bad swelling, joint pain, wrist tingling = dosing too high</li>
+      </ul></div>
+    </details>
+
+    <details><summary>🩸 Labs to monitor</summary>
+      <div class="body">
+        IGF-1 (gate for Tesa 2 mg) · fasting glucose + HbA1c · lipase · lipids · CMP (kidney/liver) ·
+        TSH/free T4 · CBC · resting HR + BP.<br><b>Schedule:</b> baseline → 3 months → 6–12 months.
+      </div>
+    </details>
+    <div class="hint">Educational / harm-reduction only — not medical advice.</div>
+  </section>
+
   <!-- ALERTS -->
   <section id="view-alerts" class="hide">
     <h2>Phone &amp; desktop alerts</h2>
@@ -135,6 +249,7 @@
   <button class="tab on" data-v="today"><span class="ic">☑️</span>Today</button>
   <button class="tab" data-v="weight"><span class="ic">⚖️</span>Weight</button>
   <button class="tab" data-v="cycle"><span class="ic">📈</span>Cycles</button>
+  <button class="tab" data-v="guide"><span class="ic">📋</span>Guide</button>
   <button class="tab" data-v="alerts"><span class="ic">🔔</span>Alerts</button>
   <button class="tab" data-v="set"><span class="ic">⚙️</span>Setup</button>
 </nav>
@@ -219,6 +334,7 @@ function render(){
     return `<div class="card"><div class="med">${m.name}</div>
       <label>Dose</label><input value="${m.dose}" onchange="upd('${k}','dose',this.value)">
       <label>Start date</label><input type="date" value="${m.start}" onchange="upd('${k}','start',this.value)"></div>`; }).join("");
+  ["reta","tesa","semax"].forEach(k=>{ const el=document.getElementById("gd_"+k); if(el) el.textContent=S.meds[k].dose; });
 }
 
 function drawChart(){
@@ -277,7 +393,7 @@ function dl(n,c,t){ const b=new Blob([c],{type:t}),u=URL.createObjectURL(b),a=do
 
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
-  ["today","weight","cycle","alerts","set"].forEach(v=>document.getElementById("view-"+v).classList.add("hide"));
+  ["today","weight","cycle","guide","alerts","set"].forEach(v=>document.getElementById("view-"+v).classList.add("hide"));
   document.getElementById("view-"+t.dataset.v).classList.remove("hide"); render();
 });
 document.getElementById("wDate").value=today();
