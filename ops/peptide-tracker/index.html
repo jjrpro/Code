@@ -10,7 +10,7 @@
   :root{ --bg:#0e1116; --card:#171b22; --card2:#1f242d; --line:#2a313c; --txt:#e8edf4; --mut:#9aa6b6;
     --accent:#37d39b; --warn:#f5a524; --danger:#f56565; --blue:#4f9df7; }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:90px}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:92px}
   header{padding:18px 16px 10px;position:sticky;top:0;background:linear-gradient(#0e1116,#0e1116ee);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--line)}
   h1{font-size:19px;margin:0;display:flex;align-items:center;gap:8px}
   .sub{color:var(--mut);font-size:12px;margin-top:2px}
@@ -20,22 +20,25 @@
   .med{font-weight:600}
   .pill{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--card2);color:var(--mut);border:1px solid var(--line)}
   .due{border-left:4px solid var(--warn)}
-  .done{border-left:4px solid var(--accent);opacity:.75}
+  .done{border-left:4px solid var(--accent);opacity:.78}
   .muted{color:var(--mut);font-size:13px}
-  .big{font-size:26px;font-weight:700;letter-spacing:.5px}
+  .big{font-size:30px;font-weight:700;letter-spacing:.5px}
   button{font:inherit;cursor:pointer;border:none;border-radius:10px;padding:11px 14px;font-weight:600}
   .btn{background:var(--accent);color:#06231a}
   .btn.alt{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
   .btn.blue{background:var(--blue);color:#04203f}
-  .btn.sm{padding:7px 11px;font-size:13px;border-radius:9px}
+  .btn.sm{padding:8px 12px;font-size:13px;border-radius:9px}
   .btn:active{transform:scale(.97)}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
+  .stat{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 6px}
+  .stat .n{font-size:20px;font-weight:700}.stat .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
   label{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
-  input,select{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:9px;font:inherit}
-  .tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 6px env(safe-area-inset-bottom);z-index:6}
-  .tab{flex:1;text-align:center;background:none;color:var(--mut);font-size:11px;padding:8px 2px;border-radius:10px}
+  input,select{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:10px;font:inherit}
+  .tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 4px env(safe-area-inset-bottom);z-index:6}
+  .tab{flex:1;text-align:center;background:none;color:var(--mut);font-size:10.5px;padding:8px 1px;border-radius:10px}
   .tab.on{color:var(--accent);background:var(--card2)}
-  .tab .ic{font-size:19px;display:block}
+  .tab .ic{font-size:18px;display:block}
   .hide{display:none}
   .logrow{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:8px}
   .logrow:last-child{border:none}
@@ -43,7 +46,8 @@
   .hint{background:var(--card2);border:1px dashed var(--line);border-radius:10px;padding:10px;font-size:12px;color:var(--mut);margin-top:8px}
   .days{font-size:12px;color:var(--accent)}
   h2{font-size:14px;margin:2px 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
-  a.dl{color:var(--blue);text-decoration:none}
+  canvas{width:100%;height:200px;display:block}
+  .warnnote{font-size:11px;color:var(--warn);margin-top:5px}
 </style>
 </head>
 <body>
@@ -55,9 +59,35 @@
 <main>
   <!-- TODAY -->
   <section id="view-today">
-    <h2>Due today</h2>
+    <h2>Doses due today</h2>
     <div id="todayList"></div>
-    <div class="hint">Tap <b>Log</b> the moment you inject — it timestamps it and advances your site rotation so you don't hit the same spot twice.</div>
+    <div class="card">
+      <div class="row"><span class="med">⚖️ Today's weight</span><span class="pill" id="wTodayPill">—</span></div>
+      <div class="grid" style="margin-top:8px">
+        <input type="number" inputmode="decimal" id="wQuick" placeholder="lb" step="0.1">
+        <button class="btn sm" onclick="quickWeight()">Save weight</button>
+      </div>
+    </div>
+    <div class="hint">Tap <b>✓ Done</b> the moment you inject — it timestamps it and rotates your injection site. Tesa: no food 2h before.</div>
+  </section>
+
+  <!-- WEIGHT -->
+  <section id="view-weight" class="hide">
+    <h2>Weight → goal 185 lb</h2>
+    <div class="card">
+      <div class="g3">
+        <div class="stat"><div class="n" id="wNow">—</div><div class="l">Current</div></div>
+        <div class="stat"><div class="n" id="wLost">—</div><div class="l">Lost</div></div>
+        <div class="stat"><div class="n" id="wToGo">—</div><div class="l">To go</div></div>
+      </div>
+      <canvas id="chart"></canvas>
+    </div>
+    <div class="card">
+      <label>Log a weight (defaults to today)</label>
+      <div class="grid"><input type="date" id="wDate"><input type="number" inputmode="decimal" id="wVal" placeholder="lb" step="0.1"></div>
+      <button class="btn" style="width:100%;margin-top:10px" onclick="saveWeight()">Save</button>
+      <div id="wList" style="margin-top:10px"></div>
+    </div>
   </section>
 
   <!-- CYCLES -->
@@ -66,28 +96,21 @@
     <div id="cycleList"></div>
   </section>
 
-  <!-- LOG -->
-  <section id="view-log" class="hide">
-    <h2>History</h2>
-    <div class="card"><div id="logList" class="muted">No injections logged yet.</div></div>
-    <button class="btn alt sm" onclick="clearLog()">Clear history</button>
-  </section>
-
   <!-- ALERTS -->
   <section id="view-alerts" class="hide">
-    <h2>Phone alerts</h2>
+    <h2>Phone &amp; desktop alerts</h2>
     <div class="card">
-      <p class="muted" style="margin-top:0">Set your times, download the calendar file, and open it on your phone. It adds <b>repeating native reminders</b> to Apple/Google Calendar — they alert you even when this app is closed. Re-download &amp; re-import only if you change times.</p>
-      <label>Semax — daily morning time</label><input type="time" id="t_semax" value="08:00">
-      <label>Tesamorelin — daily night time (bedtime, fasted)</label><input type="time" id="t_tesa" value="21:30">
+      <p class="muted" style="margin-top:0">Set times, download the calendar file, open it → adds <b>repeating native reminders</b> (Apple/Google Calendar) that alert even when this app is closed.</p>
+      <label>Semax — daily morning</label><input type="time" id="t_semax" value="08:00">
+      <label>Tesamorelin — daily night (bedtime, fasted)</label><input type="time" id="t_tesa" value="21:30">
       <label>Retatrutide — weekly</label>
       <div class="grid">
-        <select id="reta_day"><option value="SU">Sunday</option><option value="MO">Monday</option><option value="TU">Tuesday</option><option value="WE">Wednesday</option><option value="TH">Thursday</option><option value="FR">Friday</option><option value="SA">Saturday</option></select>
+        <select id="reta_day"><option value="MO">Monday</option><option value="SU">Sunday</option><option value="TU">Tuesday</option><option value="WE">Wednesday</option><option value="TH">Thursday</option><option value="FR">Friday</option><option value="SA">Saturday</option></select>
         <input type="time" id="t_reta" value="09:00">
       </div>
       <label><input type="checkbox" id="lab_chk" style="width:auto;display:inline;margin-right:6px">Add a 12-week IGF-1 / labs reminder</label>
-      <button class="btn blue" style="width:100%;margin-top:12px" onclick="downloadICS()">⬇️ Download calendar reminders (.ics)</button>
-      <div class="hint">iPhone: download → tap the file → "Add All" to Calendar. Google Cal: Settings → Import. Reminders repeat forever.</div>
+      <button class="btn blue" style="width:100%;margin-top:12px" onclick="downloadICS()">⬇️ Download reminders (.ics)</button>
+      <div class="hint">Mac: open the file → Calendar adds them. iPhone: tap file → "Add All". Repeats forever.</div>
     </div>
   </section>
 
@@ -96,11 +119,11 @@
     <h2>Protocol &amp; data</h2>
     <div id="setList"></div>
     <div class="card">
-      <h2 style="margin-top:0">Backup</h2>
-      <p class="muted" style="margin-top:0">Your data lives only in this browser. Export to keep a copy / move to another device.</p>
-      <div class="grid">
-        <button class="btn alt sm" onclick="exportData()">Export JSON</button>
-        <button class="btn alt sm" onclick="document.getElementById('imp').click()">Import JSON</button>
+      <h2 style="margin-top:0">History &amp; backup</h2>
+      <div id="logList" class="muted" style="max-height:200px;overflow:auto">No injections logged yet.</div>
+      <div class="grid" style="margin-top:10px">
+        <button class="btn alt sm" onclick="exportData()">Export backup</button>
+        <button class="btn alt sm" onclick="document.getElementById('imp').click()">Import backup</button>
       </div>
       <input type="file" id="imp" accept="application/json" class="hide" onchange="importData(event)">
     </div>
@@ -109,14 +132,15 @@
 
 <nav class="tabs">
   <button class="tab on" data-v="today"><span class="ic">☑️</span>Today</button>
+  <button class="tab" data-v="weight"><span class="ic">⚖️</span>Weight</button>
   <button class="tab" data-v="cycle"><span class="ic">📈</span>Cycles</button>
-  <button class="tab" data-v="log"><span class="ic">🗒️</span>History</button>
   <button class="tab" data-v="alerts"><span class="ic">🔔</span>Alerts</button>
   <button class="tab" data-v="set"><span class="ic">⚙️</span>Setup</button>
 </nav>
 
 <script>
 const SITES = ["Abdomen L","Abdomen R","Love handle L","Love handle R","Thigh L","Thigh R"];
+const GOAL = 185;
 const DEFAULTS = {
   meds: {
     semax:{name:"Semax", dose:"6.5u (650 mcg)", freq:"daily-am", start:"2026-05-21", siteIdx:0},
@@ -124,107 +148,127 @@ const DEFAULTS = {
     reta: {name:"Retatrutide", dose:"40u (4 mg)", freq:"weekly", start:"2026-02-10", siteIdx:0}
   },
   log: [],
-  times: {semax:"08:00", tesa:"21:30", reta:"09:00", retaDay:"SU", lab:false}
+  weights: [{date:"2026-02-10", lb:260},{date:"2026-06-13", lb:200}],
+  times: {semax:"08:00", tesa:"21:30", reta:"09:00", retaDay:"MO", lab:false}
 };
 let S = load();
 
-function load(){ try{ const r=JSON.parse(localStorage.getItem("peptrack")); return r&&r.meds?r:structuredClone(DEFAULTS);}catch(e){return structuredClone(DEFAULTS);} }
+function load(){ try{ const r=JSON.parse(localStorage.getItem("peptrack")); if(r&&r.meds){ r.weights=r.weights||[]; return r; } }catch(e){} return structuredClone(DEFAULTS); }
 function save(){ localStorage.setItem("peptrack", JSON.stringify(S)); }
-function today(){ return new Date().toLocaleDateString('en-CA'); } // YYYY-MM-DD local
+function today(){ return new Date().toLocaleDateString('en-CA'); }
 function daysSince(d){ return Math.floor((Date.now()-new Date(d+"T00:00:00"))/864e5); }
 function loggedToday(k){ const t=today(); return S.log.some(e=>e.med===k && e.date===t); }
 function loggedThisWeek(k){ return S.log.some(e=>e.med===k && (Date.now()-new Date(e.ts))<7*864e5); }
+function sortedW(){ return S.weights.slice().sort((a,b)=>a.date<b.date?-1:1); }
 
 function render(){
   document.getElementById("hdrSub").textContent =
     `Reta ${S.meds.reta.dose} • Tesa ${S.meds.tesa.dose} • Semax ${S.meds.semax.dose}`;
-  // TODAY
+  // TODAY doses
   let h="";
   for(const k of ["semax","tesa","reta"]){
     const m=S.meds[k];
     const done = m.freq==="weekly" ? loggedThisWeek(k) : loggedToday(k);
-    const when = m.freq==="daily-am"?"this morning":m.freq==="daily-pm"?"tonight (fasted)":"this week";
+    const when = m.freq==="daily-am"?"this morning":m.freq==="daily-pm"?"tonight (fasted)":"this week (Mon)";
     h+=`<div class="card ${done?'done':'due'}">
       <div class="row"><span class="med">${m.name}</span><span class="pill">${m.dose}</span></div>
-      <div class="muted" style="margin:6px 0">${done?'✅ Logged':'⏳ Due '+when} • next site: <span class="site">${SITES[m.siteIdx%SITES.length]}</span></div>
-      ${done?'':`<button class="btn sm" onclick="logDose('${k}')">Log injection</button>`}
+      <div class="muted" style="margin:6px 0">${done?'✅ Done':'⏳ Due '+when} • site: <span class="site">${SITES[m.siteIdx%SITES.length]}</span></div>
+      ${k==='tesa'&&!done?'<div class="warnnote">⚠️ No food in the last 2h</div>':''}
+      ${done?'':`<button class="btn sm" onclick="logDose('${k}')">✓ Done</button>`}
     </div>`;
   }
   document.getElementById("todayList").innerHTML=h;
+  const wt = S.weights.find(w=>w.date===today());
+  document.getElementById("wTodayPill").textContent = wt? wt.lb+" lb" : "not logged";
+  // WEIGHT
+  const sw=sortedW(); const cur=sw.length?sw[sw.length-1].lb:null; const start=sw.length?sw[0].lb:null;
+  document.getElementById("wNow").textContent = cur!=null?cur:"—";
+  document.getElementById("wLost").textContent = (cur!=null&&start!=null)?(start-cur).toFixed(1):"—";
+  document.getElementById("wToGo").textContent = cur!=null?Math.max(0,(cur-GOAL)).toFixed(1):"—";
+  document.getElementById("wList").innerHTML = sw.slice().reverse().slice(0,30)
+    .map(w=>`<div class="logrow"><span>${w.date}</span><span><b>${w.lb} lb</b> <span class="muted" onclick="delWeight('${w.date}')" style="cursor:pointer">✕</span></span></div>`).join("");
+  if(!document.getElementById("view-weight").classList.contains("hide")) drawChart();
   // CYCLES
   let c="";
-  for(const k of ["reta","tesa","semax"]){
-    const m=S.meds[k];
+  for(const k of ["reta","tesa","semax"]){ const m=S.meds[k];
     c+=`<div class="card"><div class="row"><span class="med">${m.name}</span><span class="days">Day ${daysSince(m.start)+1}</span></div>
-      <div class="muted" style="margin-top:5px">Started ${m.start} • ${m.dose}</div>
-      <div class="muted">${(daysSince(m.start)/7).toFixed(1)} weeks in</div></div>`;
-  }
+      <div class="muted" style="margin-top:5px">Started ${m.start} • ${m.dose} • ${(daysSince(m.start)/7).toFixed(1)} wks in</div></div>`; }
   document.getElementById("cycleList").innerHTML=c;
   // LOG
   const L=document.getElementById("logList");
-  if(!S.log.length){ L.innerHTML='<span class="muted">No injections logged yet.</span>'; }
-  else{ L.innerHTML=S.log.slice().reverse().slice(0,60).map(e=>
-    `<div class="logrow"><span><b>${S.meds[e.med]?.name||e.med}</b><br><span class="muted">${new Date(e.ts).toLocaleString()}</span></span><span class="site">${e.site||''}</span></div>`).join(""); }
+  L.innerHTML = S.log.length ? S.log.slice().reverse().slice(0,40).map(e=>
+    `<div class="logrow"><span><b>${S.meds[e.med]?.name||e.med}</b> <span class="muted">${new Date(e.ts).toLocaleString()}</span></span><span class="site">${e.site||''}</span></div>`).join("")
+    : '<span class="muted">No injections logged yet.</span>';
   // SETTINGS
-  document.getElementById("setList").innerHTML=["reta","tesa","semax"].map(k=>{
-    const m=S.meds[k];
+  document.getElementById("setList").innerHTML=["reta","tesa","semax"].map(k=>{ const m=S.meds[k];
     return `<div class="card"><div class="med">${m.name}</div>
       <label>Dose</label><input value="${m.dose}" onchange="upd('${k}','dose',this.value)">
-      <label>Start date</label><input type="date" value="${m.start}" onchange="upd('${k}','start',this.value)">
-      </div>`;
-  }).join("");
+      <label>Start date</label><input type="date" value="${m.start}" onchange="upd('${k}','start',this.value)"></div>`; }).join("");
 }
 
-function logDose(k){
-  const m=S.meds[k];
-  const site = SITES[m.siteIdx%SITES.length];
-  S.log.push({med:k, ts:Date.now(), date:today(), site: m.freq==='daily-am'?'(intranasal/AM)':site});
-  if(m.freq!=='daily-am') m.siteIdx++; // rotate subq sites only
-  save(); render();
+function drawChart(){
+  const sw=sortedW(); const cv=document.getElementById("chart");
+  const dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=200;
+  cv.width=W*dpr; cv.height=H*dpr; const x=cv.getContext("2d"); x.scale(dpr,dpr);
+  x.clearRect(0,0,W,H); if(sw.length<1)return;
+  const pad=34, t0=new Date(sw[0].date).getTime(), t1=new Date(sw[sw.length-1].date).getTime();
+  const vals=sw.map(w=>w.lb).concat([GOAL]); let lo=Math.min(...vals)-3, hi=Math.max(...vals)+3;
+  const px=t=>pad+((t-t0)/((t1-t0)||1))*(W-pad-10);
+  const py=v=>H-26-((v-lo)/((hi-lo)||1))*(H-44);
+  // goal line
+  x.strokeStyle="#37d39b66"; x.setLineDash([4,4]); x.beginPath(); x.moveTo(pad,py(GOAL)); x.lineTo(W-10,py(GOAL)); x.stroke(); x.setLineDash([]);
+  x.fillStyle="#37d39b"; x.font="10px sans-serif"; x.fillText("goal 185", pad, py(GOAL)-4);
+  // axis labels
+  x.fillStyle="#9aa6b6"; x.fillText(hi.toFixed(0), 4, py(hi)+4); x.fillText(lo.toFixed(0), 4, py(lo)+4);
+  // line
+  x.strokeStyle="#4f9df7"; x.lineWidth=2; x.beginPath();
+  sw.forEach((w,i)=>{ const X=px(new Date(w.date).getTime()), Y=py(w.lb); i?x.lineTo(X,Y):x.moveTo(X,Y); }); x.stroke();
+  // points + last label
+  x.fillStyle="#4f9df7"; sw.forEach(w=>{ x.beginPath(); x.arc(px(new Date(w.date).getTime()),py(w.lb),2.5,0,7); x.fill(); });
+  const last=sw[sw.length-1]; x.fillStyle="#e8edf4"; x.font="bold 12px sans-serif";
+  x.fillText(last.lb+" lb", Math.min(px(new Date(last.date).getTime())-10, W-50), py(last.lb)-8);
 }
+
+function logDose(k){ const m=S.meds[k]; const site=SITES[m.siteIdx%SITES.length];
+  S.log.push({med:k, ts:Date.now(), date:today(), site: m.freq==='daily-am'?'(AM)':site});
+  if(m.freq!=='daily-am') m.siteIdx++; save(); render(); }
 function upd(k,f,v){ S.meds[k][f]=v; save(); render(); }
-function clearLog(){ if(confirm("Clear all injection history?")){ S.log=[]; save(); render(); } }
+function upsertWeight(date,lb){ if(isNaN(lb)||lb<=0)return; const e=S.weights.find(w=>w.date===date); if(e)e.lb=lb; else S.weights.push({date,lb}); save(); render(); }
+function saveWeight(){ upsertWeight(document.getElementById("wDate").value||today(), parseFloat(document.getElementById("wVal").value)); document.getElementById("wVal").value=""; }
+function quickWeight(){ upsertWeight(today(), parseFloat(document.getElementById("wQuick").value)); document.getElementById("wQuick").value=""; }
+function delWeight(d){ S.weights=S.weights.filter(w=>w.date!==d); save(); render(); }
 
 function exportData(){ dl("peptide-tracker-backup.json", JSON.stringify(S,null,2), "application/json"); }
 function importData(ev){ const f=ev.target.files[0]; if(!f)return; const r=new FileReader();
-  r.onload=()=>{ try{ S=JSON.parse(r.result); save(); render(); alert("Imported ✓"); }catch(e){ alert("Bad file"); } }; r.readAsText(f); }
+  r.onload=()=>{ try{ S=JSON.parse(r.result); S.weights=S.weights||[]; save(); render(); alert("Imported ✓"); }catch(e){ alert("Bad file"); } }; r.readAsText(f); }
 
-// ---- Calendar (.ics) generation ----
-function icsTime(dateStr,timeStr){ return dateStr.replace(/-/g,"")+"T"+timeStr.replace(":","")+"00"; }
-function vevent(uid,summary,dtstart,rrule,desc){
-  return ["BEGIN:VEVENT",`UID:${uid}@peptracker`,`DTSTAMP:${icsTime(today(),"000000")}`,
-    `DTSTART:${dtstart}`,`RRULE:${rrule}`,`SUMMARY:${summary}`,`DESCRIPTION:${desc}`,
-    "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Injection reminder","TRIGGER:PT0M","END:VALARM","END:VEVENT"].join("\r\n");
-}
+function icsTime(d,t){ return d.replace(/-/g,"")+"T"+t.replace(":","")+"00"; }
+function vevent(uid,sum,dt,rr,desc){ return ["BEGIN:VEVENT",`UID:${uid}@peptracker`,`DTSTAMP:${icsTime(today(),"000000")}`,
+  `DTSTART:${dt}`,`RRULE:${rr}`,`SUMMARY:${sum}`,`DESCRIPTION:${desc}`,
+  "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Dose reminder","TRIGGER:PT0M","END:VALARM","END:VEVENT"].join("\r\n"); }
 function downloadICS(){
-  const tS=val("t_semax"),tT=val("t_tesa"),tR=val("t_reta"),day=val("reta_day");
-  const base=today();
-  let ev=[];
-  ev.push(vevent("semax",`💊 Semax ${S.meds.semax.dose} (AM)`, icsTime(base,tS),"FREQ=DAILY","Morning nootropic dose"));
-  ev.push(vevent("tesa",`💉 Tesamorelin ${S.meds.tesa.dose} — bedtime, FASTED`, icsTime(base,tT),"FREQ=DAILY","Night dose, >=2h after food, before sleep"));
-  ev.push(vevent("reta",`💉 Retatrutide ${S.meds.reta.dose} (weekly)`, icsTime(base,tR),`FREQ=WEEKLY;BYDAY=${day}`,"Weekly shot — rotate site"));
-  if(document.getElementById("lab_chk").checked){
-    const d=new Date(); d.setDate(d.getDate()+84); const lab=d.toLocaleDateString('en-CA');
-    ev.push(vevent("labs","🩸 IGF-1 + metabolic labs due", icsTime(lab,"09:00"),"FREQ=YEARLY","Recheck IGF-1, glucose/HbA1c, lipase, lipids, CMP"));
-  }
+  const tS=val("t_semax"),tT=val("t_tesa"),tR=val("t_reta"),day=val("reta_day"),b=today(); let ev=[];
+  ev.push(vevent("semax",`💊 Semax ${S.meds.semax.dose} (AM)`, icsTime(b,tS),"FREQ=DAILY","Morning dose"));
+  ev.push(vevent("tesa",`💉 Tesamorelin ${S.meds.tesa.dose} — bedtime, FASTED`, icsTime(b,tT),"FREQ=DAILY","Night dose, no food 2h before, before sleep"));
+  ev.push(vevent("reta",`💉 Retatrutide ${S.meds.reta.dose} (weekly)`, icsTime(b,tR),`FREQ=WEEKLY;BYDAY=${day}`,"Weekly shot — rotate site"));
+  if(document.getElementById("lab_chk").checked){ const d=new Date(); d.setDate(d.getDate()+84); const lab=d.toLocaleDateString('en-CA');
+    ev.push(vevent("labs","🩸 IGF-1 + metabolic labs", icsTime(lab,"09:00"),"FREQ=YEARLY","IGF-1, glucose/HbA1c, lipase, lipids, CMP")); }
   const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PeptideTracker//EN","CALSCALE:GREGORIAN",...ev,"END:VCALENDAR"].join("\r\n");
-  // persist chosen times
   S.times={semax:tS,tesa:tT,reta:tR,retaDay:day,lab:document.getElementById("lab_chk").checked}; save();
   dl("peptide-reminders.ics", ics, "text/calendar");
 }
 function val(id){ return document.getElementById(id).value; }
-function dl(name,content,type){ const b=new Blob([content],{type}); const u=URL.createObjectURL(b);
-  const a=document.createElement("a"); a.href=u; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1500); }
+function dl(n,c,t){ const b=new Blob([c],{type:t}),u=URL.createObjectURL(b),a=document.createElement("a"); a.href=u; a.download=n; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1500); }
 
-// tabs
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
-  ["today","cycle","log","alerts","set"].forEach(v=>document.getElementById("view-"+v).classList.add("hide"));
-  document.getElementById("view-"+t.dataset.v).classList.remove("hide");
+  ["today","weight","cycle","alerts","set"].forEach(v=>document.getElementById("view-"+v).classList.add("hide"));
+  document.getElementById("view-"+t.dataset.v).classList.remove("hide"); render();
 });
-// restore saved times
-if(S.times){ document.getElementById("t_semax").value=S.times.semax; document.getElementById("t_tesa").value=S.times.tesa;
-  document.getElementById("t_reta").value=S.times.reta; document.getElementById("reta_day").value=S.times.retaDay; document.getElementById("lab_chk").checked=!!S.times.lab; }
+document.getElementById("wDate").value=today();
+if(S.times){ ["semax","tesa","reta"].forEach(k=>document.getElementById("t_"+k).value=S.times[k]);
+  document.getElementById("reta_day").value=S.times.retaDay; document.getElementById("lab_chk").checked=!!S.times.lab; }
+window.addEventListener("resize",()=>{ if(!document.getElementById("view-weight").classList.contains("hide")) drawChart(); });
 render();
 </script>
 </body>

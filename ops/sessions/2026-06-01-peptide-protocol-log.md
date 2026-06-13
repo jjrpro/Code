@@ -53,3 +53,13 @@ final 15 lb to protect muscle + reduce gallstone risk.
 
 ---
 *Educational/harm-reduction tracking only — not medical advice.*
+
+---
+
+## Personal notes (private)
+
+- **Timing locked (2026-06-13):** Tesa before bed (fasted), Semax AM, Reta Mon AM.
+- **Substance use:** weed daily but sporadic; cocaine occasional/social (partying, infrequent).
+  - **Weed:** main cost is the pre-Tesa fasting window → **no food 2h before the bedtime Tesa shot**, even with munchies. Aim munchies at protein.
+  - **Cocaine:** Reta keeps resting HR up 24/7 (no off-week) → keep coke genuinely occasional. **Watch the coke+alcohol combo** (forms cocaethylene, more cardiotoxic). Hydrate + electrolytes on party nights; chest pain/pressure or a heart that won't settle = ER, not sleep-it-off. Eat protein next day despite low appetite.
+  - No known heart/BP history reported (raises caution if that changes).
