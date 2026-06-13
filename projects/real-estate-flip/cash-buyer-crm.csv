@@ -1,0 +1,2 @@
+name,phone,email,source,counties_buys,property_type,max_price,price_band,condition_ok,funding,proof_of_funds_YN,close_days,target_return,volume_per_mo,best_contact_time,deals_sent,deals_closed,status,date_added,notes
+EXAMPLE - delete,(718)555-0123,buyer@example.com,Meta ad,"Hudson, Essex",2-4 unit,$350k,$200-300k,light cosmetic,Cash,Y,14,min $40k spread,2,evenings,0,0,active,2026-06-13,EXAMPLE ROW - delete me

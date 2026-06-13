@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================================
+  CASH-BUYER OPT-IN LANDING PAGE  —  JJR Pro / Jaurx
+  Purpose: collect NJ/NY cash real-estate investors onto your deal-alert list.
+  ----------------------------------------------------------------------------
+  DEPLOY (no coding):
+  1. Edit the [[PLACEHOLDERS]] below (phone, email, brand name).
+  2. Drag this folder into netlify.com/drop — live in 30 seconds.
+  3. Netlify Forms captures every submission automatically (no backend needed):
+     Netlify dashboard > Forms > "buyer-signup" > enable email notifications.
+  4. Or swap the form action for a Google Form / Formspree if you prefer.
+
+  PLACEHOLDERS:
+    [[BRAND]]      e.g. Jaurx Property Group
+    [[PHONE]]      e.g. (718) 555-0123
+    [[PHONE_RAW]]  e.g. 17185550123
+    [[EMAIL]]      e.g. deals@jaurxproperties.com
+  ============================================================================
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[[BRAND]] — Off-Market NJ/NY Cash Deals</title>
+  <meta name="description" content="Get first access to off-market, below-market NJ/NY investment properties. Join our cash-buyer deal alert list free." />
+  <style>
+    :root {
+      --brand: #16507b;        /* investor navy/blue */
+      --brand-dark: #0f3a59;
+      --accent: #1f9d6b;       /* money green for CTA */
+      --accent-dark: #16774f;
+      --ink: #14181d;
+      --muted: #5b6470;
+      --bg: #ffffff;
+      --bg-soft: #f4f7fa;
+      --line: #e3e8ee;
+      --radius: 14px;
+      --maxw: 1000px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--ink); background: var(--bg); line-height: 1.6; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+    a { color: inherit; text-decoration: none; }
+    .btn {
+      display: inline-block; background: var(--accent); color: #fff; font-weight: 700;
+      padding: 16px 30px; border-radius: 999px; border: none; cursor: pointer;
+      font-size: 1.05rem; transition: background .2s, transform .1s;
+    }
+    .btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    h1, h2, h3 { line-height: 1.18; letter-spacing: -0.02em; }
+    section { padding: 64px 0; }
+
+    header { background: var(--brand); color: #fff; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -.02em; }
+    .nav a.call { color:#fff; font-weight:600; opacity:.9; }
+
+    .hero {
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: #fff; text-align: center; padding: 80px 0 70px;
+    }
+    .hero h1 { font-size: clamp(2rem, 5.5vw, 3.2rem); margin-bottom: 16px; }
+    .hero p { font-size: 1.15rem; opacity: .95; max-width: 600px; margin: 0 auto 14px; }
+    .hero .sub { font-size: 1rem; opacity: .8; margin-bottom: 30px; }
+
+    .card-form {
+      background: #fff; color: var(--ink); border-radius: 18px; max-width: 540px;
+      margin: 0 auto; padding: 30px 26px; box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      text-align: left;
+    }
+    .card-form h3 { font-size: 1.3rem; margin-bottom: 4px; }
+    .card-form .small { color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
+    label { display:block; font-weight:600; font-size:.9rem; margin: 12px 0 5px; }
+    input, select {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--line);
+      border-radius: 10px; font-size: 1rem; font-family: inherit; background: #fff;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card-form .btn { width: 100%; margin-top: 18px; }
+    .disclaimer { font-size: .78rem; color: var(--muted); margin-top: 12px; text-align:center; }
+
+    .why { background: var(--bg-soft); }
+    .why h2 { text-align:center; font-size: clamp(1.6rem,4vw,2.2rem); margin-bottom: 8px; }
+    .why .lead { text-align:center; color: var(--muted); max-width: 600px; margin: 0 auto 40px; }
+    .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .feat { background:#fff; border:1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+    .feat .ico { font-size: 1.7rem; margin-bottom: 10px; }
+    .feat h4 { font-size: 1.1rem; margin-bottom: 6px; }
+    .feat p { color: var(--muted); font-size: .95rem; }
+
+    .steps { text-align:center; }
+    .steps h2 { font-size: clamp(1.6rem,4vw,2.2rem); margin-bottom: 36px; }
+    .stepgrid { display:grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .step .n { width:42px;height:42px;line-height:42px; border-radius:50%; background:var(--brand); color:#fff; font-weight:700; margin:0 auto 12px; }
+
+    .cta { background: var(--brand); color:#fff; text-align:center; }
+    .cta h2 { font-size: clamp(1.6rem,4vw,2.2rem); margin-bottom: 14px; }
+    .cta p { opacity:.9; margin-bottom: 26px; }
+
+    footer { background: var(--brand-dark); color: rgba(255,255,255,.85); padding: 30px 0; text-align:center; font-size:.9rem; }
+
+    @media (max-width: 720px) {
+      .grid, .stepgrid { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap nav">
+      <div class="logo">[[BRAND]]</div>
+      <a class="call" href="tel:[[PHONE_RAW]]">[[PHONE]]</a>
+    </div>
+  </header>
+
+  <!-- HERO + FORM -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Get NJ/NY Off-Market Deals Before Anyone Else</h1>
+      <p>We lock up below-market and off-market investment properties across New Jersey and New York — and send them straight to our cash-buyer list first.</p>
+      <p class="sub">Free to join. No spam. Just deals that fit your buy box.</p>
+
+      <div class="card-form">
+        <h3>Join the Cash-Buyer List</h3>
+        <p class="small">Tell us your buy box and we'll only send deals that match.</p>
+
+        <!-- Netlify Forms: works automatically when deployed via netlify.com/drop -->
+        <form name="buyer-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="buyer-signup" />
+          <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+          <div class="row">
+            <div><label>First name</label><input name="first_name" required /></div>
+            <div><label>Phone</label><input name="phone" type="tel" required /></div>
+          </div>
+          <label>Email</label>
+          <input name="email" type="email" required />
+
+          <div class="row">
+            <div>
+              <label>Counties you buy in</label>
+              <input name="counties" placeholder="e.g. Hudson, Essex, Richmond" required />
+            </div>
+            <div>
+              <label>Max purchase price</label>
+              <select name="max_price" required>
+                <option value="">Select…</option>
+                <option>Under $150k</option>
+                <option>$150k–$350k</option>
+                <option>$350k–$600k</option>
+                <option>$600k+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label>Property type</label>
+              <select name="property_type">
+                <option>Single-family</option>
+                <option>2–4 unit</option>
+                <option>Multifamily 5+</option>
+                <option>Any</option>
+              </select>
+            </div>
+            <div>
+              <label>How do you buy?</label>
+              <select name="funding">
+                <option>Cash</option>
+                <option>Hard money</option>
+                <option>Cash + financing</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn" type="submit">Send Me Deals →</button>
+          <p class="disclaimer">By joining you agree to receive deal alerts. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why">
+    <div class="wrap">
+      <h2>Why buyers join our list</h2>
+      <p class="lead">We do the hunting so you can spend your time closing and rehabbing.</p>
+      <div class="grid">
+        <div class="feat"><div class="ico">🏷️</div><h4>Below-market deals</h4><p>Off-market and distressed properties priced with room for your margin.</p></div>
+        <div class="feat"><div class="ico">⚡</div><h4>First access</h4><p>Our list sees deals before they ever hit the MLS or auction sites.</p></div>
+        <div class="feat"><div class="ico">🎯</div><h4>Matched to your buy box</h4><p>We only send properties that fit the counties, price, and type you buy.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="steps">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <div class="stepgrid">
+        <div class="step"><div class="n">1</div><h4>Join free</h4><p>Tell us your buy box in 30 seconds.</p></div>
+        <div class="step"><div class="n">2</div><h4>Get matched deals</h4><p>We text/email properties that fit your criteria.</p></div>
+        <div class="step"><div class="n">3</div><h4>Close fast</h4><p>Like it? We assign you the contract and you close.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap">
+      <h2>Ready for your next deal?</h2>
+      <p>Join the cash-buyer list and get matched NJ/NY properties in your inbox.</p>
+      <a class="btn" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Join the List →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      [[BRAND]] · NJ/NY Real Estate · <a href="tel:[[PHONE_RAW]]">[[PHONE]]</a> · <a href="mailto:[[EMAIL]]">[[EMAIL]]</a><br/>
+      We are real estate investors, not licensed brokers. Properties offered via contract assignment.
+    </div>
+  </footer>
+
+</body>
+</html>
