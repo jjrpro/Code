@@ -119,6 +119,39 @@ JR's asks (easy maintain + Claude monitors + instant pay).
 
 ---
 
+## New project — Real-estate wholesaling (2026-06-13)
+
+NJ/NY wholesaling/flip business. Lives in `projects/real-estate-flip/`.
+JR's constraint: **2-3 hrs/week**; edge: audience-building + Meta/TikTok ads.
+**Chosen model: dispo / co-wholesale** — build a cash-buyer list first
+(his strength), bring buyers to other wholesalers' contracts for split fees,
+layer in automated (paid-ad/VA) acquisition once a deal pays. Hands-on
+acquisition (driving for dollars / cold calling) ruled out — too time-heavy.
+
+Files:
+- `2026-06-13-wholesaling-launch-plan.md` — 30-day buyer-list-first plan
+- `2026-06-02-nynj-flip-deal-screening-worksheet.md` — filters + deal math
+- `2026-06-02-nynj-sheriff-sale-targets.md` — 20 real public sheriff-sale
+  addresses (Hudson+Essex). NOTE: auction = NOT assignable; for market-value
+  learning, not wholesale pipeline.
+- `2026-06-02-nynj-offmarket-distressed-playbook.md` — 7 distressed lead types
+  + NY/NJ public sources
+- `2026-06-02-list-stacking-how-to.md` + `list-stacking-tracker.csv` — lead
+  scoring engine
+
+Data-source reality (checked 2026-06-02): free municipal vacant lists are
+stale/down (Newark 503 + 2021 block/lot only; JC 2014-18 static). Current
+address-level off-market data = paid aggregator (PropStream/BatchLeads) or
+direct county pulls. Don't fabricate leads.
+
+Legal: foreclosure-stage seller outreach triggers NY HETPA / NJ Foreclosure
+Rescue Fraud Prevention Act — one-time attorney consult required before mailers.
+
+**Next session priority:** if JR wants, build cash-buyer opt-in landing page +
+Meta lead-gen ad copy + co-wholesale outreach script + buyer CRM sheet.
+
+---
+
 ## Channel Details — JAURX
 
 | Field | Value |
