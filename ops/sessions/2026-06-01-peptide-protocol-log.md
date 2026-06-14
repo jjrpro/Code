@@ -36,6 +36,7 @@ final 15 lb to protect muscle + reduce gallstone risk.
 | 2026-06-01 | Note | Bad diarrhea after heavy beer — attributed to alcohol (Reta well-adapted at 16 wks); no pain, hydrating |
 | 2026-06-01 | Tesa injection-site bruise | Healing hematoma (green/yellow), benign; rotate sites |
 | 2026-06-01 | **Tesa stepped up** | 10u → **15u (1.5 mg)**. Next: IGF-1 draw, then 20u/2mg. Watch puffiness/joint/wrist tingling |
+| 2026-06-14 | **Tesa skipped** | Out all night / barely slept — one missed daily dose is harmless; resume normal, don't double up |
 | | | |
 
 *(Add rows below as you go.)*
@@ -63,3 +64,7 @@ final 15 lb to protect muscle + reduce gallstone risk.
   - **Weed:** main cost is the pre-Tesa fasting window → **no food 2h before the bedtime Tesa shot**, even with munchies. Aim munchies at protein.
   - **Cocaine:** Reta keeps resting HR up 24/7 (no off-week) → keep coke genuinely occasional. **Watch the coke+alcohol combo** (forms cocaethylene, more cardiotoxic). Hydrate + electrolytes on party nights; chest pain/pressure or a heart that won't settle = ER, not sleep-it-off. Eat protein next day despite low appetite.
   - No known heart/BP history reported (raises caution if that changes).
+- **Night of 2026-06-13→14 (party):** 2× Red Bull + small/spaced cocaine → HR peaked ~120, brought down to ~108 by spacing + hydration. **Did NOT take molly — took Tussi ("pink cocaine") instead.**
+  - **What Tussi is:** a pink polydrug powder of *unpredictable* composition — most commonly **ketamine + MDMA + caffeine**, sometimes meth/cocaine/cathinones/cutting agents or even opioids. Usually contains **neither 2C-B nor real cocaine** despite the name. Main risk = unknown contents/dose.
+  - **Stack implications:** likely MDMA + caffeine = stimulant/cardiac load still stacked on Reta's elevated HR (night's main risk). Probable ketamine adds dissociation/fall risk and can mask cardiac strain. Hydrate + electrolytes; watch next-day dehydration.
+- **2026-06-14:** Skipped Tesa (out all night, barely slept). Fine — one missed daily dose is harmless; don't double up; resume at next proper night's sleep.
