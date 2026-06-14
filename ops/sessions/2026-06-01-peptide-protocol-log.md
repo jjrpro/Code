@@ -37,6 +37,7 @@ final 15 lb to protect muscle + reduce gallstone risk.
 | 2026-06-01 | Tesa injection-site bruise | Healing hematoma (green/yellow), benign; rotate sites |
 | 2026-06-01 | **Tesa stepped up** | 10u → **15u (1.5 mg)**. Next: IGF-1 draw, then 20u/2mg. Watch puffiness/joint/wrist tingling |
 | 2026-06-14 | **Tesa skipped** | Out all night / barely slept — one missed daily dose is harmless; resume normal, don't double up |
+| 2026-06-14 | **Daily log** | Semax ✓ done · Tesa skipped · Reta due tomorrow (Mon) · **weight 201 lb** · resting **HR 91** (recovered from ~120 party night) |
 | | | |
 
 *(Add rows below as you go.)*
