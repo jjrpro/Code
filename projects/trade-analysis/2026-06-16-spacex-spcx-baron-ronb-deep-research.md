@@ -2,11 +2,11 @@
 
 **Date:** 2026-06-16
 **Prepared for:** JR
-**One-line summary:** Both tickers are *real, legitimate* securities — but the
-$431.27 SpaceX price on your screenshot does **not** match the real market
-(real SPCX trades ~$160–180), and buying more of *both* means doubling down on
-the same SpaceX bet right after the most expensive IPO in history. Verify your
-app is real money first, then size carefully.
+**One-line summary:** Both tickers are *real, legitimate* securities, and the
+$431.27 / $310.78 figures are JR's **holding values** (small positions, ~$742
+total) — not share prices. The real issue: buying more of *both* means doubling
+down on the same SpaceX bet right after the most expensive IPO in history, so
+size carefully and don't mistake it for diversification.
 
 > ⚠️ **I am not a licensed financial advisor and this is not financial advice.**
 > This is research to help you make your own decision. Nothing here is a
@@ -16,54 +16,27 @@ app is real money first, then size carefully.
 
 ---
 
-## 🔴 READ THIS FIRST: the price on your screenshot is a red flag
+## ✅ READ THIS FIRST: those figures are your HOLDING VALUES (not share prices)
 
-Your app shows **SpaceX (SPCX) at $431.27**. That is the single most important
-thing to resolve, because **it does not match the real market:**
+JR confirmed the **$431.27** and **$310.78** are his **holdings** — the total
+value of each position, with the green numbers being his gains — *not* per-share
+quotes. That **resolves the "price doesn't match the market" concern** from an
+earlier draft: there's no mismatch, because $431.27 is the value of the whole
+SpaceX position, not the price of one share (real SPCX trades ~$160–180).
 
-- SpaceX **IPO'd on Nasdaq under ticker SPCX on June 12, 2026** (4 days before
-  your screenshot), priced at **$135/share**, closed first day around **$161**,
-  and has been trading roughly **$160–180**.
-- Your tile shows **$431.27** — that's **~2.5–3x the real price.**
+**What your positions look like:**
+- **SpaceX (SPCX): ~$431 position, up $91.02 (+26.75%)** → cost basis ~$340.
+  At ~$170/share, that's roughly **2–3 shares.**
+- **Baron First Principles ETF (RONB): ~$311 position, up $15.03 (+6.18%)** →
+  cost basis ~$296.
+- **Combined: ~$742 across the two, up ~$106 (~17% blended).** These are
+  **small positions**, which lowers the stakes on "buy more" — but the
+  diversification and valuation points below still apply.
 
-There is no *live public* SpaceX security trading near $431 today. Real SpaceX
-common stock, the tokenized versions (xStocks ~$186, Republic ~$168), and the
-leveraged ETFs are all in the **$135–190** band.
-
-**The most likely explanation for $431.27:** it's almost exactly SpaceX's
-**$421/share price from the December 2025 private secondary sale** (which valued
-SpaceX at ~$800B, *before* the IPO and a 5-for-1 stock split). In other words,
-your app may be showing a **stale, pre-IPO private valuation mark** instead of
-the live post-split public price (~$160–180). Either way — stale private price
-or simulation — **the $431.27 is not the current real market price**, and the
-"+26.75%" gain next to it is not a number you could actually sell at today.
-
-**What this most likely means — one of these:**
-1. **Your app is a paper-trading / simulation / fantasy-investing app** (play
-   money, not real shares). These deliberately copy the exact look of a real
-   brokerage — same tiles, same green daily gains — but the prices can be
-   arbitrary or inflated. This is the best fit for a $431 SpaceX.
-2. The app is showing **stale, fictional, or made-up prices** for some other
-   reason.
-3. Less likely: it's a real position but the display is broken.
-
-### ✅ Do this before spending another dollar — verify it's real money
-1. **Find the app's name.** Tell me what it is and I'll confirm exactly what it
-   is in minutes.
-2. **FINRA BrokerCheck** — search the firm at <https://brokercheck.finra.org/>.
-   If it's not there, it is **not a registered US broker.**
-3. **SIPC membership** — a real brokerage is a SIPC member (covers up to
-   $500k if the *firm* fails; it never covers market losses). Check
-   <https://www.sipc.org/>.
-4. **Real account statement** — a genuine holding shows a clearing firm, a SIPC
-   line, and real **CUSIP / exchange ticker** — not just an in-app number.
-5. **Red flags it's a sim/game:** words like "practice," "paper," "simulated,"
-   "fantasy," a round "$100,000 starting balance," or the firm not appearing in
-   BrokerCheck.
-
-**If it's a simulator, the good news is you haven't risked real money — and the
-"$431.27 / +26.75%" gains aren't real either.** If it's a real broker showing
-$431, the price display is wrong and you should not trust it for decisions.
+**One quick hygiene check (not an alarm):** confirm the app is a real,
+**SIPC-member brokerage** — search the firm name on
+<https://brokercheck.finra.org/>. Assuming it is, you genuinely own ~2–3 shares
+of SpaceX plus a slice of RONB, and these are real positions you can act on.
 
 ---
 
@@ -195,14 +168,13 @@ you own a contract about SpaceX.**
 
 **Is this "really a good buy"? My honest read:**
 
-1. **First, figure out what you actually own.** The $431.27 price strongly
-   suggests this may be a **simulator or an app showing fake prices.** Until you
-   confirm it's a real, SIPC-member brokerage holding real SPCX/RONB, the
-   "should I buy more?" question is premature. **Tell me the app name** and I'll
-   settle this fast.
+1. **You own small, real positions (~$742 total).** That's a fine place to be —
+   and small enough that adding isn't a huge risk either way. Quick hygiene:
+   confirm the app is a SIPC-member broker on BrokerCheck.
 
-2. **If it IS real money:** recognize that adding to *both* is **doubling down
-   on SpaceX**, not diversifying. RONB is ~40% Musk-companies already.
+2. **Adding to *both* is doubling down on SpaceX**, not diversifying. RONB is
+   ~40% Musk-companies (SpaceX + Tesla + xAI) already, so a lot of your "two
+   positions" is really one concentrated SpaceX bet.
 
 3. **Valuation & timing argue for patience, not piling in.** You'd be buying a
    ~$1.77T company that an independent analyst thinks is worth ~$780B, days after
