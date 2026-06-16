@@ -191,6 +191,36 @@ you own a contract about SpaceX.**
 
 ---
 
+## 🧮 Position-sizing plan (JR: $5k–$25k portfolio, +$300–1,000, balanced)
+
+**Balanced ceiling:** keep **SPCX + RONB combined ≤ ~8% of total portfolio**
+(single SPCX stock ≤ ~5%). Current combined holding: **~$742.**
+
+| Total portfolio | 8% ceiling | Already held | Room to add |
+|---|---|---|---|
+| ~$5,000 | $400 | $742 | **$0 — already over; hold/trim, don't add** |
+| ~$10,000 | $800 | $742 | **~$60 — basically full** |
+| ~$15,000 | $1,200 | $742 | **~$450** |
+| ~$20,000 | $1,600 | $742 | **~$850** |
+| ~$25,000 | $2,000 | $742 | **~$1,250 (full $1k fits)** |
+
+**Execution rules:**
+1. **Drip, don't lump** — split any add into ~3 equal monthly buys (e.g. $600 →
+   $200/mo ×3). SpaceX just IPO'd; insider **lockups haven't expired**, which
+   often pressures price in the months after a mega-IPO.
+2. **Direct new money to RONB, not more SPCX** — same SpaceX conviction spread
+   across ~30 names (more "balanced"). Trade-off: RONB's 1%/yr fee. If avoiding
+   the fee / wanting SpaceX *specifically*, add to SPCX directly (more
+   concentrated).
+3. **Hard stop at ~8%** — once SPCX+RONB hits the ceiling, stop adding.
+4. **The real diversifier is a broad low-cost index** (total-market / S&P 500
+   ETF, ~0.03% fee), not more of a single hot name. SpaceX = exciting satellite
+   position, not the core.
+
+**Headline:** at the low end ($5–10k) JR is already at/over a balanced weight —
+disciplined answer is *don't add now*. At the high end ($20–25k) there's room
+for the full add, dripped over 3 months, leaning into RONB.
+
 ## Confidence & caveats
 - **High confidence:** SPCX and RONB are real securities; RONB ~21% SpaceX /
   ~40% Musk-linked; real SPCX trades ~$160–180 not $431; Baron's bullish thesis
