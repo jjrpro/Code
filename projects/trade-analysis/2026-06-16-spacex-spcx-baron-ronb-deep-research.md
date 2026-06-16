@@ -205,9 +205,11 @@ you own a contract about SpaceX.**
 | ~$25,000 | $2,000 | $742 | **~$1,250 (full $1k fits)** |
 
 **Execution rules:**
-1. **Drip, don't lump** — split any add into ~3 equal monthly buys (e.g. $600 →
-   $200/mo ×3). SpaceX just IPO'd; insider **lockups haven't expired**, which
-   often pressures price in the months after a mega-IPO.
+1. **One-time buy is fine at this size** (JR's preference). DCA mostly matters
+   for larger sums; on a $300–1,000 add the benefit is marginal. Just stay under
+   the 8% cap. (Minor caveat: SpaceX insider **lockups haven't expired**, which
+   can pressure price in the months after a mega-IPO — not worth overthinking at
+   this dollar size.)
 2. **Direct new money to RONB, not more SPCX** — same SpaceX conviction spread
    across ~30 names (more "balanced"). Trade-off: RONB's 1%/yr fee. If avoiding
    the fee / wanting SpaceX *specifically*, add to SPCX directly (more
