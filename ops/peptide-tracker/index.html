@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0e1116">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
 <title>Peptide Tracker</title>
 <style>
   :root{ --bg:#0e1116; --card:#171b22; --card2:#1f242d; --line:#2a313c; --txt:#e8edf4; --mut:#9aa6b6;
@@ -242,6 +244,16 @@
       </div>
       <input type="file" id="imp" accept="application/json" class="hide" onchange="importData(event)">
     </div>
+    <div class="card">
+      <h2 style="margin-top:0">☁️ Cloud sync — all devices</h2>
+      <label>Supabase Project URL</label><input id="sy_url" placeholder="https://xxxx.supabase.co">
+      <label>Supabase anon key</label><input id="sy_key" placeholder="eyJhbGci...">
+      <label>Private sync code (same on every device)</label><input id="sy_code" placeholder="pick a secret word/phrase">
+      <label><input type="checkbox" id="sy_on" style="width:auto;display:inline;margin-right:6px">Enable cloud sync</label>
+      <div class="grid" style="margin-top:8px"><button class="btn sm" onclick="syncSave()">Save &amp; sync</button><button class="btn alt sm" onclick="cloudPull(true)">Pull latest</button></div>
+      <div class="muted" id="syncStat" style="margin-top:8px">Not configured.</div>
+      <div class="hint">Enter the same 3 values on each device (one-time). Setup steps are in SETUP-SYNC.md.</div>
+    </div>
   </section>
 </main>
 
@@ -270,7 +282,8 @@ const DEFAULTS = {
 let S = load();
 
 function load(){ try{ const r=JSON.parse(localStorage.getItem("peptrack")); if(r&&r.meds){ r.weights=r.weights||[]; return r; } }catch(e){} return structuredClone(DEFAULTS); }
-function save(){ localStorage.setItem("peptrack", JSON.stringify(S)); }
+let _pushT;
+function save(noPush){ if(!noPush) S._u=Date.now(); localStorage.setItem("peptrack", JSON.stringify(S)); if(!noPush) schedulePush(); }
 function today(){ return new Date().toLocaleDateString('en-CA'); }
 function daysSince(d){ return Math.floor((Date.now()-new Date(d+"T00:00:00"))/864e5); }
 function loggedToday(k){ const t=today(); return S.log.some(e=>e.med===k && e.date===t); }
@@ -401,6 +414,25 @@ if(S.times){ ["semax","tesa","reta"].forEach(k=>document.getElementById("t_"+k).
   document.getElementById("reta_day").value=S.times.retaDay; document.getElementById("lab_chk").checked=!!S.times.lab; }
 window.addEventListener("resize",()=>{ if(!document.getElementById("view-weight").classList.contains("hide")) drawChart(); });
 render();
+
+/* ---------- cloud sync (Supabase REST) ---------- */
+function syncCfg(){ try{ return JSON.parse(localStorage.getItem("peptrack_sync"))||{}; }catch(e){ return {}; } }
+function setSyncStat(t){ const e=document.getElementById("syncStat"); if(e) e.textContent=t; }
+function syncSave(){ const c={url:val("sy_url").trim().replace(/\/$/,''), key:val("sy_key").trim(), code:val("sy_code").trim(), enabled:document.getElementById("sy_on").checked};
+  localStorage.setItem("peptrack_sync", JSON.stringify(c));
+  if(c.enabled&&c.url&&c.key&&c.code){ setSyncStat("Saved. Syncing…"); cloudPush(); setTimeout(()=>cloudPull(true),900); } else setSyncStat("Saved (sync off)."); }
+function schedulePush(){ const c=syncCfg(); if(!c.enabled) return; clearTimeout(_pushT); _pushT=setTimeout(cloudPush,800); }
+function cloudHeaders(c){ return {apikey:c.key, Authorization:"Bearer "+c.key}; }
+function cloudPush(){ const c=syncCfg(); if(!c.enabled||!c.url||!c.key||!c.code) return;
+  fetch(c.url+"/rest/v1/peptide_state?on_conflict=code",{method:"POST",headers:{...cloudHeaders(c),"Content-Type":"application/json",Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify([{code:c.code,data:S}])})
+   .then(r=>setSyncStat(r.ok?"☁️ Synced "+new Date().toLocaleTimeString():"Push error "+r.status)).catch(()=>setSyncStat("Offline — will retry")); }
+function cloudPull(manual){ const c=syncCfg(); if(!c.enabled||!c.url||!c.key||!c.code){ if(manual) setSyncStat("Enter your sync details first."); return; }
+  fetch(c.url+"/rest/v1/peptide_state?code=eq."+encodeURIComponent(c.code)+"&select=data",{headers:cloudHeaders(c)})
+   .then(r=>r.json()).then(rows=>{ if(rows&&rows[0]&&rows[0].data){ const rem=rows[0].data; if((rem._u||0)>(S._u||0)){ S=rem; localStorage.setItem("peptrack",JSON.stringify(S)); render(); setSyncStat("⬇️ Updated from cloud"); } else setSyncStat("✓ Up to date "+new Date().toLocaleTimeString()); } else setSyncStat(manual?"No cloud data yet — Save & sync from your main device first":"✓ Up to date"); })
+   .catch(()=>setSyncStat("Offline")); }
+(function(){ const c=syncCfg(),u=document.getElementById("sy_url"); if(u){ u.value=c.url||""; document.getElementById("sy_key").value=c.key||""; document.getElementById("sy_code").value=c.code||""; document.getElementById("sy_on").checked=!!c.enabled; if(c.enabled) cloudPull(); } })();
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden) cloudPull(); });
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>
