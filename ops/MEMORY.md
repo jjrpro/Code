@@ -457,5 +457,27 @@ the conflicted file directly in the Obsidian vault dir, then `git add` +
 
 ---
 
+## Trade-analysis — SpaceX / RONB (2026-06-16)
+
+- Deep-research report saved:
+  `projects/trade-analysis/2026-06-16-spacex-spcx-baron-ronb-deep-research.md`
+  (incl. an 8%-of-portfolio position-sizing plan).
+- JR's profile this session: $5k–25k total portfolio, balanced risk,
+  wanted to add $300–1,000 as a **one-time** buy.
+- Guidance given: cap SPCX+RONB at ~8% of portfolio; **don't add more
+  single-stock SPCX** (already ~67% of the two positions is SpaceX
+  look-through); route new money to RONB (basket) for balance.
+- **Action taken:** JR purchased **+9 shares RONB on 2026-06-16**.
+  Fill price TBD — update RONB position value & SpaceX look-through once
+  known, and re-check against the 8% cap.
+- **2026-06-20 update:** SpaceX **IPO'd June 12** (Nasdaq, ticker SPCX),
+  priced $135, +19% day one, valued >$2T — largest IPO ever. SPCX now
+  ~$185. RONB ~$25.00 (1% fee). JR's positions: ~$600 RONB (entry $24.30,
+  ~+3%), ~$530 SPCX (entry $165, ~+12%); **still holding**. News roundup
+  saved: `projects/trade-analysis/2026-06-20-spacex-spcx-ronb-early-news-roundup.md`.
+  Key shift: SpaceX now public, so RONB's "pre-IPO access" pitch is moot.
+
+---
+
 **Last updated**: 2026-05-30 by Claude (Opus 4.7) via web session
 (restructure into projects/ + ops/, bi-directional sync for Mac + Windows, CLAUDE.md added)
