@@ -61,5 +61,11 @@ why-us section, and FAQ all reinforce that shipping is included.
   supplier's vials differ.
 - **Blend contents:** Wolverine = BPC-157 + TB-500; Glow = GHK-Cu + BPC-157 +
   TB-500 (industry-standard). Adjust if your formulas differ.
-- **Still TODO before going live:** real vial photos, working checkout link
-  (Shopify/Stripe), business contact email, optional 21+ age-gate, COA links.
+- **Product imagery (done):** AI-generated branded vial shots live in `img/`
+  and are wired into every card with a 3D-animated effect (always-on float +
+  Y-axis sway, cursor-driven 3D tilt, cyan light-sweep on hover) that matches
+  the site's animated-molecule theme. Dose variants share one image
+  (BPC-157 5/10mg, GHK-Cu 50/100mg, Retatrutide 10/30mg); blends show 2–3 vials.
+  Swap in real product photos later if you want.
+- **Still TODO before going live:** working checkout link (Shopify/Stripe),
+  business contact email, optional 21+ age-gate, COA links.

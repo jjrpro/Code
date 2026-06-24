@@ -83,10 +83,17 @@
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
     .prod{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
     .prod:hover{transform:translateY(-7px);border-color:rgba(39,224,200,.45);box-shadow:0 24px 56px rgba(39,224,200,.1)}
-    .prod .ph{aspect-ratio:1/1;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 40%,#13202b,#0a121a)}
-    .prod .ph .vial{font-size:3rem;filter:drop-shadow(0 6px 20px rgba(0,0,0,.5));transition:transform .5s}
-    .prod:hover .ph .vial{transform:translateY(-4px) scale(1.08)}
-    .prod .badge{position:absolute;top:12px;left:12px;background:rgba(39,224,200,.16);border:1px solid rgba(39,224,200,.4);color:var(--cyan);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+    .prod .ph{aspect-ratio:1/1;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 38%,#13202b,#0a121a);perspective:780px}
+    .prod .ph .tilt{position:absolute;inset:0;display:grid;place-items:center;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+    .prod .ph .vial-img{width:100%;height:100%;object-fit:cover;backface-visibility:hidden;will-change:transform;animation:vialFloat 6.5s ease-in-out infinite}
+    .prod:nth-child(2n) .ph .vial-img{animation-duration:7.6s;animation-delay:-1.6s}
+    .prod:nth-child(3n) .ph .vial-img{animation-duration:8.3s;animation-delay:-3.1s}
+    .prod:hover .ph .vial-img{animation-duration:3.4s}
+    .prod .ph::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;background:linear-gradient(115deg,transparent 32%,rgba(39,224,200,.22) 46%,rgba(255,255,255,.10) 50%,transparent 64%);transform:translateX(-130%);transition:transform .9s ease;mix-blend-mode:screen}
+    .prod:hover .ph::after{transform:translateX(130%)}
+    @keyframes vialFloat{0%,100%{transform:translateY(2%) rotateY(-6deg) scale(1.03)}50%{transform:translateY(-3%) rotateY(6deg) scale(1.06)}}
+    @media(prefers-reduced-motion:reduce){.prod .ph .vial-img{animation:none}.prod .ph .tilt{transition:none}.prod .ph::after{display:none}}
+    .prod .badge{position:absolute;top:12px;left:12px;z-index:5;background:rgba(5,12,16,.66);backdrop-filter:blur(4px);border:1px solid rgba(39,224,200,.4);color:var(--cyan);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
     .prod .meta{padding:18px}
     .prod h3{font-family:var(--disp);font-size:1.06rem;margin-bottom:4px}
     .prod .purity{color:var(--muted);font-size:.8rem;margin-bottom:10px}
@@ -167,41 +174,41 @@
 
     <div class="cat-label reveal">Metabolic &amp; Longevity Research</div>
     <div class="grid">
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Bestseller</span><span class="vial">🧪</span></div><div class="meta"><h3>Retatrutide</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$175<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Best Value</span><span class="vial">🧪</span></div><div class="meta"><h3>Retatrutide</h3><div class="purity">30mg · ≥99% purity</div><div class="row"><span class="price">$325<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>Tesamorelin</h3><div class="purity">20mg · ≥99% purity</div><div class="row"><span class="price">$200<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>MOTS-c</h3><div class="purity">40mg · ≥99% purity</div><div class="row"><span class="price">$205<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>NAD+</h3><div class="purity">500mg · ≥99% purity</div><div class="row"><span class="price">$90<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Bestseller</span><div class="tilt"><img class="vial-img" src="img/retatrutide.png" alt="Retatrutide research vial" loading="lazy"></div></div><div class="meta"><h3>Retatrutide</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$175<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Best Value</span><div class="tilt"><img class="vial-img" src="img/retatrutide.png" alt="Retatrutide research vial" loading="lazy"></div></div><div class="meta"><h3>Retatrutide</h3><div class="purity">30mg · ≥99% purity</div><div class="row"><span class="price">$325<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/tesamorelin.png" alt="Tesamorelin research vial" loading="lazy"></div></div><div class="meta"><h3>Tesamorelin</h3><div class="purity">20mg · ≥99% purity</div><div class="row"><span class="price">$200<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/motsc.png" alt="MOTS-c research vial" loading="lazy"></div></div><div class="meta"><h3>MOTS-c</h3><div class="purity">40mg · ≥99% purity</div><div class="row"><span class="price">$205<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/nad.png" alt="NAD+ research vial" loading="lazy"></div></div><div class="meta"><h3>NAD+</h3><div class="purity">500mg · ≥99% purity</div><div class="row"><span class="price">$90<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
     </div>
 
     <div class="cat-label reveal">Growth-Hormone Secretagogues</div>
     <div class="grid">
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Blend</span><span class="vial">🧬</span></div><div class="meta"><h3>CJC-1295 / Ipamorelin</h3><div class="purity">Research blend · ≥99% purity</div><div class="row"><span class="price">$105<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>Sermorelin</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Blend</span><div class="tilt"><img class="vial-img" src="img/cjc-ipamorelin.png" alt="CJC-1295 Ipamorelin research blend vials" loading="lazy"></div></div><div class="meta"><h3>CJC-1295 / Ipamorelin</h3><div class="purity">Research blend · ≥99% purity</div><div class="row"><span class="price">$105<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/sermorelin.png" alt="Sermorelin research vial" loading="lazy"></div></div><div class="meta"><h3>Sermorelin</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
     </div>
 
     <div class="cat-label reveal">Repair &amp; Recovery Research</div>
     <div class="grid">
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Popular</span><span class="vial">🧪</span></div><div class="meta"><h3>BPC-157</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Best Value</span><span class="vial">🧪</span></div><div class="meta"><h3>BPC-157</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$105<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Popular</span><span class="vial">🧪</span></div><div class="meta"><h3>TB-500</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Blend</span><span class="vial">🧬</span></div><div class="meta"><h3>Wolverine Blend</h3><div class="purity">BPC-157 + TB-500 · ≥99%</div><div class="row"><span class="price">$125<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Blend</span><span class="vial">🧬</span></div><div class="meta"><h3>Glow Blend</h3><div class="purity">GHK-Cu + BPC-157 + TB-500</div><div class="row"><span class="price">$165<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>KPV</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Popular</span><div class="tilt"><img class="vial-img" src="img/bpc157.png" alt="BPC-157 research vial" loading="lazy"></div></div><div class="meta"><h3>BPC-157</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Best Value</span><div class="tilt"><img class="vial-img" src="img/bpc157.png" alt="BPC-157 research vial" loading="lazy"></div></div><div class="meta"><h3>BPC-157</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$105<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Popular</span><div class="tilt"><img class="vial-img" src="img/tb500.png" alt="TB-500 research vial" loading="lazy"></div></div><div class="meta"><h3>TB-500</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Blend</span><div class="tilt"><img class="vial-img" src="img/wolverine.png" alt="Wolverine blend research vials" loading="lazy"></div></div><div class="meta"><h3>Wolverine Blend</h3><div class="purity">BPC-157 + TB-500 · ≥99%</div><div class="row"><span class="price">$125<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Blend</span><div class="tilt"><img class="vial-img" src="img/glow.png" alt="Glow blend research vials" loading="lazy"></div></div><div class="meta"><h3>Glow Blend</h3><div class="purity">GHK-Cu + BPC-157 + TB-500</div><div class="row"><span class="price">$165<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/kpv.png" alt="KPV research vial" loading="lazy"></div></div><div class="meta"><h3>KPV</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
     </div>
 
     <div class="cat-label reveal">Cosmetic &amp; Skin Research</div>
     <div class="grid">
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>GHK-Cu</h3><div class="purity">50mg · ≥99% purity</div><div class="row"><span class="price">$80<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Best Value</span><span class="vial">🧪</span></div><div class="meta"><h3>GHK-Cu</h3><div class="purity">100mg · ≥99% purity</div><div class="row"><span class="price">$125<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Popular</span><span class="vial">🧪</span></div><div class="meta"><h3>Melanotan II</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/ghk-cu.png" alt="GHK-Cu copper peptide research vial" loading="lazy"></div></div><div class="meta"><h3>GHK-Cu</h3><div class="purity">50mg · ≥99% purity</div><div class="row"><span class="price">$80<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Best Value</span><div class="tilt"><img class="vial-img" src="img/ghk-cu.png" alt="GHK-Cu copper peptide research vial" loading="lazy"></div></div><div class="meta"><h3>GHK-Cu</h3><div class="purity">100mg · ≥99% purity</div><div class="row"><span class="price">$125<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">Popular</span><div class="tilt"><img class="vial-img" src="img/mt2.png" alt="Melanotan II research vial" loading="lazy"></div></div><div class="meta"><h3>Melanotan II</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$75<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
     </div>
 
     <div class="cat-label reveal">Nootropic &amp; Other Research</div>
     <div class="grid">
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>Selank</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$85<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>Semax</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$85<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
-      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><span class="vial">🧪</span></div><div class="meta"><h3>PT-141</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$85<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/selank.png" alt="Selank research vial" loading="lazy"></div></div><div class="meta"><h3>Selank</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$85<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/semax.png" alt="Semax research vial" loading="lazy"></div></div><div class="meta"><h3>Semax</h3><div class="purity">5mg · ≥99% purity</div><div class="row"><span class="price">$85<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
+      <a class="prod reveal" href="#shop"><div class="ph"><span class="badge">In Stock</span><div class="tilt"><img class="vial-img" src="img/pt141.png" alt="PT-141 research vial" loading="lazy"></div></div><div class="meta"><h3>PT-141</h3><div class="purity">10mg · ≥99% purity</div><div class="row"><span class="price">$85<small>shipping incl.</small></span><span class="add">Add +</span></div></div></a>
     </div>
 
     <p class="ph-note">Every price includes fast, tracked shipping to all 50 states · Certificates of Analysis available on request · bulk discounts on larger orders</p>
@@ -270,6 +277,19 @@
       document.querySelectorAll('#yr').forEach(el=>el.textContent=new Date().getFullYear());
       const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
       document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*55)+'ms';io.observe(el)});
+
+      // ===== cursor-driven 3D tilt on product cards (matches the molecule theme) =====
+      const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+      if(!reduce) document.querySelectorAll('.prod').forEach(card=>{
+        const tilt=card.querySelector('.tilt'); if(!tilt) return;
+        card.addEventListener('pointermove',e=>{
+          const r=card.getBoundingClientRect();
+          const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+          tilt.style.setProperty('--ry',(px*16).toFixed(2)+'deg');
+          tilt.style.setProperty('--rx',(-py*12).toFixed(2)+'deg');
+        },{passive:true});
+        card.addEventListener('pointerleave',()=>{tilt.style.setProperty('--ry','0deg');tilt.style.setProperty('--rx','0deg');});
+      });
     }catch(e){}
 
     // ===== 3D molecule (ball-and-stick) that rotates as you scroll =====
