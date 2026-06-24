@@ -27,6 +27,13 @@ JaurxShops). Live CTAs: Whop VIP checkout, @JaurxBot, Shopify store, email.
 ### `projects/local-638/` — Steamfitters website
 Static template for Local 638 Steamfitters.
 
+### `projects/hidden-labs/` — Research-compound storefront
+Single-page "Hidden Labs" peptide store (research-use-only framing). Animated
+3D-molecule hero + 19-SKU catalog grouped into 5 categories. Prices include a
+$25 shipping markup so the store advertises shipping-included.
+- `index.html` — the storefront
+- `2026-06-24-hidden-labs-catalog-pricing.md` — pricing table + go-live TODOs
+
 ### `projects/si-web-design/` — Local business websites (SI side business)
 Kit for selling websites to Staten Island small businesses (10312 + 5-mi radius).
 - **`template/`** — reusable, self-contained 1-page site template

@@ -151,6 +151,19 @@ JR's asks (easy maintain + Claude monitors + instant pay).
 
 ---
 
+## Hidden Labs — research-compound storefront (2026-06-24)
+
+New brand/site in `projects/hidden-labs/`. Single-page peptide store
+(research-use-only framing, no human-use/dosing claims — keep it that way).
+Loaded JR's real 19-SKU catalog into the previously-placeholder grid, grouped
+into 5 labeled categories. **Pricing rule: every list price = supplier cost +
+$25** so shipping is baked in; site advertises "shipping included." Full
+price table + go-live TODOs in `2026-06-24-hidden-labs-catalog-pricing.md`.
+Still needed before publish: vial photos, checkout link, contact email,
+optional 21+ age-gate, COA links.
+
+---
+
 ## Channel Details — JAURX
 
 | Field | Value |
