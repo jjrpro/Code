@@ -90,15 +90,17 @@
     .prod:nth-child(2n) .ph .vwrap{animation-duration:7.6s;animation-delay:-1.6s}
     .prod:nth-child(3n) .ph .vwrap{animation-duration:8.3s;animation-delay:-3.1s}
     .prod:hover .ph .vwrap{animation-duration:3.4s}
-    /* authentic printed vial label */
-    .prod .ph .vlabel{position:absolute;top:57%;left:50%;transform:translate(-50%,-50%);width:42%;max-width:118px;padding:6px 5px 5px;border-radius:5px/9px;text-align:center;line-height:1;pointer-events:none;
-      background:linear-gradient(90deg,rgba(7,12,17,.28),rgba(10,17,24,.90) 16%,rgba(13,22,31,.97) 50%,rgba(10,17,24,.90) 84%,rgba(7,12,17,.28));
-      border-top:1px solid rgba(39,224,200,.62);border-bottom:1px solid rgba(39,224,200,.26);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 3px 9px rgba(0,0,0,.45)}
-    .prod .ph.blend .vlabel{top:auto;bottom:8%;width:80%;max-width:none}
-    .vl-brand{display:block;font-family:var(--disp);font-weight:600;font-size:.44rem;letter-spacing:.24em;color:var(--cyan);opacity:.92;text-transform:uppercase}
-    .vl-name{display:block;white-space:nowrap;font-family:var(--disp);font-weight:700;font-size:.66rem;letter-spacing:.01em;color:#f3f9ff;margin:2px 0 1.5px;text-transform:uppercase}
-    .vl-sub{display:block;font-family:var(--sans);font-weight:600;font-size:.4rem;letter-spacing:.1em;color:#9fb0c2;text-transform:uppercase}
+    /* real sticker label pressed onto the vial */
+    .prod .ph .vlabel{position:absolute;top:56%;left:50%;transform:translate(-50%,-50%);width:40%;max-width:116px;padding:7px 8px 6px;border-radius:9px/12px;text-align:center;line-height:1.05;pointer-events:none;color:#0c1620;overflow:hidden;
+      background:linear-gradient(96deg,rgba(4,12,20,.30) 0%,rgba(4,12,20,0) 14%,rgba(255,255,255,.5) 50%,rgba(4,12,20,0) 86%,rgba(4,12,20,.30) 100%),linear-gradient(180deg,#fcfdff,#e4ebf3);
+      box-shadow:0 7px 13px rgba(0,0,0,.55),0 1px 2px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -2px 4px rgba(10,22,32,.16);
+      border:1px solid rgba(120,140,158,.55)}
+    .prod .ph .vlabel::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(122deg,rgba(255,255,255,.82) 0%,rgba(255,255,255,0) 22%,rgba(8,18,28,.06) 55%,rgba(8,18,28,0) 100%)}
+    .prod .ph .vlabel::after{content:"";position:absolute;left:11%;right:11%;top:6px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(11,150,137,.92),transparent)}
+    .prod .ph.blend .vlabel{top:auto;bottom:9%;width:74%;max-width:none}
+    .vl-brand{display:block;position:relative;z-index:1;font-family:var(--disp);font-weight:700;font-size:.42rem;letter-spacing:.22em;color:#0a8f81;text-transform:uppercase;margin-top:4px}
+    .vl-name{display:block;position:relative;z-index:1;white-space:nowrap;font-family:var(--disp);font-weight:700;font-size:.64rem;letter-spacing:.01em;color:#0b1622;margin:2px 0 2px;text-transform:uppercase}
+    .vl-sub{display:block;position:relative;z-index:1;font-family:var(--sans);font-weight:700;font-size:.38rem;letter-spacing:.07em;color:#41576b;text-transform:uppercase}
     .prod .ph::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(115deg,transparent 32%,rgba(39,224,200,.22) 46%,rgba(255,255,255,.10) 50%,transparent 64%);transform:translateX(-130%);transition:transform .9s ease;mix-blend-mode:screen}
     .prod:hover .ph::after{transform:translateX(130%)}
     @keyframes vialFloat{0%,100%{transform:translateY(2%) rotateY(-5deg) scale(1.03)}50%{transform:translateY(-3%) rotateY(5deg) scale(1.06)}}
