@@ -195,6 +195,15 @@
     .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);z-index:95;background:var(--panel);border:1px solid var(--cyan);color:var(--ink);padding:13px 22px;border-radius:12px;font-size:.88rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 12px 40px rgba(0,0,0,.4)}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     @media(max-width:560px){.cart-drawer{width:100%}}
+
+    /* age gate */
+    .agegate{position:fixed;inset:0;z-index:200;background:rgba(3,6,10,.93);backdrop-filter:blur(9px);display:grid;place-items:center;padding:24px}
+    .agegate[hidden]{display:none}
+    .agegate-box{max-width:440px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:46px 34px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+    .ag-logo{font-family:var(--disp);font-weight:700;font-size:1.45rem;margin-bottom:22px}.ag-logo span{color:var(--cyan)}
+    .agegate-box h2{font-family:var(--disp);font-size:1.55rem;letter-spacing:-.02em;margin-bottom:12px}
+    .agegate-box p{color:var(--muted);font-size:.9rem;line-height:1.65;margin-bottom:26px}
+    .ag-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
   </style>
 </head>
 <body>
@@ -334,6 +343,19 @@
     </div>
   </div></footer>
 
+  <!-- AGE GATE -->
+  <div class="agegate" id="ageGate" hidden>
+    <div class="agegate-box">
+      <div class="ag-logo">HIDDEN<span>·</span>LABS</div>
+      <h2>Are you 21 or older?</h2>
+      <p>All products are sold strictly for laboratory &amp; research use only — <b>not for human consumption</b>. You must be 21+ to enter this site.</p>
+      <div class="ag-actions">
+        <button class="btn btn-primary" id="ageYes">Yes, I'm 21+</button>
+        <button class="btn btn-ghost" id="ageNo">No, exit</button>
+      </div>
+    </div>
+  </div>
+
   <!-- CART + CHECKOUT -->
   <div class="cart-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
@@ -425,6 +447,14 @@
 
   <!-- ===== CART + CHECKOUT LOGIC ===== -->
   <script>
+  // 21+ age gate
+  (function(){ try{
+    if(localStorage.getItem('hl_age_ok')==='1') return;
+    var g=document.getElementById('ageGate'); if(!g) return;
+    g.hidden=false; document.body.style.overflow='hidden';
+    document.getElementById('ageYes').addEventListener('click',function(){ try{localStorage.setItem('hl_age_ok','1');}catch(e){} g.hidden=true; document.body.style.overflow=''; });
+    document.getElementById('ageNo').addEventListener('click',function(){ window.location.href='https://www.google.com'; });
+  }catch(e){} })();
   (function(){
     var KEY='hl_cart_v1', cart=[];
     try{ cart=JSON.parse(localStorage.getItem(KEY))||[]; }catch(e){ cart=[]; }
@@ -466,26 +496,32 @@
       }
       $('cartTotal').textContent=fmt(total());
     }
+    function emailFallback(d){
+      var lines=cart.map(function(i){return i.qty+'x  '+i.name+' '+i.size+'  -  '+fmt(i.price*i.qty);}).join('%0D%0A');
+      var body='New order from '+encodeURIComponent(d.name)+'%0D%0A%0D%0A'+lines+
+        '%0D%0A%0D%0ATotal: '+fmt(total())+' (shipping included)'+
+        '%0D%0A%0D%0AShip to:%0D%0A'+encodeURIComponent(d.addr)+'%0D%0A'+encodeURIComponent(d.city)+', '+encodeURIComponent(d.state)+' '+d.zip+
+        '%0D%0AEmail: '+encodeURIComponent(d.email)+'%0D%0A21+ confirmed: YES';
+      window.location.href='mailto:admin@jjrproconsultants.com?subject='+encodeURIComponent('Hidden Labs Order — '+d.name)+'&body='+body;
+      toast('Opening your email to confirm the order…');
+    }
     function placeOrder(){
       var v=function(id){return $(id).value.trim();};
-      var name=v('f-name'),email=v('f-email'),addr=v('f-addr'),city=v('f-city'),st=v('f-state'),zip=v('f-zip'),age=v('f-age');
-      if(!name||!email||!addr||!city||!st||!zip){ toast('Please fill in all shipping fields'); return; }
+      var d={name:v('f-name'),email:v('f-email'),addr:v('f-addr'),city:v('f-city'),state:v('f-state'),zip:v('f-zip')};
+      var age=v('f-age');
+      if(!d.name||!d.email||!d.addr||!d.city||!d.state||!d.zip){ toast('Please fill in all shipping fields'); return; }
       if(age.toUpperCase()!=='YES'){ toast('You must confirm you are 21+ (type YES)'); return; }
-      /* ============================================================
-         PAYMENT INTEGRATION POINT
-         Swap the mailto block below for your live payment provider:
-         e.g. POST the cart to a serverless function that creates a
-         Coinbase Commerce / NOWPayments charge (crypto) or a high-risk
-         card-gateway hosted checkout, then redirect to its pay URL.
-         The cart array + total() are everything the provider needs.
-         ============================================================ */
-      var lines=cart.map(function(i){return i.qty+'x  '+i.name+' '+i.size+'  -  '+fmt(i.price*i.qty);}).join('%0D%0A');
-      var body='New order from '+encodeURIComponent(name)+'%0D%0A%0D%0A'+lines+
-        '%0D%0A%0D%0ATotal: '+fmt(total())+' (shipping included)'+
-        '%0D%0A%0D%0AShip to:%0D%0A'+encodeURIComponent(addr)+'%0D%0A'+encodeURIComponent(city)+', '+encodeURIComponent(st)+' '+zip+
-        '%0D%0AEmail: '+encodeURIComponent(email)+'%0D%0A21+ confirmed: YES';
-      window.location.href='mailto:admin@jjrproconsultants.com?subject='+encodeURIComponent('Hidden Labs Order — '+name)+'&body='+body;
-      toast('Opening your email to confirm the order…');
+      var btn=$('checkoutBtn'), label=btn.textContent; btn.disabled=true; btn.textContent='Processing…';
+      if(typeof fetch!=='function'){ btn.disabled=false; btn.textContent=label; emailFallback(d); return; }
+      /* Live payments: POST the cart to /api/checkout (Cloudflare Pages Function),
+         which creates a Coinbase Commerce charge and returns the pay URL.
+         If payments aren't configured yet (or opened as a local file), it falls
+         back to emailing the order so checkout is never a dead end. */
+      fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({items:cart,total:total(),customer:d})})
+        .then(function(r){ return r.ok?r.json():Promise.reject(); })
+        .then(function(res){ if(res&&res.url){ window.location.href=res.url; } else { return Promise.reject(); } })
+        .catch(function(){ btn.disabled=false; btn.textContent=label; emailFallback(d); });
     }
     // wire "Add +" buttons (product data read from each card)
     document.querySelectorAll('.prod').forEach(function(card){

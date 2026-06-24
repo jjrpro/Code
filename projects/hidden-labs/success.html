@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Received — Hidden Labs</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#070b10;--panel:#101822;--ink:#eaf2fb;--muted:#8595a8;--cyan:#27e0c8;--blue:#3b82f6;--line:rgba(255,255,255,.08);
+      --disp:"Space Grotesk",-apple-system,sans-serif;--sans:"Inter",-apple-system,sans-serif;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:24px;
+      background-image:radial-gradient(circle at 50% 30%,rgba(39,224,200,.10),transparent 55%)}
+    .card{max-width:520px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:54px 36px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+    .check{width:84px;height:84px;border-radius:50%;margin:0 auto 26px;display:grid;place-items:center;font-size:2.4rem;
+      background:linear-gradient(135deg,rgba(39,224,200,.2),rgba(59,130,246,.16));border:1px solid rgba(39,224,200,.5)}
+    h1{font-family:var(--disp);font-size:2rem;letter-spacing:-.02em;margin-bottom:14px}
+    .grad{background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+    p{color:var(--muted);line-height:1.65;margin-bottom:14px}
+    .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:600;font-size:.92rem;padding:14px 28px;border-radius:10px;border:none;cursor:pointer;margin-top:18px;
+      background:linear-gradient(90deg,var(--cyan),var(--blue));color:#04121a;text-decoration:none;box-shadow:0 10px 34px rgba(39,224,200,.3)}
+    .small{font-size:.78rem;color:#6b7787;margin-top:26px;line-height:1.6}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="check">✓</div>
+    <h1>Order <span class="grad">received.</span></h1>
+    <p>Thank you — your payment is confirmed and your order is being processed. You'll get a confirmation email shortly, with tracking as soon as it ships.</p>
+    <p><strong>Shipping is included</strong> — nothing else to pay.</p>
+    <a href="/" class="btn">← Back to shop</a>
+    <div class="small">Your cart has been cleared. All products are sold strictly for laboratory &amp; research use only — not for human consumption.</div>
+  </div>
+  <script>
+    // clear the saved cart once an order completes
+    try{ localStorage.removeItem('hl_cart_v1'); }catch(e){}
+  </script>
+</body>
+</html>
