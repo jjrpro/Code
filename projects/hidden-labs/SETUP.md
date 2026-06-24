@@ -14,12 +14,17 @@ static files and runs the function automatically — no separate server.
 1. Create a free account at **dash.cloudflare.com** → **Workers & Pages** →
    **Create** → **Pages** → **Connect to Git**.
 2. Authorize GitHub and pick the **`jjrpro/code`** repo.
-3. Build settings:
+3. Build settings (important — these make the checkout function work):
    - **Production branch:** the branch this is merged to (e.g. `claude/jjr-ops-handoff-QHQJj`)
    - **Framework preset:** None
    - **Build command:** *(leave blank)*
-   - **Build output directory:** `projects/hidden-labs`
-   - **Root directory:** `projects/hidden-labs`
+   - **Root directory (Advanced):** `projects/hidden-labs`
+   - **Build output directory:** leave as the default (`/`)
+
+   > Why: setting **Root directory** to `projects/hidden-labs` makes Cloudflare
+   > find both the site files *and* the `functions/` folder (the checkout +
+   > webhook). Don't also put `projects/hidden-labs` in the output box — that
+   > double-nests the path and the site 404s.
 4. **Save and Deploy.** You'll get a live URL like `hidden-labs.pages.dev`.
    The store works immediately; checkout uses the email fallback until step B.
 
