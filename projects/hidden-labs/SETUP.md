@@ -64,13 +64,28 @@ That's it — crypto checkout is fully operational.
 
 ---
 
-## D. Before you flip it fully live (recommended)
+## D. Order notifications (Telegram ping on each paid order)
+
+A webhook function (`functions/api/webhook.js`) messages you on Telegram the
+moment an order is paid.
+
+1. In Coinbase Commerce → **Settings → Webhooks → Add an endpoint:**
+   `https://YOUR-SITE/api/webhook`
+2. Copy the **Shared Secret** Coinbase shows for that webhook.
+3. In Cloudflare Pages → Environment variables, add:
+   - `COINBASE_COMMERCE_WEBHOOK_SECRET` = the shared secret
+   - `TELEGRAM_BOT_TOKEN` = your bot token (from @BotFather)
+   - `TELEGRAM_CHAT_ID` = the chat/channel id to notify
+4. Redeploy. Each paid order now pings Telegram with items, total, and the
+   customer's shipping details.
+
+## E. Before you flip it fully live (recommended)
 
 - **Custom domain:** buy one (e.g. hiddenlabs.co) → Cloudflare Pages → Custom
   domains → add it (Cloudflare auto-handles SSL).
-- **Order notifications:** I can add an email/Telegram ping on each paid order
-  (Coinbase Commerce webhook → the function).
-- **Legal pages:** I can draft Terms, Privacy, Refund, and Shipping pages.
+- **Legal pages:** ✅ added — `terms.html`, `privacy.html`, `refund.html`,
+  `shipping.html` (linked in the footer). Fill the bracketed `[your state]`
+  items in Terms, and have an attorney review before selling.
 - **COAs:** link certificates of analysis on product pages when you have them.
 - **Age gate** is already live (21+ modal, remembered per browser).
 
@@ -80,7 +95,10 @@ That's it — crypto checkout is fully operational.
 
 - `functions/api/checkout.js` — creates the Coinbase Commerce charge, **recomputes
   the price server-side** (no browser tampering), redirects to `success.html`.
+- `functions/api/webhook.js` — verifies Coinbase webhooks and pings Telegram on
+  each paid order.
 - `index.html` checkout → calls `/api/checkout`, redirects to the pay page, and
   falls back to emailing the order if payments aren't configured yet.
 - `success.html` — thank-you page that clears the cart.
+- `terms.html` / `privacy.html` / `refund.html` / `shipping.html` — legal pages.
 - 21+ age gate on entry.
